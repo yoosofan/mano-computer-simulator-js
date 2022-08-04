@@ -164,15 +164,15 @@ document.getElementById('button').addEventListener("click", () => {
     }
 });
 
-// let file;
-// document.getElementById('js').addEventListener("change", (event) => {
-//     file = event.target.files[0];
-//     let fileReader = new FileReader();
-//     fileReader.addEventListener('load', function() {
-//             console.log( this.result);
-//             console.log(typeof(this.result))
+let file;
+document.getElementById('js').addEventListener("change", (event) => {
+    file = event.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.addEventListener('load', function() {
+            console.log( this.result);
+            console.log(typeof(this.result))
             
-//           });
-//           fileReader.readAsText(event.target.files[0]);
-// })
+          });
+          fileReader.readAsText(event.target.files[0]);
+})
 
