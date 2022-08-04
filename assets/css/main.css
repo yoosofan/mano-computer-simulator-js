@@ -1,0 +1,133 @@
+.backgroundindex {
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    background: #fff;
+    max-height: 100vh;
+}
+
+h1 {
+    color: rgb(36, 90, 90);
+    text-align: center;
+    margin-top: 50px;
+}
+
+h3 {
+    color: rgb(36, 90, 90);
+
+    margin: 40px 0px 20px 0px;
+}
+
+.hr {
+    opacity: 1 !important;
+    height: 3px;
+    background: linear-gradient(to right, rgba(36, 90, 90, 0.055) 0%, rgb(36, 90, 90)50%, rgba(36, 90, 90, 0.062) 100%);
+    border: none;
+    margin-top: 20px;
+}
+
+.RAM {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 70px 0px 50px 0px;
+}
+
+.store {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+.box-RAM {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+
+    width: 700px;
+
+}
+
+.block {
+    width: 70px;
+    height: 30px;
+
+}
+
+.btn {
+    border: 1px solid rgb(36, 90, 90);
+    background-color: rgb(255, 255, 255);
+    padding: 10px 15px;
+    color: rgb(36, 90, 90);
+    transition: .3s;
+    cursor: pointer;
+
+}
+
+.btn:hover {
+    transition: .3s;
+    background-color: rgb(36, 90, 90);
+    color: #fff;
+}
+
+.listData {
+    list-style-type: none;
+    margin-bottom: 10px;
+    color: rgb(36, 90, 90);
+    cursor: pointer;
+}
+
+input[type=file] {
+    color: rgb(36, 90, 90);
+    margin: 15px 0px;
+}
+
+input[type=file]::file-selector-button {
+    border: 1px solid rgb(36, 90, 90);
+    padding: .2em .4em;
+    border-radius: .2em;
+    background-color: #ffffff;
+    transition: .3s;
+    color: rgb(36, 90, 90);
+    cursor: pointer;
+}
+
+input[type=file]::file-selector-button:hover {
+    background-color: rgb(36, 90, 90);
+    color: #fff;
+}
+
+.flexStyle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.inputTag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.inputTag button{
+    margin-left: 15px;
+}
+.inputJs{
+    display: none;
+}
+.decode{
+    width:100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+
+}
+table td,th{
+ padding: 10px;
+ border: 1px solid red;
+}

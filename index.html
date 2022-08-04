@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <title>index</title>
+
+</head>
+
+<body>
+    <h4></h4>
+    <div class="backgroundindex">
+        <div class="container">
+            <h1>Processor simulator</h1>
+            <hr class="hr">
+            <form class="RAM">
+                <div class="box-RAM" id="RAM">
+                </div>
+                <div class="store">
+                    <button class="btn" type="submit" id="submit"> Data store</button>
+                </div>
+            </form>
+            <hr class="hr">
+            <div class="flexStyle">
+                <div>
+                    <h3>Display the list of values stored in Local Stotrage</h3>
+                    <ul id="list">
+                    </ul>
+                </div>
+                <div class="inputTag">
+                    <button class="btn" onclick="newData()">newdata</button>
+                    <button class="btn" onclick="reset()">reset locale storage</button>
+
+                </div>
+            </div>
+            <hr class="hr">
+            <div class="inputTag">
+                <label class="">
+                    <h3>Select the ROM file from your computer</h3>
+                    <input type="file" id="input" accept=".xls,.xlsx">
+                </label>
+                <div class="">
+                    <button class="btn" id="button">Convert</button>
+                </div>
+            </div>
+            <hr class="hr">
+            <div class="inputTag">
+                <label class="">
+                    <input type="file" id="js" class="inputJs">
+                    <label for="js">
+                        <div class="btn" id="button">upload file javascript</div>
+                    </label>
+                 
+                </label>
+                <div class="">
+                    <button class="btn" id="button">Convert</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/js/xlsx.full.min.js"></script>
+    <script  src="./assets/js/main.js" ></script>
+</body>
+
+</html>
