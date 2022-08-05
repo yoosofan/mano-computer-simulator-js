@@ -164,7 +164,6 @@ document.getElementById('button').addEventListener("click", () => {
     }
 });
 
-let file;
 document.getElementById('js').addEventListener("change", (event) => {
     file = event.target.files[0];
     let fileReader = new FileReader();
