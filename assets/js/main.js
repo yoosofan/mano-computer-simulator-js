@@ -1,4 +1,3 @@
-
 var element = document.getElementById("RAM");
 for (let i = 1; i <= 100; i++) {
     var tag = document.createElement("input");
@@ -82,27 +81,27 @@ for (let i = 0; i < 5; i++) {
 
                     a = "A" + f;
                 } else if (d == 2) {
-                   a = "B" + f;
+                    a = "B" + f;
                 } else if (d == 3) {
 
-                   a= "C" + f;
+                    a = "C" + f;
                 } else if (d == 4) {
 
                     a = "D" + f;
                 } else if (d == 5) {
 
-                   a = "E" + f;
+                    a = "E" + f;
                 } else if (d == 6) {
 
-                   a = "F" + f;
+                    a = "F" + f;
                 } else if (d == 7) {
 
-                   a = "G" + f;
+                    a = "G" + f;
                 } else if (d == 8) {
                     a = "H" + f;
                 } else if (d == 9) {
 
-                   a = "I" + f;
+                    a = "I" + f;
                 } else {
 
                     a = "J" + f;
@@ -164,14 +163,30 @@ document.getElementById('button').addEventListener("click", () => {
     }
 });
 
-document.getElementById('js').addEventListener("change", (event) => {
-    file = event.target.files[0];
-    let fileReader = new FileReader();
-    fileReader.addEventListener('load', function() {
-            console.log( this.result);
-            console.log(typeof(this.result))
-            
-          });
-          fileReader.readAsText(event.target.files[0]);
-})
+// document.getElementById('js').addEventListener("change", (event) => {
+//     file = event.target.files[0];
+//     let fileReader = new FileReader();
+//     fileReader.addEventListener('load', function () {
+//         console.log(this.result);
+//         console.log(typeof (this.result))
+
+//     });
+//     fileReader.readAsText(event.target.files[0]);
+// })
+const Datafetch=document.getElementById("fetch");
+Datafetch.addEventListener("click", fetch);
+function fetch(){
+    console.log("djdjfhggd")
+    var array = [5]
+    var data = [];
+    for (let b = 1; b <= 100; b++) {
+        var tag = element.childNodes[b].value;
+        data[b] = tag
+    }
+    var number = Bazdid();
+    array[number] = data;
+    localStorage.setItem(`Datafatch`, JSON.stringify(array[number]));
+}
+
+
 
