@@ -163,19 +163,42 @@ document.getElementById('button').addEventListener("click", () => {
     }
 });
 
-// document.getElementById('js').addEventListener("change", (event) => {
-//     file = event.target.files[0];
-//     let fileReader = new FileReader();
-//     fileReader.addEventListener('load', function () {
-//         console.log(this.result);
-//         console.log(typeof (this.result))
-
-//     });
-//     fileReader.readAsText(event.target.files[0]);
-// })
-const Datafetch=document.getElementById("fetch");
+document.getElementById('sendText').addEventListener("click", () => {
+    var data = document.getElementById('textarea').value;
+    var a = data.split('\n');
+    var arraydata;
+    for (let index = 0; index < a.length; index++) {
+        var mysplit = a[index].split(',');
+        // console.log(mysplit)
+        for (let i = 0; i < mysplit.length; i++) {
+            var element;
+            if (i == 0) {
+                var twoPar = mysplit[i].split('');
+                mysplit[i] = twoPar[1];
+                // console.log(twoPar[1],"hlkhoihj")
+            } else if (i == 9) {
+                var twoPar = mysplit[i].split('');
+                mysplit[i]= twoPar[0];
+            }
+        }
+        if(index==0)
+            arraydata=mysplit;
+        else
+            arraydata=arraydata.concat(mysplit)
+        
+    }
+    console.log(arraydata,";lkl") 
+    var ALL=document.getElementById("RAM").getElementsByTagName("input");
+    console.log(ALL);
+    for (let j = 0; j < ALL.length; j++) {
+        ALL[j].setAttribute("value",arraydata[j] );
+        
+    }
+})
+const Datafetch = document.getElementById("fetch");
 Datafetch.addEventListener("click", fetch);
-function fetch(){
+
+function fetch() {
     console.log("djdjfhggd")
     var array = [5]
     var data = [];
@@ -187,6 +210,3 @@ function fetch(){
     array[number] = data;
     localStorage.setItem(`Datafatch`, JSON.stringify(array[number]));
 }
-
-
-
