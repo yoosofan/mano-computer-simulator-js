@@ -162,7 +162,7 @@ document.getElementById('button').addEventListener("click", () => {
         }
     }
 });
-
+// send data in texterea 
 document.getElementById('sendText').addEventListener("click", () => {
     var data = document.getElementById('textarea').value;
     var a = data.split('\n');
