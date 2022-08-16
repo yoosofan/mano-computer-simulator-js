@@ -13,16 +13,25 @@
 
 <body>
     <div class="container">
-        <div class="decode">
-
-            <div class="ramtable">
-                <p class="center">Memory Table</p>
+        <!-- <div class="flex"> -->
+            <div class="decode">
+                <div class="ramtable">
+                    <p class="center">Memory Table</p>
+                </div>
+                <div class="register" >
+                    <div class="registerTable">
+                        <p class="center">Register Table</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        <!-- </div> -->
+        <button class="btn" id="decode" onclick="decode()">
+            decode
+        </button>
     </div>
-
     <script src="./assets/js/xlsx.full.min.js"></script>
     <script src="./assets/js/decode.js"></script>
+    <script src="./assets/js/creatTable.js"></script>
 </body>
 
 </html>

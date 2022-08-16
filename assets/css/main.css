@@ -172,17 +172,21 @@ input[type=file]::file-selector-button:hover {
     height: 100vh;
     display: flex;
     justify-content: space-between;
-
+    margin-top: 100px;
 }
 table{
+   
+    /* display: block; */
+    color: #333333;
+    background-color: #d1d1d1;
+}
+.ramtable table{
+    display: block;
     table-layout: fixed;
     width: 100%;
     margin: 0 auto;
     overflow-y: auto;
     height: 70vh;
-    display: block;
-    color: #333333;
-    background-color: #d1d1d1;
 }
 .ramtable td{
     padding: 8px;
@@ -221,5 +225,9 @@ table{
 .border{
     border: 2px solid red !important;
 }
-
+.registerTable td{
+    padding: 8px;
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
 

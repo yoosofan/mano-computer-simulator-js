@@ -124,43 +124,7 @@ function hexNumberAddress(dec) {
 
 }
 
-// add code 
-const ramTable = document.createElement('table');
-const memoryTable = document.querySelector('.ramtable');
-var storedNames = JSON.parse(localStorage.getItem(`Datafatch`));
-for (let i = -1; i < 100; i++) {
-    var datacel = storedNames[i + 1];
-    let r = document.createElement('tr');
-    for (let j = 0; j < 3; j++) {
-        let c = document.createElement('td');
-        if (i == -1) {
-            if (j == 0) {
-                c.innerText = 'Decimal Addrress';
-            } else if (j == 1) {
-                c.innerText = 'Hex Addrress';
-            } else if (j == 2) {
-                c.innerText = 'Contents';
-            }
-            c.classList.add('text');
-            r.classList.add('sticky');
-        } else if (j == 0) {
-            c.innerText = i;
-            c.classList.add('text');
-        } else if (j == 1) {
-            c.innerText = hexNumberAddress(i);
-            c.classList.add('text');
-            c.classList.add('Address');
-        } else if (j == 2) {
-            c.innerText = datacel;
-            c.classList.add('text');
-            c.classList.add('data');
-        }
-        c.classList.add('center');
-        r.appendChild(c);
-    }
-    ramTable.appendChild(r);
-}
-memoryTable.appendChild(ramTable);
+
 
 
 //decode
@@ -210,12 +174,10 @@ function ADD(MemStr, ACStr) {
         return result.reverse().join('');
 
 };
-
 // LAD 
 function LDA() {
     AC = memory;
 }
-
 // STA 
 function STA() {
     var memoryAddress = document.getElementsByClassName("Address");
@@ -225,12 +187,10 @@ function STA() {
             memory = code[l].innerText;
         }
 }
-
 // BUN 
 function BUN() {
     PC = AR;
 }
-
 // BSA 
 function BSA() {
     var memoryAddress = document.getElementsByClassName("Address");
@@ -242,7 +202,6 @@ function BSA() {
     var one = "1";
     PC = ADD(AR, one);
 }
-
 // ISZ 
 function ISZ() {
     var one = "1";
@@ -254,14 +213,12 @@ function ISZ() {
             if (code[l].innerText == 0)
                 PC = ADD(PC, one);
         }
-
 }
 
 
 function decode() {
     var code = document.getElementsByClassName("data");
     var memoryAddress = document.getElementsByClassName("Address");
-    // console.log(code);
     for (let i = 0; i < 3; i++) {
         for (let index = 0; index < code.length; index++) {
             if (i == index)
@@ -270,8 +227,6 @@ function decode() {
                 code[index].classList.remove("border");
         }
         var data = code[i].innerText;
-        // console.log(data, "opcode");
-        // console.log(data.split('')[0], "opcode");
         var opcode = data.split('')[0];
         if (opcode == "7") {
             for (let j = 0; j < register_instructions.length; j++) {
@@ -289,7 +244,6 @@ function decode() {
 
                 AC = hextobinary(and());
 
-                // console.log(AC, "iiiiiiiiiiiiiiiiiiii")
             } else if (opcode == 1) {
                 for (let l = 0; l < memoryAddress.length; l++)
                     if (memoryAddress[l].innerText == AR)
@@ -389,4 +343,4 @@ function decode() {
 
 }
 
-decode();
+
