@@ -51,7 +51,7 @@ for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 8; j++) {
         let c = document.createElement('td');
         if (j !== 0) {
-            c.classList.add('items'); 
+            c.classList.add(`${headerItems[j]}`); 
         }
         if (i == 0) {
             c.innerText =headerItems[j];
@@ -61,7 +61,7 @@ for (let i = 0; i < 10; i++) {
         if (j == 0) {
             c.innerText = items[i];
             c.classList.add('itemsStyle');
-            // c.classList.add('info-column');
+            r.classList.add(`${i}`);
         }
         r.appendChild(c);
     }
