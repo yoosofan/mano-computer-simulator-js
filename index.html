@@ -17,14 +17,117 @@
         <div class="container">
             <h1>Processor simulator</h1>
             <hr class="hr">
-            <form class="RAM">
-                <div class="box-RAM" id="RAM">
+            <div class="box">
+                <form class="RAM">
+                    <div class="box-RAM" id="RAM">
+                    </div>
+                    <div class="store">
+                        <button class="btn" type="submit" id="submit"> Data store</button>
+                        <a href="./decode.html" class="btn" id="fetch"> fetch</a>
+                    </div>
+                </form>
+
+                <div class="Instruction">
+                    <table >
+                        <tr>
+                            <td>symbol</td>
+                            <td>I=0</td>
+                            <td>I=1</td>
+                        </tr>
+                        <tr>
+                            <th>AND</th>
+                            <th>0xxx</th>
+                            <th>8xxx</th>
+                        </tr>
+                        <tr>
+                            <th>ADD</th>
+                            <th>1xxx</th>
+                            <th>9xxx</th>
+                        </tr>
+                        <tr>
+                            <th>LDA</th>
+                            <th>2xxx</th>
+                            <th>Axxx</th>
+                        </tr>
+                        <tr>
+                            <th>STA</th>
+                            <th>3xxx</th>
+                            <th>Bxxx</th>
+                        </tr>
+                        <tr>
+                            <th>BUN</th>
+                            <th>4xxx</th>
+                            <th>Cxxx</th>
+                        </tr>
+                        <tr>
+                            <th>BSA</th>
+                            <th>5xxx</th>
+                            <th>Dxxx</th>
+                        </tr>
+                        <tr>
+                            <th>ISZ</th>
+                            <th>6xxx</th>
+                            <th>Exxx</th>
+                        </tr>
+                    </table>
+                    <table class="InstructionTableReg">
+                        <tr>
+                            <td>symbol</td>
+                            <td>hexadecimal</td>
+                        </tr>
+                        <tr>
+                            <th>CLA</th>
+                            <th>7800</th>
+                        </tr>
+                        <tr>
+                            <th>CLE</th>
+                            <th>7400</th>
+                        </tr>
+                        <tr>
+                            <th>CMA</th>
+                            <th>7200</th>
+                        </tr>
+                        <tr>
+                            <th>CME</th>
+                            <th>7100</th>
+                        </tr>
+                        <tr>
+                            <th>CIR</th>
+                            <th>7080</th>
+                        </tr>
+                        <tr>
+                            <th>CIL</th>
+                            <th>7040</th>
+                        </tr>
+                        <tr>
+                            <th>INC</th>
+                            <th>7020</th>
+                        </tr>
+                        <tr>
+                            <th>SPA</th>
+                            <th>7010</th>
+                        </tr>
+                        <tr>
+                            <th>SNA</th>
+                            <th>7008</th>
+                        </tr>
+                        <tr>
+                            <th>SZA</th>
+                            <th>7004</th>
+                        </tr>
+                        <tr>
+                            <th>SZE</th>
+                            <th>7002</th>
+                        </tr>
+                        <tr>
+                            <th>HLT</th>
+                            <th>7001</th>
+                        </tr>
+                    </table>
                 </div>
-                <div class="store">
-                    <button class="btn" type="submit" id="submit"> Data store</button>
-                    <a href="./decode.html" class="btn" id="fetch"> fetch</a>
-                </div>
-            </form>
+
+            </div>
+
             <hr class="hr">
             <div class="flexStyle">
                 <div>
