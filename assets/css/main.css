@@ -41,6 +41,48 @@ h3 {
     margin-top: 50px;
 }
 
+.box{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: stretch;
+}
+.InstructionTableReg td{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;    
+}
+.InstructionTableMem td{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;    
+}
+.InstructionTableMem{
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
+.InstructionTableMem tr{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
+.InstructionTableMem th{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
+.InstructionTableReg{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
+.Instruction tr{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
+.Instruction th{
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
+}
+
 .box-RAM {
     display: flex;
     flex-direction: row;
@@ -142,7 +184,7 @@ table{
     color: #333333;
     background-color: #d1d1d1;
 }
-td{
+.ramtable td{
     padding: 8px;
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
@@ -176,6 +218,8 @@ td{
     background: #3aa3a7; 
   }
 
-
+.border{
+    border: 2px solid red !important;
+}
 
 
