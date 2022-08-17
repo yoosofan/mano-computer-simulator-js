@@ -27,64 +27,25 @@ const register_instructions = [
 ]
 
 
-let AC = '0000000000000001';
+let AC = '10000000000001001';
 let DR = '0000000000000000';
 let AR = '000000000000';
 let IR = '0000000000000000';
 let PC = '000000000000';
 let TR = '0000000000000000';
-let memory = "0000000000000000"
+let memory = "0000000000000000";
+let carry = "0"
 
-let instr_values = {
+let registerHex = {
     IR: binaryToHex(IR),
     AC: binaryToHex(AC),
     DR: binaryToHex(DR),
     PC: binaryToHex(PC),
     AR: binaryToHex(AR),
     Memory: binaryToHex(AR),
-    E: '0x' + "E"
 }
 
-function binaryToHex(number) {
-    // console.log(parseInt(number, 2).toString(16).toUpperCase(), ";;;;")
-    var hexadecimal = parseInt(number, 2).toString(16).toUpperCase();
 
-    let outcome;
-    if (hexadecimal.length < 3) {
-        let numberOfZero = [];
-        for (let i = 0; i < 3 - hexadecimal.length; i++) {
-            numberOfZero.push("0");
-        }
-        let arr = hexadecimal.split('');
-        arr.splice(0, 0, ...numberOfZero);
-        console.log(arr)
-        outcome = arr.join('');
-        // console.log(outcome)
-        hexadecimal = outcome;
-    }
-    if (hexadecimal.length > 3) {
-        hexadecimal = hexadecimal.split('').slice(-4).join('');
-    }
-    console.log(hexadecimal)
-    return hexadecimal;
-}
-
-function hextobinary(hex) {
-    // console.log(parseInt(hex, 16).toString(2).length)
-    var binery = parseInt(hex, 16).toString(2);
-    let numberOfZero = [];
-    let outcome;
-    for (let i = 0; i < 16 - binery.length; i++) {
-        numberOfZero.push("0");
-    }
-    let arr = binery.split('');
-    arr.splice(0, 0, ...numberOfZero);
-    outcome = arr.join('');
-    binery = outcome;
-    console.log(binery)
-    return binery;
-}
-// creat table 
 let len;
 let str;
 let char;
@@ -125,10 +86,222 @@ function hexNumberAddress(dec) {
 }
 
 
+// RAM table and add data  
+const ramTable = document.createElement('table');
+const memoryTable = document.querySelector('.ramtable');
+var storedNames = JSON.parse(localStorage.getItem(`Datafatch`));
+for (let i = -1; i < 100; i++) {
+    var datacel = storedNames[i + 1];
+    let r = document.createElement('tr');
+    for (let j = 0; j < 3; j++) {
+        let c = document.createElement('td');
+        if (i == -1) {
+            if (j == 0) {
+                c.innerText = 'Decimal Addrress';
+            } else if (j == 1) {
+                c.innerText = 'Hex Addrress';
+            } else if (j == 2) {
+                c.innerText = 'Contents';
+            }
+            c.classList.add('text');
+            r.classList.add('sticky');
+        } else if (j == 0) {
+            c.innerText = i;
+            c.classList.add('text');
+        } else if (j == 1) {
+            c.innerText = hexNumberAddress(i);
+            c.classList.add('text');
+            c.classList.add('Address');
+        } else if (j == 2) {
+            c.innerText = datacel;
+            c.classList.add('text');
+            c.classList.add('data');
+        }
+        c.classList.add('center');
+        r.appendChild(c);
+    }
+    ramTable.appendChild(r);
+}
+memoryTable.appendChild(ramTable);
+
+
+// register table 
+const regtable = document.createElement('table');
+const registerTable = document.querySelector('.registerTable');
+const items = ['Elements', 'Initial Values', 'T0: AR <- PC', 'T1: IR <- M[AR], PC <-PC+1', 'T2: AR <- IR[0:11]', 'T3', 'T4', 'T5', 'T6', 'After Execution'];
+const headerItems = ['statements', 'IR', 'AC', 'DR', 'PC', 'AR', 'M[AR]', 'E'];
+for (let i = 0; i < 10; i++) {
+    let r = document.createElement('tr');
+    for (let j = 0; j < 8; j++) {
+        let c = document.createElement('td');
+        if (j !== 0) {
+            c.classList.add(`${headerItems[j]}`);
+        }
+        if (i == 0) {
+            c.innerText = headerItems[j];
+            c.classList.add('text');
+            r.classList.add('sticky');
+        }
+        if (j == 0) {
+            c.innerText = items[i];
+            c.classList.add('itemsStyle');
+            r.classList.add(`${i}`);
+        }
+        r.appendChild(c);
+    }
+    regtable.appendChild(r);
+}
+registerTable.appendChild(regtable);
+
 
 
 //decode
+function binaryToHex(number) {
+    // console.log(parseInt(number, 2).toString(16).toUpperCase(), ";;;;")
+    var hexadecimal = parseInt(number, 2).toString(16).toUpperCase();
 
+    let outcome;
+    if (hexadecimal.length < 3) {
+        let numberOfZero = [];
+        for (let i = 0; i < 3 - hexadecimal.length; i++) {
+            numberOfZero.push("0");
+        }
+        let arr = hexadecimal.split('');
+        arr.splice(0, 0, ...numberOfZero);
+        console.log(arr)
+        outcome = arr.join('');
+        // console.log(outcome)
+        hexadecimal = outcome;
+    }
+    if (hexadecimal.length > 3) {
+        hexadecimal = hexadecimal.split('').slice(-4).join('');
+    }
+    return hexadecimal;
+}
+
+function hextobinary(hex) {
+    var binery = parseInt(hex).toString(2);
+    let numberOfZero = [];
+    let outcome;
+    for (let i = 0; i < 16 - binery.length; i++) {
+        numberOfZero.push("0");
+    }
+    let arr = binery.split('');
+    arr.splice(0, 0, ...numberOfZero);
+    outcome = arr.join('');
+    binery = outcome;
+    return binery;
+}
+
+
+// Register-refrence instruction
+// CLA 
+function CLA() {
+    AC = "0000000000000000";
+}
+
+// CLE 
+function CLE() {
+    carry = "0";
+}
+
+
+// CMA
+function CMA() {
+    AC = AC.split('');
+    for (let index = 0; index < AC.length; index++)
+        if (AC[index] == 0)
+            AC[index] = 1;
+        else if (AC[index] == 1) {
+        AC[index] = 0;
+    }
+    AC = AC.join('')
+}
+
+// CME 
+function CME() {
+    carry = carry.split('');
+
+    if (carry == 0)
+        carry = 1;
+    else if (carry == 1) {
+        carry = 0;
+    }
+    carry = carry.join('')
+}
+
+// CIR 
+function CIR() {
+    console.log(AC,"AC")
+    var ACsplit = AC.split('');
+    carry = ACsplit[15];
+    ACsplit=binaryToHex(AC) >> 1;
+    console.log(ACsplit,">>1")
+    ACsplit=hextobinary(ACsplit)
+    console.log(ACsplit,"after hextobinary")
+    ACsplit=ACsplit.split('');
+    ACsplit[0] = carry;
+    AC = ACsplit.join('');
+    console.log(AC, "aftr shift right")
+}
+
+// CIR 
+function CIL() {
+    var ACsplit = AC.split('');
+    carry = ACsplit[0];
+    console.log(AC,"AC")
+    ACsplit=binaryToHex(AC) << 1;
+    console.log(ACsplit,"<<1")
+    ACsplit=hextobinary(ACsplit)
+    console.log(ACsplit,"after hextobinary")
+    ACsplit=ACsplit.split('');
+    ACsplit[15] = carry;
+    AC = ACsplit.join('');
+    console.log(AC, "after shift left")
+}
+// INC 
+function INC() {
+    var one = "1";
+    AC = ADD(AC, one);
+
+}
+
+// SPA 
+function SPA() {
+    var one = "1";
+    var ACsplit = AC.split('').reverse();
+    if (ACsplit[15] == 0)
+        PC = ADD(PC, one);
+}
+
+// SNA 
+function SNA() {
+    var one = "1";
+    var ACsplit = AC.split('').reverse();
+    if (ACsplit[15] == 1)
+        PC = ADD(PC, one);
+}
+
+// SZA 
+function SZA() {
+    var one = "1";
+    if (AC == '0000000000000000')
+        PC = ADD(PC, one);
+}
+
+// SZE
+function SZE() {
+    var one = "1";
+    if (carry == '0')
+        PC = ADD(PC, one);
+}
+
+
+
+
+
+
+// Memory-refrence instruction 
 // AND 
 function and() {
     let result = '';
@@ -230,9 +403,31 @@ function decode() {
         var opcode = data.split('')[0];
         if (opcode == "7") {
             for (let j = 0; j < register_instructions.length; j++) {
-
                 if (register_instructions[j][1] == data) {
                     valu = register_instructions[j][0];
+                    if (valu == "CLA")
+                        CLA();
+                    else if (valu == "CLE")
+                        CLE();
+                    else if (valu == "CMA")
+                        CMA();
+                    else if (valu == "CME")
+                        CME();
+                    else if (valu == "CIR") {
+                        CIR();
+                    } else if (valu == "CIL") {
+                        CIL();
+                    } else if (valu == "INC")
+                        INC();
+                    else if (valu == "SPA")
+                        SPA();
+                    else if (valu == "SNA")
+                        SNA();
+                    else if (valu == "SZA")
+                        SZA();
+                    else if (valu == "SZE")
+                        SZE();
+                    else if (valu == "HLT") {}
                 }
             }
         } else {
@@ -292,7 +487,6 @@ function decode() {
                     if (memoryAddress[y].innerText == AR)
                         memory = code[y].innerText;
                 AC = ADD(memory, AC);
-                console.log(AC, "AC");
             } else if (opcode == "A") {
                 for (let l = 0; l < memoryAddress.length; l++)
                     if (memoryAddress[l].innerText == AR) {
@@ -325,7 +519,7 @@ function decode() {
                     }
                 BSA()
             } else if (opcode == "E") {
-                
+
                 for (let l = 0; l < memoryAddress.length; l++)
                     if (memoryAddress[l].innerText == AR) {
                         AR = code[l].innerText;
@@ -342,5 +536,3 @@ function decode() {
     }
 
 }
-
-
