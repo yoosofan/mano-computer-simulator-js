@@ -528,7 +528,7 @@ function decode() {
                     registerHex.DR = code[l].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
-            AC = ADD(memory, AC);
+            AC = ADD(registerHex.DR, AC);
             PC = ADD(PC, one);
             console.log(PC, "CLA");
             decode();
