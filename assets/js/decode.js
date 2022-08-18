@@ -27,7 +27,7 @@ const register_instructions = [
 ]
 
 
-let AC = '10000000000001001';
+let AC = '0010000000001001';
 let DR = '0000000000000000';
 let AR = '000000000000';
 let IR = '0000000000000000';
@@ -180,7 +180,8 @@ function binaryToHex(number) {
 }
 
 function hextobinary(hex) {
-    var binery = parseInt(hex).toString(2);
+    console.log(hex, "hex")
+    var binery = parseInt(hex, 16).toString(2);
     let numberOfZero = [];
     let outcome;
     for (let i = 0; i < 16 - binery.length; i++) {
@@ -232,32 +233,47 @@ function CME() {
 
 // CIR 
 function CIR() {
-    console.log(AC,"AC")
     var ACsplit = AC.split('');
     carry = ACsplit[15];
-    ACsplit=binaryToHex(AC) >> 1;
-    console.log(ACsplit,">>1")
-    ACsplit=hextobinary(ACsplit)
-    console.log(ACsplit,"after hextobinary")
-    ACsplit=ACsplit.split('');
-    ACsplit[0] = carry;
-    AC = ACsplit.join('');
-    console.log(AC, "aftr shift right")
+    // console.log(AC,"AC")
+    var binary = parseInt(AC, 2);
+    // console.log(binary,"lll ")
+    ACsplit = binary >> 1;
+    // console.log(ACsplit,">>1")
+    ACsplit = (ACsplit >>> 0).toString(2);
+    // console.log(ACsplit,"after hextobinary")
+    let numberOfZero = [];
+    let outcome;
+    for (let i = 0; i < 16 - ACsplit.length; i++) {
+        numberOfZero.push("0");
+    }
+    let arr = ACsplit.split('');
+    arr.splice(0, 0, ...numberOfZero);
+    arr[0] = carry;
+    AC = arr.join('');
+    // console.log(AC, "aftr shift right")
 }
 
 // CIR 
 function CIL() {
     var ACsplit = AC.split('');
     carry = ACsplit[0];
-    console.log(AC,"AC")
-    ACsplit=binaryToHex(AC) << 1;
-    console.log(ACsplit,"<<1")
-    ACsplit=hextobinary(ACsplit)
-    console.log(ACsplit,"after hextobinary")
-    ACsplit=ACsplit.split('');
-    ACsplit[15] = carry;
-    AC = ACsplit.join('');
-    console.log(AC, "after shift left")
+    // console.log(AC,"AC")
+    var binary = parseInt(AC, 2);
+    // console.log(binary,"lll ")
+    ACsplit = binary << 1;
+    // console.log(ACsplit,">>1")
+    ACsplit = ACsplit.toString(2);
+
+    // console.log(ACsplit,"after hextobinary")
+    let arr = []
+    ACsplit.split('');
+    for (let i = 0; i < 16; i++) {
+        arr[i] = ACsplit[i + 1];
+    }
+    arr[15] = carry;
+    AC = arr.join('');
+    // console.log(AC, "aftr shift left")
 }
 // INC 
 function INC() {
@@ -296,7 +312,12 @@ function SZE() {
         PC = ADD(PC, one);
 }
 
-
+// HLT
+function HLT() {
+    document.getElementById("container").style.display = "none";
+    document.getElementById("HLT").style.display = "block";
+    alert("The computer stopped")
+}
 
 
 
@@ -427,7 +448,8 @@ function decode() {
                         SZA();
                     else if (valu == "SZE")
                         SZE();
-                    else if (valu == "HLT") {}
+                    else if (valu == "HLT")
+                        HLT()
                 }
             }
         } else {
