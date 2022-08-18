@@ -1,4 +1,3 @@
-
 var valu;
 const memory_instructions = [
     ["AND", 0, 8],
@@ -321,8 +320,6 @@ function HLT() {
 
 
 // Memory-refrence instruction 
-
-
 // AND 
 function and() {
     let result = '';
@@ -416,7 +413,6 @@ function ISZ() {
 function decode() {
     var code = document.getElementsByClassName("data");
     var memoryAddress = document.getElementsByClassName("Address");
-
     var Address = "0x" + binaryToHex(PC);
     // var Address = "0x" + binaryToHex(PC);
     console.log(Address, "PC")
@@ -508,7 +504,6 @@ function decode() {
                     console.log(PC, "CLA");
                     decode();
                     break;
-
 
                 }
             }
@@ -662,7 +657,6 @@ function decode() {
             // break;
         } else if (opcode == "E") {
 
-
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == AR) {
                     AR = code[l].innerText;
@@ -682,9 +676,5 @@ function decode() {
         }
 
     }
-<<<<<<< HEAD
-}
-=======
 
 }
->>>>>>> 2ecf65601788f7f574433bdb85064dfc623e9595
