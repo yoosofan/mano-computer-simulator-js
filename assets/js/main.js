@@ -119,49 +119,51 @@ function reset() {
 }
 
 function newData() {
-    var inp = document.getElementsByTagName("input");
-    for (let j = 1; j <= 100; j++) {
-        var d = "input" + j;
-        if (d == inp[j - 1].name) {
-            inp[j - 1].value = " ";
-        }
+    var inp = document.getElementsByClassName("block");
+    for (let j = 0; j < 100; j++) {
+        // var d = "input" + j;
+        // if (d == inp[j - 1].name) {
+            inp[j].value = " ";
+        // }
     }
 }
 
-let selectedFile;
-document.getElementById('input').addEventListener("change", (event) => {
-    selectedFile = event.target.files[0];
-})
-let data = [{
-    "name": "jayanth",
-    "data": "scd",
-    "abc": "sdef"
-}]
-document.getElementById('button').addEventListener("click", () => {
-    XLSX.utils.json_to_sheet(data, 'out.xlsx');
-    if (selectedFile) {
-        let fileReader = new FileReader();
-        fileReader.readAsBinaryString(selectedFile);
-        fileReader.onload = (event) => {
-            let data = event.target.result;
-            let workbook = XLSX.read(data, {
-                type: "binary"
-            });
-            workbook.SheetNames.forEach(sheet => {
-                var obj = Object.entries(workbook.Sheets[sheet]);
-                var All = document.getElementsByTagName("input");
-                for (let i = 1; i < obj.length; i++) {
-                    for (var j = 0; j < All.length; j++) {
-                        if (All[j].getAttribute("name") == obj[i][0]) {
-                            All[j].setAttribute("value", obj[i][1].w);
-                        }
-                    }
 
-                }
-            });
-        }
-    }
-});
+// let selectedFile;
+// document.getElementById('input').addEventListener("change", (event) => {
+//     selectedFile = event.target.files[0];
+// })
+// let data = [{
+//     "name": "jayanth",
+//     "data": "scd",
+//     "abc": "sdef"
+// }]
+// document.getElementById('button').addEventListener("click", () => {
+//     XLSX.utils.json_to_sheet(data, 'out.xlsx');
+//     if (selectedFile) {
+//         let fileReader = new FileReader();
+//         fileReader.readAsBinaryString(selectedFile);
+//         fileReader.onload = (event) => {
+//             let data = event.target.result;
+//             let workbook = XLSX.read(data, {
+//                 type: "binary"
+//             });
+//             workbook.SheetNames.forEach(sheet => {
+//                 var obj = Object.entries(workbook.Sheets[sheet]);
+//                 var All = document.getElementsByTagName("input");
+//                 for (let i = 1; i < obj.length; i++) {
+//                     for (var j = 0; j < All.length; j++) {
+//                         if (All[j].getAttribute("name") == obj[i][0]) {
+//                             All[j].setAttribute("value", obj[i][1].w);
+//                         }
+//                     }
+
+//                 }
+//             });
+//         }
+//     }
+// });
+
 // send data in texterea 
 document.getElementById('sendText').addEventListener("click", () => {
     var data = document.getElementById('textarea').value;
