@@ -12,149 +12,152 @@
 </head>
 
 <body>
-    <h4></h4>
+
     <div class="backgroundindex">
         <div class="container">
-            <h1>Processor simulator</h1>
-            <hr class="hr">
-            <div class="box">
-                <form class="RAM">
-                    <div class="box-RAM" id="RAM">
+            <div class="marginBox">
+                <h1>Processor simulator</h1>
+                <hr class="hr">
+                <div class="box">
+                    <form class="RAM">
+                        <div class="box-RAM" id="RAM">
+                        </div>
+                        <div class="store">
+                            <button class="btn" type="submit" id="submit"> Data store</button>
+                            <a href="./decode.html" class="btn" id="fetch"> fetch</a>
+                            <button class="btn" onclick="newData()">newdata</button>
+                        </div>
+                    </form>
+    
+                    <div class="Instruction">
+                        <table class="InstructionTableReg" >
+                            <tr>
+                                <th>symbol</th>
+                                <th>I=0</th>
+                                <th>I=1</th>
+                            </tr>
+                            <tr>
+                                <td>AND</td>
+                                <td>0xxx</td>
+                                <td>8xxx</td>
+                            </tr>
+                            <tr>
+                                <td>ADD</td>
+                                <td>1xxx</td>
+                                <td>9xxx</td>
+                            </tr>
+                            <tr>
+                                <td>LDA</td>
+                                <td>2xxx</td>
+                                <td>Axxx</td>
+                            </tr>
+                            <tr>
+                                <td>STA</td>
+                                <td>3xxx</td>
+                                <td>Bxxx</td>
+                            </tr>
+                            <tr>
+                                <td>BUN</td>
+                                <td>4xxx</td>
+                                <td>Cxxx</td>
+                            </tr>
+                            <tr>
+                                <td>BSA</td>
+                                <td>5xxx</td>
+                                <td>Dxxx</td>
+                            </tr>
+                            <tr>
+                                <td>ISZ</td>
+                                <td>6xxx</td>
+                                <td>Exxx</td>
+                            </tr>
+                        </table>
+                        <table class="InstructionTableReg">
+                            <tr>
+                                <th>symbol</th>
+                                <th>hexadecimal</th>
+                            </tr>
+                            <tr>
+                                <td>CLA</td>
+                                <td>7800</td>
+                            </tr>
+                            <tr>
+                                <td>CLE</td>
+                                <td>7400</td>
+                            </tr>
+                            <tr>
+                                <td>CMA</td>
+                                <td>7200</td>
+                            </tr>
+                            <tr>
+                                <td>CME</td>
+                                <td>7100</td>
+                            </tr>
+                            <tr>
+                                <td>CIR</td>
+                                <td>7080</td>
+                            </tr>
+                            <tr>
+                                <td>CIL</td>
+                                <td>7040</td>
+                            </tr>
+                            <tr>
+                                <td>INC</td>
+                                <td>7020</td>
+                            </tr>
+                            <tr>
+                                <td>SPA</td>
+                                <td>7010</td>
+                            </tr>
+                            <tr>
+                                <td>SNA</td>
+                                <td>7008</td>
+                            </tr>
+                            <tr>
+                                <td>SZA</td>
+                                <td>7004</td>
+                            </tr>
+                            <tr>
+                                <td>SZE</td>
+                                <td>7002</td>
+                            </tr>
+                            <tr>
+                                <td>HLT</td>
+                                <td>7001</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="store">
-                        <button class="btn" type="submit" id="submit"> Data store</button>
-                        <a href="./decode.html" class="btn" id="fetch"> fetch</a>
+    
+                </div>
+    
+                <hr class="hr">
+                <div class="flexStyle">
+                    <div>
+                        <h3>Display the list of values stored in Local Stotrage</h3>
+                        <ul id="list">
+                        </ul>
                     </div>
-                </form>
-
-                <div class="Instruction">
-                    <table >
-                        <tr>
-                            <td>symbol</td>
-                            <td>I=0</td>
-                            <td>I=1</td>
-                        </tr>
-                        <tr>
-                            <th>AND</th>
-                            <th>0xxx</th>
-                            <th>8xxx</th>
-                        </tr>
-                        <tr>
-                            <th>ADD</th>
-                            <th>1xxx</th>
-                            <th>9xxx</th>
-                        </tr>
-                        <tr>
-                            <th>LDA</th>
-                            <th>2xxx</th>
-                            <th>Axxx</th>
-                        </tr>
-                        <tr>
-                            <th>STA</th>
-                            <th>3xxx</th>
-                            <th>Bxxx</th>
-                        </tr>
-                        <tr>
-                            <th>BUN</th>
-                            <th>4xxx</th>
-                            <th>Cxxx</th>
-                        </tr>
-                        <tr>
-                            <th>BSA</th>
-                            <th>5xxx</th>
-                            <th>Dxxx</th>
-                        </tr>
-                        <tr>
-                            <th>ISZ</th>
-                            <th>6xxx</th>
-                            <th>Exxx</th>
-                        </tr>
-                    </table>
-                    <table class="InstructionTableReg">
-                        <tr>
-                            <td>symbol</td>
-                            <td>hexadecimal</td>
-                        </tr>
-                        <tr>
-                            <th>CLA</th>
-                            <th>7800</th>
-                        </tr>
-                        <tr>
-                            <th>CLE</th>
-                            <th>7400</th>
-                        </tr>
-                        <tr>
-                            <th>CMA</th>
-                            <th>7200</th>
-                        </tr>
-                        <tr>
-                            <th>CME</th>
-                            <th>7100</th>
-                        </tr>
-                        <tr>
-                            <th>CIR</th>
-                            <th>7080</th>
-                        </tr>
-                        <tr>
-                            <th>CIL</th>
-                            <th>7040</th>
-                        </tr>
-                        <tr>
-                            <th>INC</th>
-                            <th>7020</th>
-                        </tr>
-                        <tr>
-                            <th>SPA</th>
-                            <th>7010</th>
-                        </tr>
-                        <tr>
-                            <th>SNA</th>
-                            <th>7008</th>
-                        </tr>
-                        <tr>
-                            <th>SZA</th>
-                            <th>7004</th>
-                        </tr>
-                        <tr>
-                            <th>SZE</th>
-                            <th>7002</th>
-                        </tr>
-                        <tr>
-                            <th>HLT</th>
-                            <th>7001</th>
-                        </tr>
-                    </table>
+                    <div class="inputTag">
+                        
+                        <button class="btn" onclick="reset()">reset locale storage</button>
+    
+                    </div>
                 </div>
-
-            </div>
-
-            <hr class="hr">
-            <div class="flexStyle">
-                <div>
-                    <h3>Display the list of values stored in Local Stotrage</h3>
-                    <ul id="list">
-                    </ul>
+                <hr class="hr">
+                <!-- <div class="inputTag">
+                    <label class="">
+                        <h3>Select the ROM file from your computer</h3>
+                        <input type="file" id="input" accept=".xls,.xlsx">
+                    </label>
+                    <div class="">
+                        <button class="btn" id="button">Convert</button>
+                    </div>
                 </div>
+                <hr class="hr"> -->
                 <div class="inputTag">
-                    <button class="btn" onclick="newData()">newdata</button>
-                    <button class="btn" onclick="reset()">reset locale storage</button>
-
-                </div>
-            </div>
-            <hr class="hr">
-            <div class="inputTag">
-                <label class="">
-                    <h3>Select the ROM file from your computer</h3>
-                    <input type="file" id="input" accept=".xls,.xlsx">
-                </label>
-                <div class="">
-                    <button class="btn" id="button">Convert</button>
-                </div>
-            </div>
-            <hr class="hr">
-            <div class="inputTag">
-                <label for="textarea">Enter as in the example:</label></p>
-                <textarea id="textarea" name="w3review" rows="20" cols="50" placeholder="[1, ,2,3, ,4, ,5,6,7]
+                    <div class="area">
+                        <label for="textarea">Enter as in the example:</label>
+                        <textarea id="textarea" name="w3review" rows="10" cols="40" placeholder="[1, ,2,3, ,4, ,5,6,7]
 [1, ,2,3, ,4, ,5,6,7]
 [1, ,2,3, ,4, ,5,6,7]
 [1, ,2,3, ,4, ,5,6,7]
@@ -164,7 +167,9 @@
 [1, ,2,3, ,4, ,5,6,7]
 [1, ,2,3, ,4, ,5,6,7]
 [1, ,2,3, ,4, ,5,6,7]"></textarea>
-                <button class="btn" id="sendText">Convert</button>
+                    </div>
+                    <button class="btn" id="sendText">Convert</button>
+                </div>
             </div>
 
         </div>
