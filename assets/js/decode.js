@@ -187,6 +187,22 @@ function writeTotable(number) {
             c[6].innerText = "0x" + registerHex.memory;
             c[7].innerText = registerHex.E;
 }
+//excute
+
+function led(){
+    var led = document.getElementsByClassName("circle");
+    console.log(led[1],'pppp')
+    var ACLed=AC.split('');
+    for (let k = 0; k < ACLed.length; k++) {
+        if (ACLed[k] == 1) {
+            led[k].style.backgroundColor="#d2bc0d";
+        }else{
+            led[k].style.backgroundColor="white";
+        }
+        
+    }
+}
+
 
 //decode
 function binaryToHex(number) {
@@ -593,6 +609,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "and");
+            led();
             decode();
             // break;
 
@@ -609,6 +626,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "ADD");
+            led();
             decode();
             // break;
         } else if (opcode == 2) {
@@ -738,6 +756,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "STAtwo");
+            led();
             decode();
             // break;
         } else if (opcode == "C") {
@@ -795,4 +814,5 @@ function decode() {
 
     }
 
+    
 }
