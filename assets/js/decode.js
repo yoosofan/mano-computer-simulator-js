@@ -508,6 +508,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "CLA");
+                    led();
                     decode();
                     break;
 
@@ -516,6 +517,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "CLE");
+                    led();
                     decode();
                     break;
                 } else if (valu == "CMA") {
@@ -523,6 +525,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "CMA");
+                    led();
                     decode();
                     break;
                 } else if (valu == "CME") {
@@ -530,6 +533,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "CME");
+                    led();
                     decode();
                     break;
                 } else if (valu == "CIR") {
@@ -537,6 +541,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "CIR");
+                    led();
                     decode();
                     break;
                 } else if (valu == "CIL") {
@@ -544,6 +549,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "CIL");
+                    led();
                     decode();
                     break;
                 } else if (valu == "INC") {
@@ -551,6 +557,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "INC");
+                    led();
                     decode();
                     break;
                 } else if (valu == "SPA") {
@@ -558,6 +565,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "SPA");
+                    led();
                     decode();
                     break;
                 } else if (valu == "SNA") {
@@ -565,6 +573,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "SNA");
+                    led();
                     decode();
                     break;
                 } else if (valu == "SZA") {
@@ -572,6 +581,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "SZA");
+                    led();
                     decode();
                     break;
                 } else if (valu == "SZE") {
@@ -579,6 +589,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "SZE");
+                    led();
                     decode();
                     break;
                 } else if (valu == "HLT") {
@@ -586,6 +597,7 @@ function decode() {
                     PC = ADD(PC, one);
                     registerHex.PC=binaryToHex(PC);
                     console.log(PC,"PC\n",AC,"AC\n", "HLT");
+                    led();
                     decode();
                     break;
 
@@ -641,6 +653,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "LDA");
+            led();
             decode();
             // break;
 
@@ -649,6 +662,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "STA");
+            led();
             decode();
             // break;
         } else if (opcode == 4) {
@@ -656,6 +670,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "BUN");
+            led();
             decode();
             // break;
         } else if (opcode == 5) {
@@ -663,6 +678,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "BSA");
+            led();
             decode();
             // break;
         } else if (opcode == 6) {
@@ -677,6 +693,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "ISZ");
+            led();
             decode();
             // break;
         } else if (opcode == 8) {
@@ -699,6 +716,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "andtwo");
+            led();
             decode();
             // break;
         } else if (opcode == 9) {
@@ -721,6 +739,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "ADDtwo");
+            led();
             decode();
             // break;
         } else if (opcode == "A") {
@@ -742,6 +761,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "LDAtwo");
+            led();
             decode();
             // break;
         } else if (opcode == "B") {
@@ -771,6 +791,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "BUNtwo");
+            led();
             decode();
             // break;
         } else if (opcode == "D") {
@@ -785,6 +806,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "BSAtwo");
+            led();
             decode();
             // break;
         } else if (opcode == "E") {
@@ -808,6 +830,7 @@ function decode() {
             PC = ADD(PC, one);
             registerHex.PC=binaryToHex(PC);
             console.log(PC,"PC\n",AC,"AC\n", "ISZtwo");
+            led();
             decode();
             // break;
         }
