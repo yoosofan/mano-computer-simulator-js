@@ -264,3 +264,19 @@ table {
     border-radius: 50%;
     display: inline-block;
 }
+.boxLog{
+    /* width: ; */
+    border: 1px solid #3aa3a7;
+    height: 70vh;
+    overflow-y: auto;
+}
+#log th{
+        padding: 8px;
+        background-color:#3aa3a7;
+        border:1px solid #3aa3a7;
+}
+#log td{
+    padding: 8px;
+    
+    text-align: center;
+}
