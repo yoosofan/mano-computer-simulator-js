@@ -1,0 +1,15 @@
+body { direction: rtl; 
+    background-image: linear-gradient(to right, #2a791f8c, #8faa86b6);
+}
+p{
+    font-size: 20px;
+    color: rgb(68, 68, 68);
+    padding: 10px 30px;
+    text-align: justify;
+}
+img{
+    padding: 10px 30px;
+}
+h2{
+    padding: 0px 20px;
+}
