@@ -1,39 +1,33 @@
-var element = document.getElementById("RAM");
-for (let i = 1; i <= 100; i++) {
-    var tag = document.createElement("input");
-    tag.classList.add("block")
-    var d = i % 10;
-    var f = ((i - d) / 10) + 1;
-    if (d == 1) {
-        tag.name = "A" + f;
-    } else if (d == 2) {
-        tag.name = "B" + f;
-    } else if (d == 3) {
+// one methode
+var count = 1;
+var adrBox = document.getElementById("address");
+const adr = document.getElementsByClassName("Address");
+const ins = document.getElementById("insert");
+var elementt = document.getElementsByClassName("data");
+var getDataTextarea = document.getElementById("textarea");
+ins.addEventListener("click", insert);
 
-        tag.name = "C" + f;
-    } else if (d == 4) {
-
-        tag.name = "D" + f;
-    } else if (d == 5) {
-
-        tag.name = "E" + f;
-    } else if (d == 6) {
-
-        tag.name = "F" + f;
-    } else if (d == 7) {
-
-        tag.name = "G" + f;
-    } else if (d == 8) {
-        tag.name = "H" + f;
-    } else if (d == 9) {
-
-        tag.name = "I" + f;
-    } else {
-
-        tag.name = "J" + f;
-    }
-    element.appendChild(tag);
+function natural() {
+    document.getElementById("naturalInsertion").style.visibility = "visible";
+    resetMem();
 }
+
+
+function insert() {
+    console.log(count, ";;;")
+    var data = document.getElementById("firstInput").value;
+    if (data == "") {} else
+        elementt[count - 1].innerText = data;
+
+    console.log(data, "llllfjfhdjfgdj")
+    adrBox.innerText = adr[count].innerText;
+    count++;
+    if (count == 100)
+        count = 0;
+    document.getElementById("firstInput").value = "";
+}
+
+
 
 
 function Bazdid() {
@@ -47,20 +41,38 @@ function Bazdid() {
 
 const click = document.getElementById("submit");
 click.addEventListener("click", store);
+const local = document.getElementById("localstore");
+
+var dataStore = [];
 
 function store() {
-    var array = [5]
-    var data = [];
-    for (let b = 1; b <= 100; b++) {
-        var tag = element.childNodes[b].value;
-        data[b] = tag
+    var tag;
+    for (let b = 0; b < 100; b++) {
+        console.log(elementt[b].innerText)
+        tag = elementt[b].innerText;
+        if (tag == "0000")
+            if (b == 99)
+                dataStore[b] = " ,";
+            else
+                dataStore[b] = " ";
+        else
+        if (b == 99)
+            dataStore[b] = tag + ",";
+        else
+            dataStore[b] = tag;
     }
-    var number = Bazdid();
-    array[number] = data;
-    localStorage.setItem(`DataFile${number}`, JSON.stringify(array[number]));
-    alert("The data was saved as a" + `DataFile${number}`)
+    getDataTextarea.value=dataStore;
 }
+// local.addEventListener("click", localstore(data));
 
+function localstore() {
+    var array = [10];
+    var number = Bazdid();
+    array[number] = dataStore;
+    localStorage.setItem(`DataFile${number}`, JSON.stringify(array[number]));
+    alert("The data was saved as a" + `DataFile${number}`);
+    getDataTextarea.value="";
+}
 var list = document.getElementById("list");
 for (let i = 0; i < 5; i++) {
     var storedNames = JSON.parse(localStorage.getItem(`DataFile${i}`));
@@ -73,43 +85,8 @@ for (let i = 0; i < 5; i++) {
             var namelist = this.innerHTML;
             var inp = document.getElementsByTagName("input");
             var storedNames = JSON.parse(localStorage.getItem(namelist));
-            for (let j = 1; j <= 100; j++) {
-                var d = j % 10;
-                var f = ((j - d) / 10) + 1;
-                var a;
-                if (d == 1) {
-
-                    a = "A" + f;
-                } else if (d == 2) {
-                    a = "B" + f;
-                } else if (d == 3) {
-
-                    a = "C" + f;
-                } else if (d == 4) {
-
-                    a = "D" + f;
-                } else if (d == 5) {
-
-                    a = "E" + f;
-                } else if (d == 6) {
-
-                    a = "F" + f;
-                } else if (d == 7) {
-
-                    a = "G" + f;
-                } else if (d == 8) {
-                    a = "H" + f;
-                } else if (d == 9) {
-
-                    a = "I" + f;
-                } else {
-
-                    a = "J" + f;
-                }
-                if (a == inp[j - 1].name) {
-                    inp[j - 1].value = storedNames[j];
-                }
-            }
+            console.log(storedNames, "lksaka");
+            getDataTextarea.value = storedNames;
         }
     }
 }
@@ -118,97 +95,55 @@ function reset() {
     localStorage.clear();
 }
 
-function newData() {
-    var inp = document.getElementsByClassName("block");
-    for (let j = 0; j < 100; j++) {
-        // var d = "input" + j;
-        // if (d == inp[j - 1].name) {
-            inp[j].value = " ";
-        // }
+function resetMem() {
+    var inp = document.getElementsByClassName("data");
+    for (let j = 0; j < inp.length; j++) {
+        inp[j].innerText = "0000";
     }
+    count = 1;
+    // console.log()
+    adrBox.innerText = "0x000";
 }
 
 
-// let selectedFile;
-// document.getElementById('input').addEventListener("change", (event) => {
-//     selectedFile = event.target.files[0];
-// })
-// let data = [{
-//     "name": "jayanth",
-//     "data": "scd",
-//     "abc": "sdef"
-// }]
-// document.getElementById('button').addEventListener("click", () => {
-//     XLSX.utils.json_to_sheet(data, 'out.xlsx');
-//     if (selectedFile) {
-//         let fileReader = new FileReader();
-//         fileReader.readAsBinaryString(selectedFile);
-//         fileReader.onload = (event) => {
-//             let data = event.target.result;
-//             let workbook = XLSX.read(data, {
-//                 type: "binary"
-//             });
-//             workbook.SheetNames.forEach(sheet => {
-//                 var obj = Object.entries(workbook.Sheets[sheet]);
-//                 var All = document.getElementsByTagName("input");
-//                 for (let i = 1; i < obj.length; i++) {
-//                     for (var j = 0; j < All.length; j++) {
-//                         if (All[j].getAttribute("name") == obj[i][0]) {
-//                             All[j].setAttribute("value", obj[i][1].w);
-//                         }
-//                     }
-
-//                 }
-//             });
-//         }
-//     }
-// });
-
 // send data in texterea 
-document.getElementById('sendText').addEventListener("click", () => {
+function sendText() {
     var data = document.getElementById('textarea').value;
-    var a = data.split('\n');
-    var arraydata;
-    for (let index = 0; index < a.length; index++) {
-        var mysplit = a[index].split(',');
-        // console.log(mysplit)
-        for (let i = 0; i < mysplit.length; i++) {
-            var element;
-            if (i == 0) {
-                var twoPar = mysplit[i].split('');
-                mysplit[i] = twoPar[1];
-                // console.log(twoPar[1],"hlkhoihj")
-            } else if (i == 9) {
-                var twoPar = mysplit[i].split('');
-                mysplit[i]= twoPar[0];
-            }
+    var a = data.split(',');
+    let c = document.getElementsByClassName('data');
+    let j = 0;
+    for (let i = 0; i < c.length; i++) {
+        if (a[j] == undefined || a[j] == " ") {
+            console.log(a[j], ";;;;;;;;;;;;;")
+        } else if (a[j] == "") {
+            break
+        } else {
+            console.log(a[j])
+            c[i].innerText = a[j];
         }
-        if(index==0)
-            arraydata=mysplit;
-        else
-            arraydata=arraydata.concat(mysplit)
-        
+        j++;
     }
-    console.log(arraydata,";lkl") 
-    var ALL=document.getElementById("RAM").getElementsByTagName("input");
-    console.log(ALL);
-    for (let j = 0; j < ALL.length; j++) {
-        ALL[j].setAttribute("value",arraydata[j] );
-        
-    }
-})
-const Datafetch = document.getElementById("fetch");
-Datafetch.addEventListener("click", fetch);
+    document.getElementById('textarea').value="";
 
-function fetch() {
-    console.log("djdjfhggd")
-    var array = [5]
-    var data = [];
-    for (let b = 1; b <= 100; b++) {
-        var tag = element.childNodes[b].value;
-        data[b] = tag
-    }
-    var number = Bazdid();
-    array[number] = data;
-    localStorage.setItem(`Datafatch`, JSON.stringify(array[number]));
+}
+
+function showCPU(){
+    var start = document.querySelectorAll(".cpu");
+    var end =document.querySelectorAll(".endInput");
+    [].forEach.call(start, function(el) {
+        el.classList.remove("StartCPU");
+    });
+    [].forEach.call(end, function(el) {
+        el.classList.add("StartCPU");
+    });
+}
+function back(){
+    var end = document.querySelectorAll(".cpu");
+    var start =document.querySelectorAll(".endInput");
+    [].forEach.call(start, function(el) {
+        el.classList.remove("StartCPU");
+    });
+    [].forEach.call(end, function(el) {
+        el.classList.add("StartCPU");
+    });
 }

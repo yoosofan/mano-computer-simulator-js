@@ -19,156 +19,187 @@
                 <h1>Processor simulator</h1>
                 <hr class="hr">
                 <div class="box">
-                    <form class="RAM">
-                        <div class="box-RAM" id="RAM">
+                    <div class="RAM">
+                        <div class="ramtable">
+
                         </div>
                         <div class="store">
-                            <button class="btn" type="submit" id="submit"> Data store</button>
-                            <a href="./decode.html" class="btn" id="fetch"> send data</a>
-                            <button class="btn" onclick="newData()">newdata</button>
+                            <button class="btn endInput" id="submit"> send to textarea</button>
+                            <button class="btn endInput" onclick="natural()"> insert manually </button>
+                            <button class="btn endInput" onclick="resetMem()">Clear Memory</button>
+                            <button class="btn endInput special" id="fetch" onclick="showCPU()">Start CPU</button>
+                            <button class="btn StartCPU cpu special" id="fetchdata" onclick="fetch()">fetch</button>
+                            <button class="btn StartCPU cpu special" id="decode" onclick="decode()">decode</button>
+                            <button class="btn StartCPU cpu special" id="execute" onclick="execute()">execute</button>
+                            <button class="btn StartCPU cpu"  onclick="back()">Back</button>
                         </div>
-                    </form>
-    
-                    <div class="Instruction">
-                        <table class="InstructionTableReg" >
+
+                    </div>
+                    <div class="register cpu StartCPU">
+                        <div class="registerTable">
+                             
+                        </div>
+                    </div>
+                    <div class="boxLog cpu StartCPU">
+                        <table id="log">
                             <tr>
-                                <th>symbol</th>
-                                <th>I=0</th>
-                                <th>I=1</th>
-                            </tr>
-                            <tr>
-                                <td>AND</td>
-                                <td>0xxx</td>
-                                <td>8xxx</td>
-                            </tr>
-                            <tr>
-                                <td>ADD</td>
-                                <td>1xxx</td>
-                                <td>9xxx</td>
-                            </tr>
-                            <tr>
-                                <td>LDA</td>
-                                <td>2xxx</td>
-                                <td>Axxx</td>
-                            </tr>
-                            <tr>
-                                <td>STA</td>
-                                <td>3xxx</td>
-                                <td>Bxxx</td>
-                            </tr>
-                            <tr>
-                                <td>BUN</td>
-                                <td>4xxx</td>
-                                <td>Cxxx</td>
-                            </tr>
-                            <tr>
-                                <td>BSA</td>
-                                <td>5xxx</td>
-                                <td>Dxxx</td>
-                            </tr>
-                            <tr>
-                                <td>ISZ</td>
-                                <td>6xxx</td>
-                                <td>Exxx</td>
-                            </tr>
-                        </table>
-                        <table class="InstructionTableReg">
-                            <tr>
-                                <th>symbol</th>
-                                <th>hexadecimal</th>
-                            </tr>
-                            <tr>
-                                <td>CLA</td>
-                                <td>7800</td>
-                            </tr>
-                            <tr>
-                                <td>CLE</td>
-                                <td>7400</td>
-                            </tr>
-                            <tr>
-                                <td>CMA</td>
-                                <td>7200</td>
-                            </tr>
-                            <tr>
-                                <td>CME</td>
-                                <td>7100</td>
-                            </tr>
-                            <tr>
-                                <td>CIR</td>
-                                <td>7080</td>
-                            </tr>
-                            <tr>
-                                <td>CIL</td>
-                                <td>7040</td>
-                            </tr>
-                            <tr>
-                                <td>INC</td>
-                                <td>7020</td>
-                            </tr>
-                            <tr>
-                                <td>SPA</td>
-                                <td>7010</td>
-                            </tr>
-                            <tr>
-                                <td>SNA</td>
-                                <td>7008</td>
-                            </tr>
-                            <tr>
-                                <td>SZA</td>
-                                <td>7004</td>
-                            </tr>
-                            <tr>
-                                <td>SZE</td>
-                                <td>7002</td>
-                            </tr>
-                            <tr>
-                                <td>HLT</td>
-                                <td>7001</td>
+                                <th>Log File</th>
                             </tr>
                         </table>
                     </div>
-    
+                    <div class="inputToMem endInput">
+                        <div class="inputTag">
+                            <div class="area">
+                                <label for="textarea">Enter as in the example:</label>
+                                <textarea id="textarea" name="w3review" rows="10" cols="40"
+                                    placeholder="7800,0063,7200, , , , , , ,7020, , , A061, , , ,HLT, , , , ...,"></textarea>
+                            </div>
+                            <div class="clickTextarea">
+                                <button class="btn" onclick="sendText()">input to memory</button>
+                                <button class="btn" onclick="localstore()">store in browser</button>
+                            </div>
+                        </div>
+                        <hr class="hr">
+                        <div class="flexStyle">
+                            <div>
+                                <h3>Display the list of values stored in Local Stotrage</h3>
+                                <ul id="list">
+                                </ul>
+                            </div>
+
+                            <button class="btn" onclick="reset()">reset locale storage</button>
+
+                        </div>
+                        <hr class="hr">
+                        <div class="firstInput" id="naturalInsertion">
+                            <label for="" id="address">0x000 </label>
+                            <input type="text" name="firstInput" id="firstInput">
+                            <button class="btn" id="insert">insert to memory</button>
+                            <button class="btn" onclick="resetMem()">reset</button>
+                        </div>
+                    </div>
                 </div>
-    
-                <hr class="hr">
-                <div class="flexStyle">
-                    <div>
-                        <h3>Display the list of values stored in Local Stotrage</h3>
-                        <ul id="list">
-                        </ul>
-                    </div>
-                    <div class="inputTag">
-                        
-                        <button class="btn" onclick="reset()">reset locale storage</button>
-    
+                <hr class="hr cpu StartCPU">
+                <div class="led cpu StartCPU">
+                    <h1>Output</h1>
+                    <div class="ledBox" id="led">
+                        <h3>AC:</h3>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
                     </div>
                 </div>
-                <hr class="hr">
-                <!-- <div class="inputTag">
-                    <label class="">
-                        <h3>Select the ROM file from your computer</h3>
-                        <input type="file" id="input" accept=".xls,.xlsx">
-                    </label>
-                    <div class="">
-                        <button class="btn" id="button">Convert</button>
-                    </div>
-                </div>
-                <hr class="hr"> -->
-                <div class="inputTag">
-                    <div class="area">
-                        <label for="textarea">Enter as in the example:</label>
-                        <textarea id="textarea" name="w3review" rows="10" cols="40" placeholder="[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]
-[1, ,2,3, ,4, ,5,6,7]"></textarea>
-                    </div>
-                    <button class="btn" id="sendText">Convert</button>
+                
+                <div class="Instruction endInput">
+                    <table class="InstructionTableReg">
+                        <tr>
+                            <th>symbol</th>
+                            <th>I=0</th>
+                            <th>I=1</th>
+                        </tr>
+                        <tr>
+                            <td>AND</td>
+                            <td>0xxx</td>
+                            <td>8xxx</td>
+                        </tr>
+                        <tr>
+                            <td>ADD</td>
+                            <td>1xxx</td>
+                            <td>9xxx</td>
+                        </tr>
+                        <tr>
+                            <td>LDA</td>
+                            <td>2xxx</td>
+                            <td>Axxx</td>
+                        </tr>
+                        <tr>
+                            <td>STA</td>
+                            <td>3xxx</td>
+                            <td>Bxxx</td>
+                        </tr>
+                        <tr>
+                            <td>BUN</td>
+                            <td>4xxx</td>
+                            <td>Cxxx</td>
+                        </tr>
+                        <tr>
+                            <td>BSA</td>
+                            <td>5xxx</td>
+                            <td>Dxxx</td>
+                        </tr>
+                        <tr>
+                            <td>ISZ</td>
+                            <td>6xxx</td>
+                            <td>Exxx</td>
+                        </tr>
+                    </table>
+                    <table class="InstructionTableReg">
+                        <tr>
+                            <th>symbol</th>
+                            <th>hexadecimal</th>
+                        </tr>
+                        <tr>
+                            <td>CLA</td>
+                            <td>7800</td>
+                        </tr>
+                        <tr>
+                            <td>CLE</td>
+                            <td>7400</td>
+                        </tr>
+                        <tr>
+                            <td>CMA</td>
+                            <td>7200</td>
+                        </tr>
+                        <tr>
+                            <td>CME</td>
+                            <td>7100</td>
+                        </tr>
+                        <tr>
+                            <td>CIR</td>
+                            <td>7080</td>
+                        </tr>
+                        <tr>
+                            <td>CIL</td>
+                            <td>7040</td>
+                        </tr>
+                        <tr>
+                            <td>INC</td>
+                            <td>7020</td>
+                        </tr>
+                        <tr>
+                            <td>SPA</td>
+                            <td>7010</td>
+                        </tr>
+                        <tr>
+                            <td>SNA</td>
+                            <td>7008</td>
+                        </tr>
+                        <tr>
+                            <td>SZA</td>
+                            <td>7004</td>
+                        </tr>
+                        <tr>
+                            <td>SZE</td>
+                            <td>7002</td>
+                        </tr>
+                        <tr>
+                            <td>HLT</td>
+                            <td>7001</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
@@ -177,6 +208,7 @@
     <script src="./assets/js/xlsx.full.min.js"></script>
     <!-- <script src="./assets/js/importjs.js" type="module"></script> -->
     <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/decode.js"></script>
 </body>
 
 </html>

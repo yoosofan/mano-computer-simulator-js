@@ -47,7 +47,7 @@ let registerHex = {
 }
 var code = document.getElementsByClassName("data");
 var memoryAddress = document.getElementsByClassName("Address");
-const fetchBtn = document.getElementById('fetch');
+const fetchBtn = document.getElementById('fetchdata');
 const decodeBtn = document.getElementById('decode');
 const executeBtn = document.getElementById('execute');
 let len;
@@ -99,9 +99,9 @@ function enableBtn(button) {
 // RAM table and add data  
 const ramTable = document.createElement('table');
 const memoryTable = document.querySelector('.ramtable');
-var storedNames = JSON.parse(localStorage.getItem(`Datafatch`));
+// var storedNames = JSON.parse(localStorage.getItem(`Datafatch`));
 for (let i = -1; i < 100; i++) {
-    var datacel = storedNames[i + 1];
+    // var datacel = storedNames[i + 1];
     let r = document.createElement('tr');
     for (let j = 0; j < 3; j++) {
         let c = document.createElement('td');
@@ -111,7 +111,7 @@ for (let i = -1; i < 100; i++) {
             } else if (j == 1) {
                 c.innerText = 'Hex Addrress';
             } else if (j == 2) {
-                c.innerText = 'Contents';
+                c.innerText = 'Memory';
             }
             c.classList.add('text');
             r.classList.add('sticky');
@@ -123,7 +123,7 @@ for (let i = -1; i < 100; i++) {
             c.classList.add('text');
             c.classList.add('Address');
         } else if (j == 2) {
-            c.innerText = datacel;
+            c.innerText = "0000";
             c.classList.add('text');
             c.classList.add('data');
         }
