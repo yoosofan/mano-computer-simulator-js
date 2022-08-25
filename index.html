@@ -12,9 +12,13 @@
 </head>
 
 <body>
-
+    <div id="HLT">
+        <button class="btn StartCPU cpu" onclick="back()" id="back">Start agin</button>
+    
+    </div>
     <div class="backgroundindex">
-        <div class="container">
+
+        <div class="container" id="container">
             <div class="marginBox">
                 <h1>Processor simulator</h1>
                 <hr class="hr">
@@ -31,14 +35,13 @@
                             <button class="btn StartCPU cpu special" id="fetchdata" onclick="fetch()">fetch</button>
                             <button class="btn StartCPU cpu special" id="decode" onclick="decode()">decode</button>
                             <button class="btn StartCPU cpu special" id="execute" onclick="execute()">execute</button>
-                            <button class="btn StartCPU cpu"  onclick="back()">Back</button>
+                            <button class="btn StartCPU cpu" onclick="back()">Back</button>
                         </div>
 
                     </div>
                     <div class="register cpu StartCPU">
-                        <div class="registerTable">
-                             
-                        </div>
+                        <div class="registerTable"></div>
+                        <div class="flagTable"></div>
                     </div>
                     <div class="boxLog cpu StartCPU">
                         <table id="log">
@@ -52,7 +55,7 @@
                             <div class="area">
                                 <label for="textarea">Enter as in the example:</label>
                                 <textarea id="textarea" name="w3review" rows="10" cols="40"
-                                    placeholder="7800,0063,7200, , , , , , ,7020, , , A061, , , ,HLT, , , , ...,"></textarea>
+                                    placeholder="7800,0063,7200, , , , , , ,7020, , , A061, , , ,HLT, , , , ...,">1063,B062,7001, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ,151,252,</textarea>
                             </div>
                             <div class="clickTextarea">
                                 <button class="btn" onclick="sendText()">input to memory</button>
@@ -102,7 +105,7 @@
                         <div class="circle"></div>
                     </div>
                 </div>
-                
+
                 <div class="Instruction endInput">
                     <table class="InstructionTableReg">
                         <tr>
@@ -130,16 +133,16 @@
                             <td>3xxx</td>
                             <td>Bxxx</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>BUN</td>
                             <td>4xxx</td>
                             <td>Cxxx</td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!-- <tr>
                             <td>BSA</td>
                             <td>5xxx</td>
                             <td>Dxxx</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td>ISZ</td>
                             <td>6xxx</td>
@@ -179,22 +182,22 @@
                             <td>INC</td>
                             <td>7020</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td>SPA</td>
                             <td>7010</td>
                         </tr>
                         <tr>
                             <td>SNA</td>
                             <td>7008</td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!-- <tr>
                             <td>SZA</td>
                             <td>7004</td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!-- <tr>
                             <td>SZE</td>
                             <td>7002</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td>HLT</td>
                             <td>7001</td>

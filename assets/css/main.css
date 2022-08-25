@@ -291,15 +291,25 @@ table {
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
 }
-
-.HLT {
-    background-color: #333333;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: none;
+.flagTable{
+margin-top: 50px;
+}
+.flagTable td {
+    align-items: center;
+    padding: 8px;
+    border-collapse: collapse;
+    border: 1px solid #3aa3a7;
 }
 
+.shutDown {
+    background-color: #333333;
+    width: 100vw;
+    height: 100vh;
+   
+}
+#back{
+    display: none;
+}
 
 
 .boxLog {
