@@ -5,6 +5,8 @@ const adr = document.getElementsByClassName("Address");
 const ins = document.getElementById("insert");
 var elementt = document.getElementsByClassName("data");
 var getDataTextarea = document.getElementById("textarea");
+
+// var emptyRegister=document.querySelectorAll(".regList");
 ins.addEventListener("click", insert);
 
 function natural() {
@@ -126,8 +128,18 @@ function sendText() {
     document.getElementById('textarea').value="";
 
 }
-
+function turnOFFled() {
+    var led = document.getElementsByClassName("circle");
+    console.log(led[1], 'pppp')
+    var ACLed = AC.split('');
+    for (let k = 0; k < ACLed.length; k++) {
+        led[k].style.backgroundColor = "white";
+    }
+}
 function showCPU(){
+    console.log("djdjdhjdhj")
+    PC ='000000000000';
+    registerHex.PC = binaryToHex(PC);
     var start = document.querySelectorAll(".cpu");
     var end =document.querySelectorAll(".endInput");
     [].forEach.call(start, function(el) {
@@ -136,8 +148,28 @@ function showCPU(){
     [].forEach.call(end, function(el) {
         el.classList.add("StartCPU");
     });
+    var emptyLog=document.querySelectorAll(".logList");
+    var emptyRegister=document.querySelectorAll(".regList");
+    var emptyflag=document.querySelectorAll(".flagList");
+    [].forEach.call(emptyLog, function(el) {
+        console.log("pspspsps")
+        el.remove();
+    });
+    
+    [].forEach.call(emptyRegister, function(el) {
+        console.log("pspspsps")
+        el.innerText="";
+    });
+    [].forEach.call(emptyflag, function(el) {
+        console.log("pspspsps")
+        el.innerText="0";
+    });
+    turnOFFled();
 }
 function back(){
+    document.getElementById("container").style.display="block";
+    document.getElementById("HLT").classList.remove("shutDown");
+    document.getElementById("back").remove();
     var end = document.querySelectorAll(".cpu");
     var start =document.querySelectorAll(".endInput");
     [].forEach.call(start, function(el) {
@@ -145,5 +177,9 @@ function back(){
     });
     [].forEach.call(end, function(el) {
         el.classList.add("StartCPU");
+    });
+    [].forEach.call(code, function(el) {
+        console.log("pspspsps")
+        el.classList.remove("border");
     });
 }

@@ -25,7 +25,7 @@ const register_instructions = [
     ["SZE", "7002"],
     ["HLT", "7001"]
 ]
-
+let sym;
 
 let AC = '0000000000000000';
 let DR = '0000000000000000';
@@ -33,9 +33,8 @@ let AR = '000000000000';
 let IR = '0000000000000000';
 let PC = '000000000000';
 let TR = '0000000000000000';
-let memory = '000000000000'
-let carry = "0"
-let sym;
+let memory = '000000000000';
+
 let registerHex = {
     IR: binaryToHex(IR),
     AC: binaryToHex(AC),
@@ -43,8 +42,19 @@ let registerHex = {
     PC: binaryToHex(PC),
     AR: binaryToHex(AR),
     memory: binaryToHex(AR),
-    E: carry
 }
+
+
+//flag
+let FGI ="0";
+let FGO= "0";
+let IEN="0";
+let R="0";
+let carry = "0";
+let S="0";
+let I="0";
+
+var opcode;
 var code = document.getElementsByClassName("data");
 var memoryAddress = document.getElementsByClassName("Address");
 const fetchBtn = document.getElementById('fetchdata');
@@ -139,13 +149,15 @@ memoryTable.appendChild(ramTable);
 const regtable = document.createElement('table');
 const registerTable = document.querySelector('.registerTable');
 const items = ['Elements', 'Initial Values', ' AR <- PC', ' IR <- M[AR], PC <-PC+1', ' AR <- IR[0:11]'];
-const headerItems = ['statements', 'IR', 'AC', 'DR', 'PC', 'AR', 'M[AR]', 'E'];
+const headerItems = ['statements', 'IR', 'AC', 'DR', 'PC', 'AR', 'M[AR]'];
 for (let i = 0; i < 5; i++) {
     let r = document.createElement('tr');
-    for (let j = 0; j < 8; j++) {
+    for (let j = 0; j < 7; j++) {
         let c = document.createElement('td');
         if (j !== 0) {
             c.classList.add(`${i}`);
+            if(i != 0 && i != 1)
+                c.classList.add('regList');
         }
         if (i == 0) {
             c.innerText = headerItems[j];
@@ -170,14 +182,51 @@ for (let i = 0; i < 5; i++) {
                 c.innerHTML = "0x" + registerHex.AR;
             else if (j == 6)
                 c.innerHTML = "0x" + registerHex.memory;
-            else if (j == 7)
-                c.innerHTML = registerHex.E;
         }
         r.appendChild(c);
     }
     regtable.appendChild(r);
 }
 registerTable.appendChild(regtable);
+
+// flag table
+const ftable = document.createElement('table');
+const flagTable = document.querySelector('.flagTable');
+const header = ['FGI', 'FGO','IEN','R' ,'E','S','I'];
+for (let o = 0; o < 2; o++) {
+    let r = document.createElement('tr');
+    for (let j = 0; j < 7; j++) {
+        let c = document.createElement('td');
+        if(o == 0){
+            c.innerText = header[j];
+            c.classList.add('text');
+            r.classList.add('sticky');
+        }
+            
+        if (o == 1) {
+            c.classList.add('flagList');
+            if (j == 0)
+                c.innerText = "0";
+            else if (j == 1)
+                c.innerHTML = "0";
+            else if (j == 2)
+                c.innerHTML = "0";
+            else if (j == 3)
+                c.innerHTML ="0";
+            else if (j == 4)
+                c.innerHTML = "0";
+            else if (j == 5)
+                c.innerHTML = "0" ;
+            else if (j == 6)
+                c.innerHTML = "0";
+        }
+        r.appendChild(c);
+    }
+    ftable.appendChild(r);
+}
+
+flagTable.appendChild(ftable);
+
 
 // write to table 
 function writeTotable(number) {
@@ -189,10 +238,20 @@ function writeTotable(number) {
     c[4].innerText = "0x" + registerHex.PC;
     c[5].innerText = registerHex.AR;
     c[6].innerText = "0x" + registerHex.memory;
-    c[7].innerText = registerHex.E;
 }
 
-
+// write to flag
+function writeToflag(){
+    var flag=document.getElementsByClassName("flagList");
+    flag[0].innerText = FGI;
+    flag[1].innerText = FGO;
+    flag[2].innerText = IEN;
+    flag[3].innerText = R;
+    flag[4].innerText = carry ;
+    flag[5].innerText = S;
+    flag[6].innerText = I;
+   
+}
 
 
 
@@ -200,13 +259,7 @@ function writeTotable(number) {
 
 //execute************************************************************
 
-function execute() {
-    // enableBtn(executeBtn);
-    // disableBtn(fetchBtn);
-    // disableBtn(decodeBtn);
-    led();
-    writeLog(sym,2);
-}
+
 
 function led() {
     var led = document.getElementsByClassName("circle");
@@ -221,7 +274,14 @@ function led() {
 
     }
 }
-
+function turnOFFled() {
+    var led = document.getElementsByClassName("circle");
+    console.log(led[1], 'pppp')
+    var ACLed = AC.split('');
+    for (let k = 0; k < ACLed.length; k++) {
+        led[k].style.backgroundColor = "white";
+    }
+}
 function writeLog(symbol,level) {
     console.log(symbol, "symbol")
     var tab = document.getElementById("log");
@@ -230,8 +290,6 @@ function writeLog(symbol,level) {
     let c = document.createElement('td');
     for (let index = 0; index < 3; index++) {
         let r = document.createElement('tr');
-      
-      
         if(index == 0 && index == level){
             c.innerText = `Fetch \n AR <= PC \n PC <= PC + 1 \n IR <= M[AR]`;
         }else if(index == 1 && index == level){
@@ -240,6 +298,7 @@ function writeLog(symbol,level) {
             c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n
             ----------------`;
         }
+        r.classList.add('logList');
         r.appendChild(c);
         tab.appendChild(r);
     }
@@ -322,13 +381,9 @@ function CME() {
 function CIR() {
     var ACsplit = AC.split('');
     carry = ACsplit[15];
-    // console.log(AC,"AC")
     var binary = parseInt(AC, 2);
-    // console.log(binary,"lll ")
     ACsplit = binary >> 1;
-    // console.log(ACsplit,">>1")
     ACsplit = (ACsplit >>> 0).toString(2);
-    // console.log(ACsplit,"after hextobinary")
     let numberOfZero = [];
     let outcome;
     for (let i = 0; i < 16 - ACsplit.length; i++) {
@@ -339,20 +394,14 @@ function CIR() {
     arr[0] = carry;
     AC = arr.join('');
     registerHex.AC = binaryToHex(AC);
-    // console.log(AC, "aftr shift right")
 }
 
 function CIL() {
     var ACsplit = AC.split('');
     carry = ACsplit[0];
-    // console.log(AC,"AC")
     var binary = parseInt(AC, 2);
-    // console.log(binary,"lll ")
     ACsplit = binary << 1;
-    // console.log(ACsplit,">>1")
     ACsplit = ACsplit.toString(2);
-
-    // console.log(ACsplit,"after hextobinary")
     let arr = []
     ACsplit.split('');
     for (let i = 0; i < 16; i++) {
@@ -361,7 +410,6 @@ function CIL() {
     arr[15] = carry;
     AC = arr.join('');
     registerHex.AC = binaryToHex(AC);
-    // console.log(AC, "aftr shift left")
 }
 
 function INC() {
@@ -370,40 +418,41 @@ function INC() {
     registerHex.AC = binaryToHex(AC);
 }
 
-function SPA() {
-    var one = "1";
-    var ACsplit = AC.split('').reverse();
-    if (ACsplit[15] == 0)
-        PC = ADD(PC, one);
-    registerHex.PC = binaryToHex(PC);
-}
+// function SPA() {
+//     var one = "1";
+//     var ACsplit = AC.split('').reverse();
+//     if (ACsplit[15] == 0)
+//         PC = ADD(PC, one);
+//     registerHex.PC = binaryToHex(PC);
+// }
 
-function SNA() {
-    var one = "1";
-    var ACsplit = AC.split('').reverse();
-    if (ACsplit[15] == 1)
-        PC = ADD(PC, one);
-    registerHex.PC = binaryToHex(PC);
-}
+// function SNA() {
+//     var one = "1";
+//     var ACsplit = AC.split('').reverse();
+//     if (ACsplit[15] == 1)
+//         PC = ADD(PC, one);
+//     registerHex.PC = binaryToHex(PC);
+// }
 
-function SZA() {
-    var one = "1";
-    if (AC == '0000000000000000')
-        PC = ADD(PC, one);
-    registerHex.PC = binaryToHex(PC);
-}
+// function SZA() {
+//     var one = "1";
+//     if (AC == '0000000000000000')
+//         PC = ADD(PC, one);
+//     registerHex.PC = binaryToHex(PC);
+// }
 
-function SZE() {
-    var one = "1";
-    if (carry == '0')
-        PC = ADD(PC, one);
-    registerHex.PC = binaryToHex(PC);
-}
+// function SZE() {
+//     var one = "1";
+//     if (carry == '0')
+//         PC = ADD(PC, one);
+//     registerHex.PC = binaryToHex(PC);
+// }
 
 function HLT() {
-    document.getElementById("container").style.display = "none";
-    document.getElementById("HLT").style.display = "block";
-    alert("The computer stopped")
+    console.log("hlt meeeeee")
+    document.getElementById("HLT").classList.add("shutDown");
+    document.getElementById("back").style.display= "block";
+    document.getElementById("container").style.display="none";
 }
 
 
@@ -474,23 +523,22 @@ function STA() {
     }
 }
 
-function BUN() {
-    PC = AR;
-}
+// function BUN() {
+//     PC = AR;
+// }
 
-function BSA() {
-    // var memoryAddress = document.getElementsByClassName("Address");
-    for (let l = 0; l < memoryAddress.length; l++)
-        if (memoryAddress[l].innerText == registerHex.AR) {
-            memory = AR;
-            registerHex.memory = binaryToHex(memory);
-            code[l].innerText = PC;
-            registerHex.DR = code[l].innerText;
-            DR = hextobinary(registerHex.DR)
-        }
-    var one = "1";
-    PC = ADD(AR, one);
-}
+// function BSA() {
+//     for (let l = 0; l < memoryAddress.length; l++)
+//         if (memoryAddress[l].innerText == registerHex.AR) {
+//             memory = AR;
+//             registerHex.memory = binaryToHex(memory);
+//             code[l].innerText = PC;
+//             registerHex.DR = code[l].innerText;
+//             DR = hextobinary(registerHex.DR)
+//         }
+//     var one = "1";
+//     PC = ADD(AR, one);
+// }
 
 function ISZ() {
     var one = "1";
@@ -544,7 +592,7 @@ function decode() {
     // disableBtn(fetchBtn);
     // disableBtn(executeBtn);
     // enableBtn(decodeBtn);
-    var opcode = registerHex.IR.split('')[0];
+    opcode = registerHex.IR.split('')[0];
     if (opcode == "7") {
         AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
         registerHex.AR = AR;
@@ -553,236 +601,468 @@ function decode() {
             if (register_instructions[j][1] == registerHex.IR) {
                 valu = register_instructions[j][0];
                 sym=valu;
-                if (valu == "CLA") {
-                    CLA();
-                    console.log(PC, "PC\n", AC, "AC\n", "CLA");
-                    break;
-                } else if (valu == "CLE") {
-                    CLE();
-                    console.log(PC, "PC\n", AC, "AC\n", "CLE");
-                    break;
-                } else if (valu == "CMA") {
-                    CMA();
-                    console.log(PC, "PC\n", AC, "AC\n", "CMA");
-                    break;
-                } else if (valu == "CME") {
-                    CME();
-                    console.log(PC, "PC\n", AC, "AC\n", "CME");
-                    break;
-                } else if (valu == "CIR") {
-                    CIR();
-                    console.log(PC, "PC\n", AC, "AC\n", "CIR");
-                    break;
-                } else if (valu == "CIL") {
-                    CIL();
-                    console.log(PC, "PC\n", AC, "AC\n", "CIL");
-                    break;
-                } else if (valu == "INC") {
-                    INC();
-                    console.log(PC, "PC\n", AC, "AC\n", "INC");
-                    break;
-                } else if (valu == "SPA") {
-                    SPA();
-                    console.log(PC, "PC\n", AC, "AC\n", "SPA");
-                    break;
-                } else if (valu == "SNA") {
-                    SNA();
-                    console.log(PC, "PC\n", AC, "AC\n", "SNA");
-                    break;
-                } else if (valu == "SZA") {
-                    SZA();
-                    console.log(PC, "PC\n", AC, "AC\n", "SZA");
-                    break;
-                } else if (valu == "SZE") {
-                    SZE();
-                    console.log(PC, "PC\n", AC, "AC\n", "SZE");
-                    break;
-                } else if (valu == "HLT") {
-                    HLT();
-                    console.log(PC, "PC\n", AC, "AC\n", "HLT");
-                    break;
+                // if (valu == "CLA") {
+                //     CLA();
+                //     console.log(PC, "PC\n", AC, "AC\n", "CLA");
+                //     break;
+                // } else if (valu == "CLE") {
+                //     CLE();
+                //     console.log(PC, "PC\n", AC, "AC\n", "CLE");
+                //     break;
+                // } else if (valu == "CMA") {
+                //     CMA();
+                //     console.log(PC, "PC\n", AC, "AC\n", "CMA");
+                //     break;
+                // } else if (valu == "CME") {
+                //     CME();
+                //     console.log(PC, "PC\n", AC, "AC\n", "CME");
+                //     break;
+                // } else if (valu == "CIR") {
+                //     CIR();
+                //     console.log(PC, "PC\n", AC, "AC\n", "CIR");
+                //     break;
+                // } else if (valu == "CIL") {
+                //     CIL();
+                //     console.log(PC, "PC\n", AC, "AC\n", "CIL");
+                //     break;
+                // } else if (valu == "INC") {
+                //     INC();
+                //     console.log(PC, "PC\n", AC, "AC\n", "INC");
+                //     break;
+                // } else if (valu == "SPA") {
+                //     SPA();
+                //     console.log(PC, "PC\n", AC, "AC\n", "SPA");
+                //     break;
+                // } else if (valu == "SNA") {
+                //     SNA();
+                //     console.log(PC, "PC\n", AC, "AC\n", "SNA");
+                //     break;
+                // } else if (valu == "SZA") {
+                //     SZA();
+                //     console.log(PC, "PC\n", AC, "AC\n", "SZA");
+                //     break;
+                // } else if (valu == "SZE") {
+                //     SZE();
+                //     console.log(PC, "PC\n", AC, "AC\n", "SZE");
+                //     break;
+                // } else if (valu == "HLT") {
+                //     HLT();
+                //     console.log(PC, "PC\n", AC, "AC\n", "HLT");
+                //     break;
 
-                }
+                // }
             }
         }
     } else {
         AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
         registerHex.AR = AR;
 
-        if (opcode == 0) {
-            sym="AND";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[l].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
-            AC = hextobinary(and());
-            registerHex.AC = binaryToHex(AC);
-            console.log(PC, "PC\n", AC, "AC\n", "and");
-        } else if (opcode == 1) {
-            sym="ADD";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[l].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
-            AC = ADD(DR, AC);
-            registerHex.AC = binaryToHex(AC);
-            console.log(PC, "PC\n", AC, "AC\n", "ADD");
-        } else if (opcode == 2) {
-            sym="LDA";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[l].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
-            LDA();
-            console.log(PC, "PC\n", AC, "AC\n", "LDA");
+        // if (opcode == 0) {
+        //     sym="AND";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[l].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
+        //     AC = hextobinary(and());
+        //     registerHex.AC = binaryToHex(AC);
+        //     console.log(PC, "PC\n", AC, "AC\n", "and");
+        // } else if (opcode == 1) {
+        //     sym="ADD";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[l].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
+        //     AC = ADD(DR, AC);
+        //     registerHex.AC = binaryToHex(AC);
+        //     console.log(PC, "PC\n", AC, "AC\n", "ADD");
+        // } else if (opcode == 2) {
+        //     sym="LDA";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[l].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
+        //     LDA();
+        //     console.log(PC, "PC\n", AC, "AC\n", "LDA");
   
-        } else if (opcode == 3) {
-            sym="STA";
-            STA();
-            console.log(PC, "PC\n", AC, "AC\n", "STA");
-        } else if (opcode == 4) {
-            sym="BUN";
-            BUN();
-            console.log(PC, "PC\n", AC, "AC\n", "BUN");
-        } else if (opcode == 5) {
-            sym="BSA";
-            BSA();
-            console.log(PC, "PC\n", AC, "AC\n", "BSA");
-        } else if (opcode == 6) {
-            sym="ISZ";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[l].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
-            ISZ();
-            console.log(PC, "PC\n", AC, "AC\n", "ISZ");
+        // } else if (opcode == 3) {
+        //     sym="STA";
+        //     STA();
+        //     console.log(PC, "PC\n", AC, "AC\n", "STA");
+        // } else if (opcode == 4) {
+        //     sym="BUN";
+        //     BUN();
+        //     console.log(PC, "PC\n", AC, "AC\n", "BUN");
+        // } else if (opcode == 5) {
+        //     sym="BSA";
+        //     BSA();
+        //     console.log(PC, "PC\n", AC, "AC\n", "BSA");
+        // } else if (opcode == 6) {
+        //     sym="ISZ";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[l].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
+        //     ISZ();
+        //     console.log(PC, "PC\n", AC, "AC\n", "ISZ");
            
-        } else if (opcode == 8) {
-            sym="AND";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            for (let y = 0; y < memoryAddress.length; y++)
-                if (memoryAddress[y].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[y].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
-            AC = hextobinary(and());
-            registerHex.AC = binaryToHex(AC);
-            console.log(PC, "PC\n", AC, "AC\n", "andtwo");
+        // } else if (opcode == 8) {
+        //     sym="AND";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     for (let y = 0; y < memoryAddress.length; y++)
+        //         if (memoryAddress[y].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[y].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
+        //     AC = hextobinary(and());
+        //     registerHex.AC = binaryToHex(AC);
+        //     console.log(PC, "PC\n", AC, "AC\n", "andtwo");
 
-        } else if (opcode == 9) {
-            sym="ADD";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            for (let y = 0; y < memoryAddress.length; y++)
-                if (memoryAddress[y].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[y].innerText;
-                    DR = hextobinary(registerHex.DR)
-                }
-            AC = ADD(DR, AC);
-            registerHex.AC = binaryToHex(AC);
-            console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
-        } else if (opcode == "A") {
-            sym="LDA";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            for (let y = 0; y < memoryAddress.length; y++)
-                if (memoryAddress[y].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    registerHex.DR = code[y].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
-            LDA();
-            console.log(PC, "PC\n", AC, "AC\n", "LDAtwo");
-        } else if (opcode == "B") {
-            sym="STA";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            STA();
-            console.log(PC, "PC\n", AC, "AC\n", "STAtwo");
-        } else if (opcode == "C") {
-            sym="BUN";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            BUN();
-            console.log(PC, "PC\n", AC, "AC\n", "BUNtwo");
+        // } else if (opcode == 9) {
+        //     sym="ADD";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     for (let y = 0; y < memoryAddress.length; y++)
+        //         if (memoryAddress[y].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[y].innerText;
+        //             DR = hextobinary(registerHex.DR)
+        //         }
+        //     AC = ADD(DR, AC);
+        //     registerHex.AC = binaryToHex(AC);
+        //     console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
+        // } else if (opcode == "A") {
+        //     sym="LDA";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     for (let y = 0; y < memoryAddress.length; y++)
+        //         if (memoryAddress[y].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             registerHex.DR = code[y].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
+        //     LDA();
+        //     console.log(PC, "PC\n", AC, "AC\n", "LDAtwo");
+        // } else if (opcode == "B") {
+        //     sym="STA";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     STA();
+        //     console.log(PC, "PC\n", AC, "AC\n", "STAtwo");
+        // } else if (opcode == "C") {
+        //     sym="BUN";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     BUN();
+        //     console.log(PC, "PC\n", AC, "AC\n", "BUNtwo");
 
-        } else if (opcode == "D") {
-            sym="BSA";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            BSA();
-            console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
-        } else if (opcode == "E") {
-            sym="ISZ";
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
-                    break;
-                }
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory)
-                    registerHex.DR = code[l].innerText;
-                    DR = hextobinary(registerHex.DR);
-                }
+        // } else if (opcode == "D") {
+        //     sym="BSA";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     BSA();
+        //     console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
+        // } else if (opcode == "E") {
+        //     sym="ISZ";
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory);
+        //             AR = code[l].innerText;
+        //             break;
+        //         }
+        //     for (let l = 0; l < memoryAddress.length; l++)
+        //         if (memoryAddress[l].innerText == AR) {
+        //             memory = AR;
+        //             registerHex.memory = binaryToHex(memory)
+        //             registerHex.DR = code[l].innerText;
+        //             DR = hextobinary(registerHex.DR);
+        //         }
 
-            ISZ();
-            console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
+        //     ISZ();
+        //     console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
             
-        }
+        // }
 
     }
     writeTotable("4");
     writeLog(sym,1);
+}
+function execute() {
+    // enableBtn(executeBtn);
+    // disableBtn(fetchBtn);
+    // disableBtn(decodeBtn);
+    if(opcode == "7" ){
+
+        if (valu == "CLA") {
+            CLA();
+            console.log(PC, "PC\n", AC, "AC\n", "CLA");
+            
+        } else if (valu == "CLE") {
+            CLE();
+            console.log(PC, "PC\n", AC, "AC\n", "CLE");
+       
+        } else if (valu == "CMA") {
+            CMA();
+            console.log(PC, "PC\n", AC, "AC\n", "CMA");
+         
+        } else if (valu == "CME") {
+            CME();
+            console.log(PC, "PC\n", AC, "AC\n", "CME");
+           
+        } else if (valu == "CIR") {
+            CIR();
+            console.log(PC, "PC\n", AC, "AC\n", "CIR");
+          
+        } else if (valu == "CIL") {
+            CIL();
+            console.log(PC, "PC\n", AC, "AC\n", "CIL");
+          
+        } else if (valu == "INC") {
+            INC();
+            console.log(PC, "PC\n", AC, "AC\n", "INC");
+            
+        } else if (valu == "SPA") {
+            SPA();
+            console.log(PC, "PC\n", AC, "AC\n", "SPA");
+            
+        } else if (valu == "SNA") {
+            SNA();
+            console.log(PC, "PC\n", AC, "AC\n", "SNA");
+           
+        } else if (valu == "SZA") {
+            SZA();
+            console.log(PC, "PC\n", AC, "AC\n", "SZA");
+           
+        } else if (valu == "SZE") {
+            SZE();
+            console.log(PC, "PC\n", AC, "AC\n", "SZE");
+           
+        } else if (valu == "HLT") {
+            HLT();
+            console.log(PC, "PC\n", AC, "AC\n", "HLT");
+           
+    
+        }
+    }
+    if (opcode == 0) {
+        sym="AND";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[l].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+        AC = hextobinary(and());
+        registerHex.AC = binaryToHex(AC);
+        console.log(PC, "PC\n", AC, "AC\n", "and");
+    } else if (opcode == 1) {
+        sym="ADD";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[l].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+        AC = ADD(DR, AC);
+        registerHex.AC = binaryToHex(AC);
+        console.log(PC, "PC\n", AC, "AC\n", "ADD");
+    } else if (opcode == 2) {
+        sym="LDA";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[l].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+        LDA();
+        console.log(PC, "PC\n", AC, "AC\n", "LDA");
+
+    } else if (opcode == 3) {
+        sym="STA";
+        STA();
+        console.log(PC, "PC\n", AC, "AC\n", "STA");
+    } else if (opcode == 4) {
+        sym="BUN";
+        BUN();
+        console.log(PC, "PC\n", AC, "AC\n", "BUN");
+    } else if (opcode == 5) {
+        sym="BSA";
+        BSA();
+        console.log(PC, "PC\n", AC, "AC\n", "BSA");
+    } else if (opcode == 6) {
+        sym="ISZ";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[l].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+        ISZ();
+        console.log(PC, "PC\n", AC, "AC\n", "ISZ");
+       
+    } else if (opcode == 8) {
+        sym="AND";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        for (let y = 0; y < memoryAddress.length; y++)
+            if (memoryAddress[y].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[y].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+        AC = hextobinary(and());
+        registerHex.AC = binaryToHex(AC);
+        console.log(PC, "PC\n", AC, "AC\n", "andtwo");
+
+    } else if (opcode == 9) {
+        sym="ADD";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        for (let y = 0; y < memoryAddress.length; y++)
+            if (memoryAddress[y].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[y].innerText;
+                DR = hextobinary(registerHex.DR)
+            }
+        AC = ADD(DR, AC);
+        registerHex.AC = binaryToHex(AC);
+        console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
+    } else if (opcode == "A") {
+        sym="LDA";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        for (let y = 0; y < memoryAddress.length; y++)
+            if (memoryAddress[y].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[y].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+        LDA();
+        console.log(PC, "PC\n", AC, "AC\n", "LDAtwo");
+    } else if (opcode == "B") {
+        sym="STA";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        STA();
+        console.log(PC, "PC\n", AC, "AC\n", "STAtwo");
+    } else if (opcode == "C") {
+        sym="BUN";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        BUN();
+        console.log(PC, "PC\n", AC, "AC\n", "BUNtwo");
+
+    } else if (opcode == "D") {
+        sym="BSA";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        BSA();
+        console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
+    } else if (opcode == "E") {
+        sym="ISZ";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                AR = code[l].innerText;
+                break;
+            }
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory)
+                registerHex.DR = code[l].innerText;
+                DR = hextobinary(registerHex.DR);
+            }
+
+        ISZ();
+        console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
+        
+    }
+    led();
+    writeLog(sym,2);
 }
