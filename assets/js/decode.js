@@ -768,6 +768,8 @@ function execute() {
                 registerHex.memory = binaryToHex(memory);
                 registerHex.DR = code[l].innerText;
                 DR = hextobinary(registerHex.DR);
+                console.log(AR,"AR in ADD");
+                console.log(memory,"Memory in ADD");
             }
         AC = ADD(DR, AC);
         registerHex.AC = binaryToHex(AC);
