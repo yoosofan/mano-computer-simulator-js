@@ -863,7 +863,20 @@ function execute() {
         registerHex.AC = binaryToHex(AC);
         console.log(PC, "PC\n", AC, "AC\n", "and");
     } else if (opcode == 1) {
+<<<<<<< HEAD
         sym = "ADD";
+=======
+        sym="ADD";
+        for (let l = 0; l < memoryAddress.length; l++)
+            if (memoryAddress[l].innerText == AR) {
+                memory = AR;
+                registerHex.memory = binaryToHex(memory);
+                registerHex.DR = code[l].innerText;
+                DR = hextobinary(registerHex.DR);
+                console.log(AR,"AR in ADD");
+                console.log(memory,"Memory in ADD");
+            }
+>>>>>>> 18149b126e541482ce838e9bc3cb719d8cf940a4
         AC = ADD(DR, AC);
         registerHex.AC = binaryToHex(AC);
         console.log(PC, "PC\n", AC, "AC\n", "ADD");

@@ -142,10 +142,12 @@ function showCPU(){
     IR = '0000000000000000';
     AC = '0000000000000000';
     DR = '0000000000000000';
+    memory = '000000000000';
     registerHex.PC = binaryToHex(PC);
     registerHex.IR = binaryToHex(IR);
     registerHex.AC = binaryToHex(AC);
     registerHex.DR = binaryToHex(DR);
+    registerHex.memory = binaryToHex(memory);
     var start = document.querySelectorAll(".cpu");
     var end =document.querySelectorAll(".endInput");
     [].forEach.call(start, function(el) {
