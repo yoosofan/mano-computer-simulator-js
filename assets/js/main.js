@@ -64,13 +64,15 @@ function store() {
             dataStore[b] = tag;
     }
     getDataTextarea.value=dataStore;
+    console.log(dataStore,"datastorddddddddddddddddddddddd")
 }
 // local.addEventListener("click", localstore(data));
 
 function localstore() {
     var array = [10];
     var number = Bazdid();
-    array[number] = dataStore;
+    array[number] = getDataTextarea.value;
+    console.log(getDataTextarea.value,"datastor")
     localStorage.setItem(`DataFile${number}`, JSON.stringify(array[number]));
     alert("The data was saved as a" + `DataFile${number}`);
     getDataTextarea.value="";
@@ -177,7 +179,8 @@ function showCPU(){
 function back(){
     document.getElementById("container").style.display="block";
     document.getElementById("HLT").classList.remove("shutDown");
-    document.getElementById("back").remove();
+    // document.getElementById("back").remove();
+    document.getElementById("back").style.display = "none";
     var end = document.querySelectorAll(".cpu");
     var start =document.querySelectorAll(".endInput");
     [].forEach.call(start, function(el) {
