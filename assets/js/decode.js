@@ -298,22 +298,29 @@ function writeLog(symbol, level) {
         let r = document.createElement('tr');
         if (index == 0 && index == level) {
             c.innerText = `Fetch \n AR <= PC \n PC <= PC + 1 \n IR <= M[AR]`;
+            r.classList.add('logList');
+            r.appendChild(c);
+            tab.appendChild(r);
         } else if (index == 1 && index == level) {
             c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol} \n DR <= Data `;
+            r.classList.add('logList');
+            r.appendChild(c);
+            tab.appendChild(r);
         } else if (index == 2 && index == level) {
-            c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n
-            ----------------`;
+            c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n`;
+            r.classList.add('logList');
+            r.classList.add('logexecute');
+            r.appendChild(c);
+            tab.appendChild(r);
+            // c.innerText = "kdkflk";
+            let z = document.createElement('td');
+            z.innerText="   "
+            z.classList.add('space');
+            r.appendChild(z);
+            tab.appendChild(r);
         }
-        r.classList.add('logList');
-        r.appendChild(c);
-        tab.appendChild(r);
+       
     }
-    //    if(level == 3){
-    //     let h = document.createElement('hr');
-    //     tab.appendChild(h);
-    //    }
-
-
 }
 
 function binaryToHex(number) {
