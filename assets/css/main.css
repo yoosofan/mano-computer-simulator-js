@@ -291,6 +291,9 @@ table {
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
 }
+.dis{
+    display: none;
+}
 .flagTable{
 margin-top: 50px;
 }
