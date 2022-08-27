@@ -260,10 +260,19 @@ function writeToflag() {
 }
 
 function checkFlag() {
-    if (AC == "0000000000000000")
+    if (AC == "0000000000000000"){
         Z = "1";
-    else
+    }
+    else if (AC != "0000000000000000"){
         Z = "0";
+    }
+    console.log(AC[0],"5454jhhugy")
+    if (AC[0]=="0") {
+        N="0";    
+    }
+    else if (AC[0]=="1") {
+        N="1";    
+    }
     writeToflag();
 }
 
