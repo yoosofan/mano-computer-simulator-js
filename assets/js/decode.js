@@ -233,8 +233,8 @@ flagTable.appendChild(ftable);
 // write to table 
 function writeTotable(number, T) {
     let c = document.getElementsByClassName(`${number}`);
-    console.log(c, ";;;;;;;;;;;;rpooepirope")
-    console.log(typeof (registerHex.IR), "lllllll");
+    // console.log(c, ";;;;;;;;;;;;rpooepirope")
+    // console.log(typeof (registerHex.IR), "lllllll");
     c[0].innerHTML = T;
     c[1].innerText = "0x" + registerHex.IR;
     c[2].innerText = "0x" + registerHex.AC;
@@ -267,7 +267,7 @@ function checkFlag() {
 
 function led() {
     var led = document.getElementsByClassName("circle");
-    console.log(led[1], 'pppp')
+    // console.log(led[1], 'pppp')
     var ACLed = AC.split('');
     for (let k = 0; k < ACLed.length; k++) {
         if (ACLed[k] == 1) {
@@ -281,7 +281,7 @@ function led() {
 
 function turnOFFled() {
     var led = document.getElementsByClassName("circle");
-    console.log(led[1], 'pppp')
+    // console.log(led[1], 'pppp')
     var ACLed = AC.split('');
     for (let k = 0; k < ACLed.length; k++) {
         led[k].style.backgroundColor = "white";
@@ -462,7 +462,7 @@ function INC() {
 // }
 
 function HLT() {
-    console.log("hlt meeeeee")
+    // console.log("hlt meeeeee")
     document.getElementById("HLT").classList.add("shutDown");
     document.getElementById("back").style.display = "block";
     document.getElementById("container").style.display = "none";
@@ -481,8 +481,10 @@ function and() {
 function ADD(MemStr, ACStr) {
     const result = [];
     let E = 0;
+    let overflow=0;
     let lenMem = MemStr.length;
     let lenAC = ACStr.length;
+    
     for (let i = lenMem - 1, j = lenAC - 1; 0 <= i || 0 <= j; --i, --j) {
         let x, y;
         if (0 <= i)
@@ -499,6 +501,29 @@ function ADD(MemStr, ACStr) {
         // console.log((x + y + E) , "AAAAAAAAAA")
         E = 1 < x + y + E;
     };
+    console.log(result.length,"huhgggg")
+    console.log(result[result.length-1],"huhgggggggggggg")
+    console.log(result,"rrrrrrrrrrr")
+    console.log(MemStr.length,"Memstr.len")
+    console.log(MemStr[0],"Memstrrrrrrrrrr-1")
+    console.log(MemStr,"Memstr")
+    if (MemStr[0]=="1" & ACStr[0]=="1") {
+        if (result[result.length-1]=="1") {
+            overflow=0;       
+        }
+        else if (result[result.length-1]=="0") {
+            overflow=1;   
+        }   
+    }
+    if (MemStr[0]=="0" & ACStr[0]=="0") {
+        if (result[result.length-1]=="0") {
+            overflow=0;       
+        }
+        else if (result[result.length-1]=="1") {
+            overflow=1;   
+        }   
+    }
+    console.log(overflow,"overflow")
     if (E) {
         result.push(1);
         Cout = 1;
@@ -519,7 +544,7 @@ function LDA() {
 
 function STA() {
     for (let l = 0; l < memoryAddress.length; l++) {
-        console.log(memoryAddress[l].innerText, "koja", registerHex.AR)
+        // console.log(memoryAddress[l].innerText, "koja", registerHex.AR)
         if (memoryAddress[l].innerText == registerHex.AR) {
             code[l].innerText = binaryToHex(AC);
             memory = hextobinary(code[l].innerText);
@@ -569,20 +594,20 @@ function fetch() {
     // disableBtn(executeBtn);
     // disableBtn(decodeBtn);
     // enableBtn(fetchBtn);
-    console.log(registerHex, "fetch");
+    // console.log(registerHex, "fetch");
     var one = "1";
     registerHex.AR = "0x" + binaryToHex(PC); // AR <= PC   
     AR = PC; // AR <= PC
     writeTotable("2", "T0: AR <- PC");
     PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC); //PC <= PC +1
-    console.log(registerHex.AR, "PC")
+    // console.log(registerHex.AR, "PC")
     for (let index = 0; index < memoryAddress.length; index++) {
         if (memoryAddress[index].innerText == registerHex.AR) {
             code[index].classList.add("border");
             memory = hextobinary(code[index].innerText);
             registerHex.memory = code[index].innerText;
-            console.log(memory, "dhghydyetyttttttttttttttttttttttttt")
+            // console.log(memory, "dhghydyetyttttttttttttttttttttttttt")
             registerHex.IR = registerHex.memory; //IR <= M[AR]
             IR = memory; //IR <= M[AR]
 
