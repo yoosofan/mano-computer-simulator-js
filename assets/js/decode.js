@@ -149,7 +149,7 @@ memoryTable.appendChild(ramTable);
 // register table 
 const regtable = document.createElement('table');
 const registerTable = document.querySelector('.registerTable');
-const items = ['Elements', 'Initial Values', ' AR <- PC', ' IR <- M[AR], PC <-PC+1', ' AR <- IR[0:11]', 'T3', 'T4', 'T5', 'T6'];
+const items = ['Elements', 'Initial Values', 'T0: AR <- PC', 'T1: IR <- M[AR], PC <-PC+1', 'T2: AR <- IR[0:11]', 'T:', 'T:', 'T:', 'T:'];
 const headerItems = ['statements', 'IR', 'AC', 'DR', 'PC', 'AR', 'M[AR]'];
 for (let i = 0; i < 9; i++) {
     let r = document.createElement('tr');
@@ -168,6 +168,8 @@ for (let i = 0; i < 9; i++) {
         if (j == 0) {
             c.innerText = items[i];
             c.classList.add('itemsStyle');
+            if( i > 4)
+                c.classList.add('empty');
             c.classList.add(`${i}`);
             // r.classList.add(`${i}`);
         }
@@ -236,8 +238,8 @@ function writeTotable(number, T) {
     console.log(c, ";;;;;;;;;;;;rpooepirope")
     console.log(typeof (registerHex.IR), "lllllll");
     c[0].innerHTML = T;
-    c[1].innerText = "0x" + registerHex.IR;
-    c[2].innerText = "0x" + registerHex.AC;
+    c[1].innerText = registerHex.IR;
+    c[2].innerText = registerHex.AC;
     c[3].innerText = registerHex.DR;
     c[4].innerText = "0x" + registerHex.PC;
     c[5].innerText = registerHex.AR;
@@ -319,7 +321,7 @@ function writeLog(symbol, level) {
             r.appendChild(z);
             tab.appendChild(r);
         }
-       
+
     }
 }
 
@@ -555,8 +557,7 @@ function ISZ() {
         PC = ADD(PC, one);
         registerHex.PC = binaryToHex(PC);
     }
-    writeTotable("7", `T4: M[AR] <- DR IF(DR=0) \n
-    then (PC <- PC + 1)`);
+
 
 }
 
@@ -569,6 +570,16 @@ function fetch() {
     // disableBtn(executeBtn);
     // disableBtn(decodeBtn);
     // enableBtn(fetchBtn);
+    var emptyRegister = document.querySelectorAll(".regList");
+    var emptytable = document.querySelectorAll(".empty");
+    [].forEach.call(emptyRegister, function (el) {
+        console.log("pspspsps")
+        el.innerText = "";
+    });
+    [ ].forEach.call(emptytable, function (el) {
+        console.log(el,"////////////")
+        el.innerText = "T :";
+    });
     console.log(registerHex, "fetch");
     var one = "1";
     registerHex.AR = "0x" + binaryToHex(PC); // AR <= PC   
@@ -601,8 +612,8 @@ function decode() {
     // enableBtn(decodeBtn);
     opcode = registerHex.IR.split('')[0];
     if (opcode == "7") {
-        AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        registerHex.AR = AR;
+        registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
+        AR = hextobinary(AR);
         writeTotable("4", "T2: AR <- IR[0:11]");
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
@@ -611,42 +622,41 @@ function decode() {
             }
         }
     } else {
-        AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        registerHex.AR = AR;
+        registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
+        AR = hextobinary(AR);
         writeTotable("4", "T2: AR <- IR[0:11]");
         if (opcode == 0) {
             sym = "AND";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
+                if (memoryAddress[l].innerText == registerHex.AR) {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
-            writeTotable("5", "T3: DR <-M[AR]");
+
 
         } else if (opcode == 1) {
             sym = "ADD";
-            writeTotable("4", "T2: AR <- IR[0:11]");
+            // writeTotable("4", "T2: AR <- IR[0:11]");
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
+                if (memoryAddress[l].innerText == registerHex.AR) {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
-            writeTotable("5", "T3: DR <-M[AR]");
+
         } else if (opcode == 2) {
             sym = "LDA";
-            writeTotable("4", "T2: AR <- IR[0:11]");
+            // writeTotable("4", "T2: AR <- IR[0:11]");
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
+                if (memoryAddress[l].innerText == registerHex.AR) {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
-            writeTotable("5", "T3: DR <-M[AR]");
         } else if (opcode == 3) {
             sym = "STA";
         } else if (opcode == 4) {
@@ -655,106 +665,123 @@ function decode() {
             sym = "BSA";
         } else if (opcode == 6) {
             sym = "ISZ";
-            writeTotable("4", "T2: AR <- IR[0:11]");
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
+                if (memoryAddress[l].innerText == registerHex.AR) {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
-            writeTotable("5", "T3: DR <-M[AR]");
         } else if (opcode == 8) {
             sym = "AND";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
-            for (let y = 0; y < memoryAddress.length; y++)
-                if (memoryAddress[y].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
+            writeTotable("5", "T3: AR <-M[AR]");
+            for (let y = 0; y < memoryAddress.length; y++) {
+                if (memoryAddress[y].innerText == registerHex.AR) {
+                    memory = hextobinary(code[y].innerText);
+                    registerHex.memory = code[y].innerText;
                     registerHex.DR = code[y].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
+            }
+
         } else if (opcode == 9) {
             sym = "ADD";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
-            for (let y = 0; y < memoryAddress.length; y++)
-                if (memoryAddress[y].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
+            writeTotable("5", "T3: AR <-M[AR]");
+            for (let y = 0; y < memoryAddress.length; y++) {
+                if (memoryAddress[y].innerText == registerHex.AR) {
+                    memory = hextobinary(code[y].innerText);
+                    registerHex.memory = code[y].innerText;
                     registerHex.DR = code[y].innerText;
-                    DR = hextobinary(registerHex.DR)
+                    DR = hextobinary(registerHex.DR);
                 }
+            }
         } else if (opcode == "A") {
             sym = "LDA";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
-            for (let y = 0; y < memoryAddress.length; y++)
-                if (memoryAddress[y].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
+            writeTotable("5", "T3: AR <-M[AR]");
+            for (let y = 0; y < memoryAddress.length; y++) {
+                if (memoryAddress[y].innerText == registerHex.AR) {
+                    memory = hextobinary(code[y].innerText);
+                    registerHex.memory = code[y].innerText;
                     registerHex.DR = code[y].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
+            }
         } else if (opcode == "B") {
             sym = "STA";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
+            writeTotable("5", "T3: AR <-M[AR]");
         } else if (opcode == "C") {
             sym = "BUN";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
+            writeTotable("5", "T3: AR <-M[AR]");
         } else if (opcode == "D") {
             sym = "BSA";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
+            writeTotable("5", "T3: AR <-M[AR]");
         } else if (opcode == "E") {
             sym = "ISZ";
             for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory);
-                    AR = code[l].innerText;
+                if (memoryAddress[l].innerText == registerHex.AR) {
+                    memory = hextobinary(code[l].innerText);
+                    registerHex.memory = code[l].innerText;
+                    AR = memory;
+                    registerHex.AR = registerHex.memory;
                     break;
                 }
-            for (let l = 0; l < memoryAddress.length; l++)
-                if (memoryAddress[l].innerText == AR) {
-                    memory = AR;
-                    registerHex.memory = binaryToHex(memory)
-                    registerHex.DR = code[l].innerText;
+            writeTotable("5", "T3: AR <-M[AR]");
+            for (let y = 0; y < memoryAddress.length; y++) {
+                if (memoryAddress[y].innerText == registerHex.AR) {
+                    memory = hextobinary(code[y].innerText);
+                    registerHex.memory = code[y].innerText;
+                    registerHex.DR = code[y].innerText;
                     DR = hextobinary(registerHex.DR);
                 }
+            }
         }
 
     }
@@ -823,6 +850,7 @@ function execute() {
     }
     if (opcode == 0) {
         sym = "AND";
+        writeTotable("5", "T3: DR <-M[AR]");
         AC = hextobinary(and());
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC ^ DR");
@@ -830,6 +858,7 @@ function execute() {
         console.log(PC, "PC\n", AC, "AC\n", "and");
     } else if (opcode == 1) {
         sym = "ADD";
+        writeTotable("5", "T3: DR <-M[AR]");
         AC = ADD(DR, AC);
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC + DR");
@@ -837,6 +866,7 @@ function execute() {
         console.log(PC, "PC\n", AC, "AC\n", "ADD");
     } else if (opcode == 2) {
         sym = "LDA";
+        writeTotable("5", "T3: DR <-M[AR]");
         LDA();
         writeTotable("6", "T4: AC <- DR");
         checkFlag();
@@ -846,51 +876,79 @@ function execute() {
         sym = "STA";
         STA();
         writeTotable("5", "T3: M[AR] <- AC");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "STA");
     } else if (opcode == 4) {
         sym = "BUN";
         BUN();
+        writeTotable("5", "T3: PC  <- AR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "BUN");
     } else if (opcode == 5) {
         sym = "BSA";
+        writeTotable("5", "T3: M[AR] <- PC\n","AR <- AR + 1");
         BSA();
+        writeTotable("6", "T4: PC <- AR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "BSA");
     } else if (opcode == 6) {
         sym = "ISZ";
+        writeTotable("5", "T3: DR <-M[AR]");
         ISZ();
+        writeTotable("6", "T4: M[AR] <- DR IF(DR=0)\n", "then (PC <- PC + 1)");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "ISZ");
 
     } else if (opcode == 8) {
         sym = "AND";
+        writeTotable("6", "T4: DR <-M[AR]");
         AC = hextobinary(and());
         registerHex.AC = binaryToHex(AC);
+        writeTotable("7", "T5: AC <- AC ^ DR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "andtwo");
 
     } else if (opcode == 9) {
         sym = "ADD";
+        writeTotable("6", "T4: DR <-M[AR]");
         AC = ADD(DR, AC);
         registerHex.AC = binaryToHex(AC);
+        writeTotable("7", "T5: AC <- AC + DR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
     } else if (opcode == "A") {
         sym = "LDA";
+        writeTotable("6", "T4: DR <-M[AR]");
         LDA();
+        writeTotable("7", "T5: AC <- DR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "LDAtwo");
     } else if (opcode == "B") {
         sym = "STA";
         STA();
+        writeTotable("6", "T4: M[AR] <- AC");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "STAtwo");
     } else if (opcode == "C") {
         sym = "BUN";
         BUN();
+        writeTotable("6", "T4: PC  <- AR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "BUNtwo");
 
     } else if (opcode == "D") {
         sym = "BSA";
+        writeTotable("6", "T4: M[AR] <- PC\n","AR <- AR + 1");
         BSA();
+        writeTotable("7", "T5: PC <- AR");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
     } else if (opcode == "E") {
         sym = "ISZ";
+        writeTotable("6", "T4: DR <-M[AR]");
         ISZ();
+        writeTotable("7", "T5: M[AR] <- DR IF(DR=0)\n", "then (PC <- PC + 1)");
+        checkFlag();
         console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
 
     }
