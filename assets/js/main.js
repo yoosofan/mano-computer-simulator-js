@@ -16,7 +16,7 @@ function natural() {
 
 
 function insert() {
-    console.log(count, ";;;")
+    // console.log(count, ";;;")
     var data = document.getElementById("firstInput").value;
     if (data == "") {} else
         elementt[count - 1].innerText = data;
@@ -95,7 +95,7 @@ var list = document.getElementsByClassName("listData");
 for (let i = listTest.length; i < 10; i++) {
     let o = i - 2;
     var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
-    console.log(storedNames, "{{{{{{{{{[")
+    // console.log(storedNames, "{{{{{{{{{[")
     if (storedNames == null) {} else {
         list[i].innerHTML = `DataFile${o}`;
         list[i].onclick = function () {
@@ -142,7 +142,7 @@ function sendText() {
 
 function turnOFFled() {
     var led = document.getElementsByClassName("circle");
-    console.log(led[1], 'pppp')
+    // console.log(led[1], 'pppp')
     var ACLed = AC.split('');
     for (let k = 0; k < ACLed.length; k++) {
         led[k].style.backgroundColor = "white";
@@ -150,7 +150,7 @@ function turnOFFled() {
 }
 
 function showCPU() {
-    console.log("djdjdhjdhj")
+    // console.log("djdjdhjdhj")
     PC = '000000000000';
     IR = '0000000000000000';
     AC = '0000000000000000';
@@ -173,16 +173,16 @@ function showCPU() {
     var emptyRegister = document.querySelectorAll(".regList");
     var emptyflag = document.querySelectorAll(".flagList");
     [].forEach.call(emptyLog, function (el) {
-        console.log("pspspsps")
+        // console.log("pspspsps")
         el.remove();
     });
 
     [].forEach.call(emptyRegister, function (el) {
-        console.log("pspspsps")
+        // console.log("pspspsps")
         el.innerText = "";
     });
     [].forEach.call(emptyflag, function (el) {
-        console.log("pspspsps")
+        // console.log("pspspsps")
         el.innerText = "0";
     });
     turnOFFled();
@@ -201,7 +201,7 @@ function back() {
         el.classList.add("StartCPU");
     });
     [].forEach.call(code, function (el) {
-        console.log("pspspsps")
+        // console.log("pspspsps")
         el.classList.remove("border");
     });
 }
