@@ -427,7 +427,7 @@ function CIL() {
 
 function INC() {
     var one = "1";
-    AC = ADD(AC, one);
+    AC =  ADDlogic(AC, one);
     registerHex.AC = binaryToHex(AC);
 }
 
@@ -477,8 +477,41 @@ function and() {
         result += registerHex.DR[index] & Number(ACNumber[index]);
     return result;
 }
-
 function ADD(MemStr, ACStr) {
+    const result = [];
+    let E = 0;
+    let lenMem = MemStr.length;
+    let lenAC = ACStr.length;
+    
+    for (let i = lenMem - 1, j = lenAC - 1; 0 <= i || 0 <= j; --i, --j) {
+        let x, y;
+        if (0 <= i)
+            x = Number(MemStr[i]);
+        else
+            x = 0;
+
+        if (0 <= j)
+            y = Number(ACStr[j]);
+        else
+            y = 0;
+
+        result.push((x + y + E) % 2);
+        // console.log((x + y + E) , "AAAAAAAAAA")
+        E = 1 < x + y + E;
+    };
+    if (E) {
+        result.push(1);
+        Cout = 1;
+    }
+
+    if (result.length > 16)
+        return result.reverse().splice(result.length - 16).join('');
+    else
+        return result.reverse().join('');
+
+};
+
+function ADDlogic(MemStr, ACStr) {
     const result = [];
     let E = 0;
     let overflow=0;
@@ -573,7 +606,7 @@ function STA() {
 
 function ISZ() {
     var one = "1";
-    DR = ADD(DR, one);
+    DR = ADDlogic(DR, one);
     registerHex.DR = binaryToHex(DR);
     writeTotable("6", "T4: DR <- DR + 1");
     if (DR == "0000000000000000") {
@@ -855,7 +888,7 @@ function execute() {
         console.log(PC, "PC\n", AC, "AC\n", "and");
     } else if (opcode == 1) {
         sym = "ADD";
-        AC = ADD(DR, AC);
+        AC = ADDlogic(DR, AC);
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC + DR");
         checkFlag();
@@ -893,7 +926,7 @@ function execute() {
 
     } else if (opcode == 9) {
         sym = "ADD";
-        AC = ADD(DR, AC);
+        AC =  ADDlogic(DR, AC);
         registerHex.AC = binaryToHex(AC);
         console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
     } else if (opcode == "A") {
