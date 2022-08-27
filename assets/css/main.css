@@ -320,14 +320,16 @@ margin-top: 50px;
 
 
 .boxLog {
-    width: 112px;
+    width: 130px;
     border: 1px solid #3aa3a7;
     height: 70vh;
     overflow-y: auto;
 }
-
+#log{
+    width: 100%;
+}
 #log th {
-    width: 112px;
+    /* width: 112px; */
     padding: 8px;
     background-color: #3aa3a7;
     border: 1px solid #3aa3a7;

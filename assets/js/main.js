@@ -63,31 +63,43 @@ function store() {
         else
             dataStore[b] = tag;
     }
-    getDataTextarea.value=dataStore;
-    console.log(dataStore,"datastorddddddddddddddddddddddd")
+    getDataTextarea.value = dataStore;
 }
-// local.addEventListener("click", localstore(data));
 
 function localstore() {
     var array = [10];
     var number = Bazdid();
     array[number] = getDataTextarea.value;
-    console.log(getDataTextarea.value,"datastor")
+    // console.log(getDataTextarea.value, "datastor")
     localStorage.setItem(`DataFile${number}`, JSON.stringify(array[number]));
     alert("The data was saved as a" + `DataFile${number}`);
-    getDataTextarea.value="";
+    getDataTextarea.value = "";
+    var list = document.getElementsByClassName("listData");
+    for (let i = listTest.length; i < 10; i++) {
+        let o = i - 2;
+        var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
+        if (storedNames == null) {} else {
+            list[i].innerHTML = `DataFile${o}`;
+            list[i].onclick = function () {
+                var namelist = this.innerHTML;
+                var storedNames = JSON.parse(localStorage.getItem(namelist));
+                console.log(storedNames, "lksaka");
+                getDataTextarea.value = storedNames;
+            }
+        }
+    }
 }
-var list = document.getElementById("list");
-for (let i = 0; i < 5; i++) {
-    var storedNames = JSON.parse(localStorage.getItem(`DataFile${i}`));
+
+// list test
+var list = document.getElementsByClassName("listData");
+for (let i = listTest.length; i < 10; i++) {
+    let o = i - 2;
+    var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
+    console.log(storedNames, "{{{{{{{{{[")
     if (storedNames == null) {} else {
-        var tagli = document.createElement("li");
-        tagli.classList.add("listData");
-        tagli.innerHTML = `DataFile${i}`;
-        list.appendChild(tagli);
-        tagli.onclick = function () {
+        list[i].innerHTML = `DataFile${o}`;
+        list[i].onclick = function () {
             var namelist = this.innerHTML;
-            var inp = document.getElementsByTagName("input");
             var storedNames = JSON.parse(localStorage.getItem(namelist));
             console.log(storedNames, "lksaka");
             getDataTextarea.value = storedNames;
@@ -105,7 +117,6 @@ function resetMem() {
         inp[j].innerText = "0000";
     }
     count = 1;
-    // console.log()
     adrBox.innerText = "0x000";
 }
 
@@ -117,9 +128,7 @@ function sendText() {
     let c = document.getElementsByClassName('data');
     let j = 0;
     for (let i = 0; i < c.length; i++) {
-        if (a[j] == undefined || a[j] == " ") {
-            console.log(a[j], ";;;;;;;;;;;;;")
-        } else if (a[j] == "") {
+        if (a[j] == undefined || a[j] == " ") {} else if (a[j] == "") {
             break
         } else {
             console.log(a[j])
@@ -127,9 +136,10 @@ function sendText() {
         }
         j++;
     }
-    document.getElementById('textarea').value="";
+    document.getElementById('textarea').value = "";
 
 }
+
 function turnOFFled() {
     var led = document.getElementsByClassName("circle");
     console.log(led[1], 'pppp')
@@ -138,9 +148,10 @@ function turnOFFled() {
         led[k].style.backgroundColor = "white";
     }
 }
-function showCPU(){
+
+function showCPU() {
     console.log("djdjdhjdhj")
-    PC ='000000000000';
+    PC = '000000000000';
     IR = '0000000000000000';
     AC = '0000000000000000';
     DR = '0000000000000000';
@@ -151,45 +162,45 @@ function showCPU(){
     registerHex.DR = binaryToHex(DR);
     registerHex.memory = binaryToHex(memory);
     var start = document.querySelectorAll(".cpu");
-    var end =document.querySelectorAll(".endInput");
-    [].forEach.call(start, function(el) {
+    var end = document.querySelectorAll(".endInput");
+    [].forEach.call(start, function (el) {
         el.classList.remove("StartCPU");
     });
-    [].forEach.call(end, function(el) {
+    [].forEach.call(end, function (el) {
         el.classList.add("StartCPU");
     });
-    var emptyLog=document.querySelectorAll(".logList");
-    var emptyRegister=document.querySelectorAll(".regList");
-    var emptyflag=document.querySelectorAll(".flagList");
-    [].forEach.call(emptyLog, function(el) {
+    var emptyLog = document.querySelectorAll(".logList");
+    var emptyRegister = document.querySelectorAll(".regList");
+    var emptyflag = document.querySelectorAll(".flagList");
+    [].forEach.call(emptyLog, function (el) {
         console.log("pspspsps")
         el.remove();
     });
-    
-    [].forEach.call(emptyRegister, function(el) {
+
+    [].forEach.call(emptyRegister, function (el) {
         console.log("pspspsps")
-        el.innerText="";
+        el.innerText = "";
     });
-    [].forEach.call(emptyflag, function(el) {
+    [].forEach.call(emptyflag, function (el) {
         console.log("pspspsps")
-        el.innerText="0";
+        el.innerText = "0";
     });
     turnOFFled();
 }
-function back(){
-    document.getElementById("container").style.display="block";
+
+function back() {
+    document.getElementById("container").style.display = "block";
     document.getElementById("HLT").classList.remove("shutDown");
-    // document.getElementById("back").remove();
     document.getElementById("back").style.display = "none";
     var end = document.querySelectorAll(".cpu");
-    var start =document.querySelectorAll(".endInput");
-    [].forEach.call(start, function(el) {
+    var start = document.querySelectorAll(".endInput");
+    [].forEach.call(start, function (el) {
         el.classList.remove("StartCPU");
     });
-    [].forEach.call(end, function(el) {
+    [].forEach.call(end, function (el) {
         el.classList.add("StartCPU");
     });
-    [].forEach.call(code, function(el) {
+    [].forEach.call(code, function (el) {
         console.log("pspspsps")
         el.classList.remove("border");
     });

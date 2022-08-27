@@ -314,7 +314,7 @@ function writeLog(symbol, level) {
             tab.appendChild(r);
             // c.innerText = "kdkflk";
             let z = document.createElement('td');
-            z.innerText="   "
+            // z.innerText="   "
             z.classList.add('space');
             r.appendChild(z);
             tab.appendChild(r);
