@@ -101,10 +101,12 @@ function hexNumberAddress(dec) {
 }
 
 function disableBtn(button) {
+    console.log(";;;;;;;;;;;;;")
     button.disabled = true;
 }
 
 function enableBtn(button) {
+    console.log("ooooooooooo")
     button.disabled = false;
 }
 
@@ -168,7 +170,7 @@ for (let i = 0; i < 9; i++) {
         if (j == 0) {
             c.innerText = items[i];
             c.classList.add('itemsStyle');
-            if( i > 4)
+            if (i > 4)
                 c.classList.add('empty');
             c.classList.add(`${i}`);
             // r.classList.add(`${i}`);
@@ -260,18 +262,16 @@ function writeToflag() {
 }
 
 function checkFlag() {
-    if (AC == "0000000000000000"){
+    if (AC == "0000000000000000") {
         Z = "1";
-    }
-    else if (AC != "0000000000000000"){
+    } else if (AC != "0000000000000000") {
         Z = "0";
     }
-    console.log(AC[0],"5454jhhugy")
-    if (AC[0]=="0") {
-        N="0";    
-    }
-    else if (AC[0]=="1") {
-        N="1";    
+    console.log(AC[0], "5454jhhugy")
+    if (AC[0] == "0") {
+        N = "0";
+    } else if (AC[0] == "1") {
+        N = "1";
     }
     writeToflag();
 }
@@ -311,19 +311,19 @@ function writeLog(symbol, level) {
             r.appendChild(c);
             tab.appendChild(r);
         } else if (index == 1 && index == level) {
-            if(opcode == "8" || opcode == "9" || opcode == "A" || opcode == "B" || opcode == "C" || opcode == "D" || opcode == "E")
+            if (opcode == "8" || opcode == "9" || opcode == "A" || opcode == "B" || opcode == "C" || opcode == "D" || opcode == "E")
                 c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol} \n  AR <-M[AR]`;
             else
-                c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`;   
+                c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`;
             r.classList.add('logList');
             r.appendChild(c);
             tab.appendChild(r);
         } else if (index == 2 && index == level) {
-            if(opcode == "0" || opcode == "8" || opcode == "1" || opcode == "9" || opcode == "2" || opcode == "A" || opcode == "6" || opcode == "E")
+            if (opcode == "0" || opcode == "8" || opcode == "1" || opcode == "9" || opcode == "2" || opcode == "A" || opcode == "6" || opcode == "E")
                 c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n`;
-        else
-          
-            c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n`;
+            else
+
+                c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n`;
             r.classList.add('logList');
             r.classList.add('logexecute');
             r.appendChild(c);
@@ -441,7 +441,7 @@ function CIL() {
 
 function INC() {
     var one = "1";
-    AC =  ADDlogic(AC, one);
+    AC = ADDlogic(AC, one);
     registerHex.AC = binaryToHex(AC);
 }
 
@@ -491,12 +491,13 @@ function and() {
         result += registerHex.DR[index] & Number(ACNumber[index]);
     return result;
 }
+
 function ADD(MemStr, ACStr) {
     const result = [];
     let E = 0;
     let lenMem = MemStr.length;
     let lenAC = ACStr.length;
-    
+
     for (let i = lenMem - 1, j = lenAC - 1; 0 <= i || 0 <= j; --i, --j) {
         let x, y;
         if (0 <= i)
@@ -530,10 +531,10 @@ function ADDlogic(MemStr, ACStr) {
     let E = 0;
     let lenMem = MemStr.length;
     let lenAC = ACStr.length;
-    if(ACStr.length == 1){
-        ACStr="0000000000000001"   
+    if (ACStr.length == 1) {
+        ACStr = "0000000000000001"
     }
-    console.log(ACStr.length,";;;;;;;;;;;;;;;;;yyyyyyyyyyyyyyyyyyyyyyy")
+    console.log(ACStr.length, ";;;;;;;;;;;;;;;;;yyyyyyyyyyyyyyyyyyyyyyy")
     for (let i = lenMem - 1, j = lenAC - 1; 0 <= i || 0 <= j; --i, --j) {
         let x, y;
         if (0 <= i)
@@ -549,23 +550,21 @@ function ADDlogic(MemStr, ACStr) {
         result.push((x + y + E) % 2);
         E = 1 < x + y + E;
     };
-    if (MemStr[0]=="1" & ACStr[0]=="1") {
-        if (result[result.length-1]=="1") {
-            V=0;       
+    if (MemStr[0] == "1" & ACStr[0] == "1") {
+        if (result[result.length - 1] == "1") {
+            V = 0;
+        } else if (result[result.length - 1] == "0") {
+            V = 1;
         }
-        else if (result[result.length-1]=="0") {
-            V=1;   
-        }   
     }
-    if (MemStr[0]=="0" & ACStr[0]=="0") {
-        if (result[result.length-1]=="0") {
-            V=0;       
+    if (MemStr[0] == "0" & ACStr[0] == "0") {
+        if (result[result.length - 1] == "0") {
+            V = 0;
+        } else if (result[result.length - 1] == "1") {
+            V = 1;
         }
-        else if (result[result.length-1]=="1") {
-            V=1;   
-        }   
     }
-    console.log(V,"overflow")
+    console.log(V, "overflow")
     if (E) {
         result.push(1);
         Cout = 1;
@@ -631,10 +630,11 @@ function ISZ() {
 
 //fetch************************************************
 
+enableBtn(fetchBtn);
+disableBtn(executeBtn);
+disableBtn(decodeBtn);
+
 function fetch() {
-    // disableBtn(executeBtn);
-    // disableBtn(decodeBtn);
-    // enableBtn(fetchBtn);
 
     var emptyRegister = document.querySelectorAll(".regList");
     var emptytable = document.querySelectorAll(".empty");
@@ -642,8 +642,8 @@ function fetch() {
         console.log("pspspsps")
         el.innerText = "";
     });
-    [ ].forEach.call(emptytable, function (el) {
-        console.log(el,"////////////")
+    [].forEach.call(emptytable, function (el) {
+        console.log(el, "////////////")
         el.innerText = "T :";
     });
     console.log(registerHex, "fetch");
@@ -669,6 +669,9 @@ function fetch() {
             code[index].classList.remove("border");
     }
     writeLog(" ", 0);
+    enableBtn(decodeBtn);
+    disableBtn(executeBtn);
+    disableBtn(fetchBtn);
 }
 
 //decode**************************************************
@@ -852,7 +855,9 @@ function decode() {
         }
 
     }
-
+    enableBtn(executeBtn);
+    disableBtn(decodeBtn);
+    disableBtn(fetchBtn);
     writeLog(sym, 1);
 }
 
@@ -886,12 +891,12 @@ function execute() {
 
         } else if (valu == "CIR") {
             CIR();
-            writeTotable("5", "T3: AC <- shr AC\n"," AC(15) <- E\n","E <- AC(0)");
+            writeTotable("5", "T3: AC <- shr AC\n", " AC(15) <- E\n", "E <- AC(0)");
             console.log(PC, "PC\n", AC, "AC\n", "CIR");
 
         } else if (valu == "CIL") {
             CIL();
-            writeTotable("5", "T3: AC <- shl AC\n"," AC(0) <- E\n","E <- AC(15)");
+            writeTotable("5", "T3: AC <- shl AC\n", " AC(0) <- E\n", "E <- AC(15)");
             console.log(PC, "PC\n", AC, "AC\n", "CIL");
 
         } else if (valu == "INC") {
@@ -901,22 +906,22 @@ function execute() {
 
         } else if (valu == "SPA") {
             SPA();
-            writeTotable("5", "T3:If( AC(15) = 0)\n","then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( AC(15) = 0)\n", "then ( PC <- PC + 1)");
             console.log(PC, "PC\n", AC, "AC\n", "SPA");
 
         } else if (valu == "SNA") {
             SNA();
-            writeTotable("5", "T3:If( AC(15) = 1)\n","then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( AC(15) = 1)\n", "then ( PC <- PC + 1)");
             console.log(PC, "PC\n", AC, "AC\n", "SNA");
 
         } else if (valu == "SZA") {
             SZA();
-            writeTotable("5", "T3:If( AC = 0)\n","then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( AC = 0)\n", "then ( PC <- PC + 1)");
             console.log(PC, "PC\n", AC, "AC\n", "SZA");
 
         } else if (valu == "SZE") {
             SZE();
-            writeTotable("5", "T3:If( E = 0)\n","then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( E = 0)\n", "then ( PC <- PC + 1)");
             console.log(PC, "PC\n", AC, "AC\n", "SZE");
 
         } else if (valu == "HLT") {
@@ -960,7 +965,7 @@ function execute() {
         console.log(PC, "PC\n", AC, "AC\n", "BUN");
     } else if (opcode == 5) {
         sym = "BSA";
-        writeTotable("5", "T3: M[AR] <- PC\n","AR <- AR + 1");
+        writeTotable("5", "T3: M[AR] <- PC\n", "AR <- AR + 1");
         BSA();
         writeTotable("6", "T4: PC <- AR");
         console.log(PC, "PC\n", AC, "AC\n", "BSA");
@@ -982,7 +987,7 @@ function execute() {
     } else if (opcode == 9) {
         sym = "ADD";
         writeTotable("6", "T4: DR <-M[AR]");
-        AC =  ADDlogic(DR, AC);
+        AC = ADDlogic(DR, AC);
         registerHex.AC = binaryToHex(AC);
         writeTotable("7", "T5: AC <- AC + DR");
         console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
@@ -1005,7 +1010,7 @@ function execute() {
 
     } else if (opcode == "D") {
         sym = "BSA";
-        writeTotable("6", "T4: M[AR] <- PC\n","AR <- AR + 1");
+        writeTotable("6", "T4: M[AR] <- PC\n", "AR <- AR + 1");
         BSA();
         writeTotable("7", "T5: PC <- AR");
         console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
@@ -1017,6 +1022,9 @@ function execute() {
         console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
 
     }
+    enableBtn(fetchBtn);
+    disableBtn(decodeBtn);
+    disableBtn(executeBtn);
     checkFlag();
     led();
     writeLog(sym, 2);
