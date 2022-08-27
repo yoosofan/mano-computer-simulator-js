@@ -501,12 +501,12 @@ function ADD(MemStr, ACStr) {
         // console.log((x + y + E) , "AAAAAAAAAA")
         E = 1 < x + y + E;
     };
-    console.log(result.length,"huhgggg")
-    console.log(result[result.length-1],"huhgggggggggggg")
-    console.log(result,"rrrrrrrrrrr")
-    console.log(MemStr.length,"Memstr.len")
-    console.log(MemStr[0],"Memstrrrrrrrrrr-1")
-    console.log(MemStr,"Memstr")
+    // console.log(result.length,"huhgggg")
+    // console.log(result[result.length-1],"huhgggggggggggg")
+    // console.log(result,"rrrrrrrrrrr")
+    // console.log(MemStr.length,"Memstr.len")
+    // console.log(MemStr[0],"Memstrrrrrrrrrr-1")
+    // console.log(MemStr,"Memstr")
     if (MemStr[0]=="1" & ACStr[0]=="1") {
         if (result[result.length-1]=="1") {
             overflow=0;       
