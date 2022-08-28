@@ -5,7 +5,7 @@ const adr = document.getElementsByClassName("Address");
 const ins = document.getElementById("insert");
 var elementt = document.getElementsByClassName("data");
 var getDataTextarea = document.getElementById("textarea");
-var getDataAsembler = document.getElementById("asembler");
+var getDataAssembler = document.getElementById("assembler");
 var instructionAssembler;
 // var emptyRegister=document.querySelectorAll(".regList");
 ins.addEventListener("click", insert);
@@ -205,7 +205,7 @@ function back() {
 
 // TextAreaAssembler
 function assembler() {
-    var stringValu = getDataAsembler.value.split('\n');
+    var stringValu = getDataAssembler.value.split('\n');
     var opcode;
     var arr = [];
     for (let index = 0; index < stringValu.length; index++) {

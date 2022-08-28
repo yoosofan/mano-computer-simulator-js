@@ -81,13 +81,18 @@ h3 {
     align-items: flex-start;
 
 }
-.AsembleArea{
+.AssembleArea{
     display: flex;
 	flex-direction: row;
-	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: flex-end;
-	align-content: stretch;
+}
+.lableAssembly{
+    display: flex;
+    flex-direction: column;
+}
+.lableAssembly label{
+    margin-bottom: 15px;
 }
 .Instruction {
     display: flex;
