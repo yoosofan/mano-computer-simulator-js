@@ -314,8 +314,8 @@ table {
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
 }
-.dis{
-    display: none;
+#back{
+    margin: 20px;
 }
 .logexecute{
     display: flex;
@@ -330,20 +330,50 @@ margin-top: 50px;
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
 }
-
+.itemsStyle {
+    width: 220px;
+}
+#HLT{
+    display: none;
+}
 .shutDown {
     background-color: #333333;
     width: 100vw;
     height: 100vh;
-   
+    display: block !important;
 }
-#back{
-    display: none;
+.textHLT{
+    color: #fff;
+    font-size: 50px;
+    /* -webkit-animation: slide-fwd-center 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-fwd-center 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both; */
 }
+/* @-webkit-keyframes slide-fwd-center {
+    0% {
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+    }
+    100% {
+      -webkit-transform: translateZ(160px);
+              transform: translateZ(160px);
+    }
+  }
+  @keyframes slide-fwd-center {
+    0% {
+      -webkit-transform: translateZ(0);
+              transform: translateZ(0);
+    }
+    100% {
+      -webkit-transform: translateZ(160px);
+              transform: translateZ(160px);
+    }
+  } */
+  
+
 
 
 .boxLog {
-    width: 130px;
+    width: 170px;
     border: 1px solid #3aa3a7;
     height: 70vh;
     overflow-y: auto;

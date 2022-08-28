@@ -150,7 +150,6 @@ function turnOFFled() {
 }
 
 function showCPU() {
-    // console.log("djdjdhjdhj")
     PC = '000000000000';
     IR = '0000000000000000';
     AC = '0000000000000000';
@@ -163,6 +162,7 @@ function showCPU() {
     registerHex.memory = binaryToHex(memory);
     var start = document.querySelectorAll(".cpu");
     var end = document.querySelectorAll(".endInput");
+    document.getElementById("versions").style.display="none";
     [].forEach.call(start, function (el) {
         el.classList.remove("StartCPU");
     });
@@ -173,16 +173,13 @@ function showCPU() {
     var emptyRegister = document.querySelectorAll(".regList");
     var emptyflag = document.querySelectorAll(".flagList");
     [].forEach.call(emptyLog, function (el) {
-        // console.log("pspspsps")
         el.remove();
     });
 
     [].forEach.call(emptyRegister, function (el) {
-        // console.log("pspspsps")
         el.innerText = "";
     });
     [].forEach.call(emptyflag, function (el) {
-        // console.log("pspspsps")
         el.innerText = "0";
     });
     turnOFFled();
@@ -191,7 +188,7 @@ function showCPU() {
 function back() {
     document.getElementById("container").style.display = "block";
     document.getElementById("HLT").classList.remove("shutDown");
-    document.getElementById("back").style.display = "none";
+    document.getElementById("versions").style.display="block";
     var end = document.querySelectorAll(".cpu");
     var start = document.querySelectorAll(".endInput");
     [].forEach.call(start, function (el) {
@@ -201,7 +198,6 @@ function back() {
         el.classList.add("StartCPU");
     });
     [].forEach.call(code, function (el) {
-        // console.log("pspspsps")
         el.classList.remove("border");
     });
 }

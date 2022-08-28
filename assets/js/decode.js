@@ -27,7 +27,7 @@ const register_instructions = [
     ["HLT", "7001"]
 ]
 let sym;
-
+let myString;
 let AC = '0000000000000000';
 let DR = '0000000000000000';
 let AR = '000000000000';
@@ -319,11 +319,8 @@ function writeLog(symbol, level) {
             r.appendChild(c);
             tab.appendChild(r);
         } else if (index == 2 && index == level) {
-            if (opcode == "0" || opcode == "8" || opcode == "1" || opcode == "9" || opcode == "2" || opcode == "A" || opcode == "6" || opcode == "E")
-                c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n`;
-            else
-
-                c.innerText = `execute \n ALU_Sel: ${symbol} \n AC <= ALU_OUT \n`;
+            console.log(myString,"log")
+            c.innerText = `execute \n  ${myString}`;
             r.classList.add('logList');
             r.classList.add('logexecute');
             r.appendChild(c);
@@ -478,7 +475,7 @@ function SZE() {
 function HLT() {
     // console.log("hlt meeeeee")
     document.getElementById("HLT").classList.add("shutDown");
-    document.getElementById("back").style.display = "block";
+    // document.getElementById("back").style.display = "block";
     document.getElementById("container").style.display = "none";
 }
 
@@ -595,22 +592,22 @@ function STA() {
     }
 }
 
-// function BUN() {
-//     PC = AR;
-// }
+function BUN() {
+    PC = AR;
+}
 
-// function BSA() {
-//     for (let l = 0; l < memoryAddress.length; l++)
-//         if (memoryAddress[l].innerText == registerHex.AR) {
-//             memory = AR;
-//             registerHex.memory = binaryToHex(memory);
-//             code[l].innerText = PC;
-//             registerHex.DR = code[l].innerText;
-//             DR = hextobinary(registerHex.DR)
-//         }
-//     var one = "1";
-//     PC = ADD(AR, one);
-// }
+function BSA() {
+    for (let l = 0; l < memoryAddress.length; l++)
+        if (memoryAddress[l].innerText == registerHex.AR) {
+            memory = AR;
+            registerHex.memory = binaryToHex(memory);
+            code[l].innerText = PC;
+            registerHex.DR = code[l].innerText;
+            DR = hextobinary(registerHex.DR)
+        }
+    var one = "1";
+    PC = ADD(AR, one);
+}
 
 function ISZ() {
     var one = "1";
@@ -708,7 +705,6 @@ function decode() {
 
         } else if (opcode == 1) {
             sym = "ADD";
-            // writeTotable("4", "T2: AR <- IR[0:11]");
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
                     memory = hextobinary(code[l].innerText);
@@ -719,7 +715,6 @@ function decode() {
 
         } else if (opcode == 2) {
             sym = "LDA";
-            // writeTotable("4", "T2: AR <- IR[0:11]");
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
                     memory = hextobinary(code[l].innerText);
@@ -864,69 +859,77 @@ function decode() {
 //execute**************************************************
 function execute() {
     console.log(registerHex, "execute");
-    // enableBtn(executeBtn);
-    // disableBtn(fetchBtn);
-    // disableBtn(decodeBtn);
     if (opcode == "7") {
 
         if (valu == "CLA") {
             CLA();
             writeTotable("5", "T3: AC <- 0");
+            myString= " AC <- 0";
             console.log(PC, "PC\n", AC, "AC\n", "CLA");
 
         } else if (valu == "CLE") {
             CLE();
             writeTotable("5", "T3: E <- 0");
+            myString=" E <- 0";
             console.log(PC, "PC\n", AC, "AC\n", "CLE");
 
         } else if (valu == "CMA") {
             CMA();
             writeTotable("5", "T3: AC <- complement(AC)");
+            myString=" AC <- complement(AC)";
             console.log(PC, "PC\n", AC, "AC\n", "CMA");
 
         } else if (valu == "CME") {
             CME();
             writeTotable("5", "T3: E <- complement(E)");
+            myString=" E <- complement(E)"
             console.log(PC, "PC\n", AC, "AC\n", "CME");
 
         } else if (valu == "CIR") {
             CIR();
-            writeTotable("5", "T3: AC <- shr AC\n", " AC(15) <- E\n", "E <- AC(0)");
+            writeTotable("5", "T3: AC <- shr AC\n, AC(15) <- E\n ,E <- AC(0)");
+            myString=" AC <- shr AC\n AC(15) <- E\n E <- AC(0)";
             console.log(PC, "PC\n", AC, "AC\n", "CIR");
 
         } else if (valu == "CIL") {
             CIL();
-            writeTotable("5", "T3: AC <- shl AC\n", " AC(0) <- E\n", "E <- AC(15)");
+            writeTotable("5", "T3: AC <- shl AC\n, AC(0) <- E\n,E <- AC(15)");
+            myString=" AC <- shl AC\n AC(0) <- E\n E <- AC(15)";
             console.log(PC, "PC\n", AC, "AC\n", "CIL");
 
         } else if (valu == "INC") {
             INC();
             writeTotable("5", "T3: AC <- AC + 1");
+            myString=" AC <- AC + 1"
             console.log(PC, "PC\n", AC, "AC\n", "INC");
 
         } else if (valu == "SPA") {
             SPA();
-            writeTotable("5", "T3:If( AC(15) = 0)\n", "then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( AC(15) = 0)\n,then ( PC <- PC + 1)");
+            myString="If( AC(15) = 0)\n  then ( PC <- PC + 1)";
             console.log(PC, "PC\n", AC, "AC\n", "SPA");
 
         } else if (valu == "SNA") {
             SNA();
-            writeTotable("5", "T3:If( AC(15) = 1)\n", "then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( AC(15) = 1)\n,then ( PC <- PC + 1)");
+            myString="If( AC(15) = 1)\n then ( PC <- PC + 1)";
             console.log(PC, "PC\n", AC, "AC\n", "SNA");
 
         } else if (valu == "SZA") {
             SZA();
-            writeTotable("5", "T3:If( AC = 0)\n", "then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( AC = 0)\n,then ( PC <- PC + 1)");
+            myString="If( AC = 0)\n then ( PC <- PC + 1)";
             console.log(PC, "PC\n", AC, "AC\n", "SZA");
 
         } else if (valu == "SZE") {
             SZE();
-            writeTotable("5", "T3:If( E = 0)\n", "then ( PC <- PC + 1)");
+            writeTotable("5", "T3:If( E = 0)\n,then ( PC <- PC + 1)");
             console.log(PC, "PC\n", AC, "AC\n", "SZE");
-
+            myString="If( E = 0)\n then ( PC <- PC + 1)";
         } else if (valu == "HLT") {
             HLT();
             writeTotable("5", "T3:S <- 0");
+            myString="T3:S <- 0";
             console.log(PC, "PC\n", AC, "AC\n", "HLT");
 
 
@@ -938,6 +941,7 @@ function execute() {
         AC = hextobinary(and());
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC ^ DR");
+        myString="AC <- AC ^ DR";
         console.log(PC, "PC\n", AC, "AC\n", "and");
     } else if (opcode == 1) {
         sym = "ADD";
@@ -945,35 +949,41 @@ function execute() {
         AC = ADDlogic(DR, AC);
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC + DR");
+        myString= "AC <- AC + DR";
         console.log(PC, "PC\n", AC, "AC\n", "ADD");
     } else if (opcode == 2) {
         sym = "LDA";
         writeTotable("5", "T3: DR <-M[AR]");
         LDA();
         writeTotable("6", "T4: AC <- DR");
+        myString="AC <- DR";
         console.log(PC, "PC\n", AC, "AC\n", "LDA");
 
     } else if (opcode == 3) {
         sym = "STA";
         STA();
         writeTotable("5", "T3: M[AR] <- AC");
+        myString=" M[AR] <- AC";
         console.log(PC, "PC\n", AC, "AC\n", "STA");
     } else if (opcode == 4) {
         sym = "BUN";
         BUN();
         writeTotable("5", "T3: PC  <- AR");
+        myString="PC  <- AR";
         console.log(PC, "PC\n", AC, "AC\n", "BUN");
     } else if (opcode == 5) {
         sym = "BSA";
-        writeTotable("5", "T3: M[AR] <- PC\n", "AR <- AR + 1");
+        writeTotable("5", "T3: M[AR] <- PC\nAR <- AR + 1");
         BSA();
         writeTotable("6", "T4: PC <- AR");
+        myString="PC <- AR";
         console.log(PC, "PC\n", AC, "AC\n", "BSA");
     } else if (opcode == 6) {
         sym = "ISZ";
         writeTotable("5", "T3: DR <-M[AR]");
         ISZ();
-        writeTotable("6", "T4: M[AR] <- DR IF(DR=0)\n", "then (PC <- PC + 1)");
+        writeTotable("6", "T4: M[AR] <- DR IF(DR=0) ,\n then (PC <- PC + 1)");
+        myString=" M[AR] <- DR IF(DR=0) ,\n then (PC <- PC + 1)";
         console.log(PC, "PC\n", AC, "AC\n", "ISZ");
 
     } else if (opcode == 8) {
@@ -982,6 +992,7 @@ function execute() {
         AC = hextobinary(and());
         registerHex.AC = binaryToHex(AC);
         writeTotable("7", "T5: AC <- AC ^ DR");
+        myString="AC <- AC ^ DR";
         console.log(PC, "PC\n", AC, "AC\n", "andtwo");
 
     } else if (opcode == 9) {
@@ -990,35 +1001,41 @@ function execute() {
         AC = ADDlogic(DR, AC);
         registerHex.AC = binaryToHex(AC);
         writeTotable("7", "T5: AC <- AC + DR");
+        myString= "AC <- AC + DR";
         console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
     } else if (opcode == "A") {
         sym = "LDA";
         writeTotable("6", "T4: DR <-M[AR]");
         LDA();
         writeTotable("7", "T5: AC <- DR");
+        myString="AC <- DR";
         console.log(PC, "PC\n", AC, "AC\n", "LDAtwo");
     } else if (opcode == "B") {
         sym = "STA";
         STA();
         writeTotable("6", "T4: M[AR] <- AC");
+        myString=" M[AR] <- AC";
         console.log(PC, "PC\n", AC, "AC\n", "STAtwo");
     } else if (opcode == "C") {
         sym = "BUN";
         BUN();
         writeTotable("6", "T4: PC  <- AR");
+        myString="PC  <- AR";
         console.log(PC, "PC\n", AC, "AC\n", "BUNtwo");
 
     } else if (opcode == "D") {
         sym = "BSA";
-        writeTotable("6", "T4: M[AR] <- PC\n", "AR <- AR + 1");
+        writeTotable("6", "T4: M[AR] <- PC\nAR <- AR + 1");
         BSA();
         writeTotable("7", "T5: PC <- AR");
+        myString="PC <- AR";
         console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
     } else if (opcode == "E") {
         sym = "ISZ";
         writeTotable("6", "T4: DR <-M[AR]");
         ISZ();
-        writeTotable("7", "T5: M[AR] <- DR IF(DR=0)\n", "then (PC <- PC + 1)");
+        writeTotable("7", "T5: M[AR] <- DR IF(DR=0),\nthen (PC <- PC + 1)");
+        myString=" M[AR] <- DR IF(DR=0) ,\n then (PC <- PC + 1)";
         console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
 
     }
