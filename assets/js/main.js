@@ -19,7 +19,7 @@ function natural() {
 function insert() {
     // console.log(count, ";;;")
     var data = document.getElementById("firstInput").value;
-    if (data == "") { } else
+    if (data == "") {} else
         elementt[count - 1].innerText = data;
 
     console.log(data, "llllfjfhdjfgdj")
@@ -59,10 +59,10 @@ function store() {
             else
                 dataStore[b] = " ";
         else
-            if (b == 99)
-                dataStore[b] = tag + ",";
-            else
-                dataStore[b] = tag;
+        if (b == 99)
+            dataStore[b] = tag + ",";
+        else
+            dataStore[b] = tag;
     }
     getDataTextarea.value = dataStore;
 }
@@ -79,7 +79,7 @@ function localstore() {
     for (let i = listTest.length; i < 10; i++) {
         let o = i - 2;
         var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
-        if (storedNames == null) { } else {
+        if (storedNames == null) {} else {
             list[i].innerHTML = `DataFile${o}`;
             list[i].onclick = function () {
                 var namelist = this.innerHTML;
@@ -97,7 +97,7 @@ for (let i = listTest.length; i < 10; i++) {
     let o = i - 2;
     var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
     // console.log(storedNames, "{{{{{{{{{[")
-    if (storedNames == null) { } else {
+    if (storedNames == null) {} else {
         list[i].innerHTML = `DataFile${o}`;
         list[i].onclick = function () {
             var namelist = this.innerHTML;
@@ -129,7 +129,7 @@ function sendText() {
     let c = document.getElementsByClassName('data');
     let j = 0;
     for (let i = 0; i < c.length; i++) {
-        if (a[j] == undefined || a[j] == " ") { } else if (a[j] == "") {
+        if (a[j] == undefined || a[j] == " ") {} else if (a[j] == "") {
             break
         } else {
             console.log(a[j])
@@ -151,6 +151,9 @@ function turnOFFled() {
 }
 
 function showCPU() {
+    enableBtn(fetchBtn);
+    disableBtn(executeBtn);
+    disableBtn(decodeBtn);
     PC = '000000000000';
     IR = '0000000000000000';
     AC = '0000000000000000';
@@ -248,7 +251,7 @@ function assembler() {
                 for (let i = 0; i < memoryAddress.length; i++) {
                     if (instructionAssembler[0] == memoryAddress[i].innerText) {
                         // var ind=memoryAddress.indexOf(memoryAddress[i]);
-                        arr[i] = instructionAssembler[1] +",";
+                        arr[i] = instructionAssembler[1] + ",";
                     }
 
                 }
@@ -257,7 +260,7 @@ function assembler() {
 
     }
     for (let h = 0; h < memoryAddress.length; h++) {
-        console.log(arr[h],";ydhdjhdjnhgjhnh")
+        console.log(arr[h], ";ydhdjhdjnhgjhnh")
         if (arr[h] == undefined) {
             arr[h] = " ,";
 
@@ -266,4 +269,27 @@ function assembler() {
     console.log(arr, "\n", arr.length, "llllllllllllllllllllllllllll")
     arr = arr.join('');
     getDataTextarea.value = arr;
+}
+
+
+
+// version 2 
+function version() {
+    console.log("dkdhjfhfj")
+    var two = document.getElementsByClassName("vTwo");
+    var ver = document.getElementById("versions").value;
+    console.log(document.getElementById("versions").value, ";;;;;;;;");
+    if ("version1" == ver) {
+        versions = 1;
+        [].forEach.call(two, function (el) {
+            el.classList.add("dis");
+        });
+    }
+    if ("version2" == ver) {
+        versions = 2;
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+    }
+
 }

@@ -446,3 +446,8 @@ margin-top: 50px;
     background-color: #fff;
     height: 20px;
 }
+
+/* version two  */
+.dis{
+    display: none;
+}

@@ -22,9 +22,9 @@
             <div class="marginBox">
                 <div class="header">
                     <div class="version">
-                        <select class="versions" id="versions">
+                        <select class="versions" id="versions" onchange="version()">
                             <option value="version1">version1</option>
-                            <option value="version2">version2</option>
+                            <option value="version2" >version2</option>
                             <option value="version3">version3</option>
                             <option value="version4">version4</option>
                         </select>
@@ -127,9 +127,9 @@
                 </div>
                 <div class="flexBox">
                     <div class="AssembleArea">
-                        <div class="lableAssembly">     
+                        <div class="lableAssembly">
                             <label for="">Add your assembly code</label>
-                            <textarea name="" id="assembler"  cols="30" rows="15"></textarea>
+                            <textarea name="" id="assembler" cols="30" rows="15"></textarea>
                         </div>
                         <button class="btn" id="assmblerBtn" onclick="assembler()">send to textarea</button>
                     </div>
@@ -160,16 +160,16 @@
                                 <td>3xxx</td>
                                 <td>Bxxx</td>
                             </tr>
-                            <!-- <tr>
-                            <td>BUN</td>
-                            <td>4xxx</td>
-                            <td>Cxxx</td>
-                        </tr> -->
-                            <!-- <tr>
-                            <td>BSA</td>
-                            <td>5xxx</td>
-                            <td>Dxxx</td>
-                        </tr> -->
+                            <tr class="vTwo dis">
+                                <td>BUN</td>
+                                <td>4xxx</td>
+                                <td>Cxxx</td>
+                            </tr>
+                            <!-- <tr class="">
+                                <td>BSA</td>
+                                <td>5xxx</td>
+                                <td>Dxxx</td>
+                            </tr> -->
                             <tr>
                                 <td>ISZ</td>
                                 <td>6xxx</td>
@@ -210,22 +210,22 @@
                                 <td>INC</td>
                                 <td>7020</td>
                             </tr>
-                            <!-- <tr>
-                            <td>SPA</td>
-                            <td>7010</td>
-                        </tr>
-                        <tr>
-                            <td>SNA</td>
-                            <td>7008</td>
-                        </tr> -->
-                            <!-- <tr>
-                            <td>SZA</td>
-                            <td>7004</td>
-                        </tr> -->
-                            <!-- <tr>
-                            <td>SZE</td>
-                            <td>7002</td>
-                        </tr> -->
+                            <tr class="vTwo dis" >
+                                <td>SPA</td>
+                                <td>7010</td>
+                            </tr >
+                            <tr class="vTwo dis">
+                                <td>SNA</td>
+                                <td>7008</td>
+                            </tr>
+                            <tr class="vTwo dis">
+                                <td>SZA</td>
+                                <td>7004</td>
+                            </tr>
+                            <tr class="vTwo dis">
+                                <td>SZE</td>
+                                <td>7002</td>
+                            </tr>
                             <tr>
                                 <td>HLT</td>
                                 <td>7001</td>
@@ -240,7 +240,7 @@
     <script src="./assets/js/xlsx.full.min.js"></script>
     <script src="./assets/js/example.js"></script>
     <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/decode.js"></script>
+    <script src="./assets/js/CPU.js"></script>
 </body>
 
 </html>
