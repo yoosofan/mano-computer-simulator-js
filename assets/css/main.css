@@ -75,7 +75,20 @@ h3 {
     align-items: flex-start;
     justify-content: space-between;
 }
+.flexBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
+}
+.AsembleArea{
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-end;
+	align-content: stretch;
+}
 .Instruction {
     display: flex;
     align-items: flex-start;
