@@ -23,12 +23,12 @@
                 <div class="header">
                     <div class="version">
                         <select class="versions" id="versions">
-                          <option value="version1">version1</option>
-                          <option value="version2">version2</option>
-                          <option value="version3">version3</option>
-                          <option value="version4">version4</option>
+                            <option value="version1">version1</option>
+                            <option value="version2">version2</option>
+                            <option value="version3">version3</option>
+                            <option value="version4">version4</option>
                         </select>
-                     </div>
+                    </div>
                     <h1>Processor simulator</h1>
                 </div>
                 <hr class="hr">
@@ -125,84 +125,89 @@
                         <div class="circle"></div>
                     </div>
                 </div>
-
-                <div class="Instruction endInput">
-                    <table class="InstructionTableReg">
-                        <tr>
-                            <th>symbol</th>
-                            <th>I=0</th>
-                            <th>I=1</th>
-                        </tr>
-                        <tr>
-                            <td>AND</td>
-                            <td>0xxx</td>
-                            <td>8xxx</td>
-                        </tr>
-                        <tr>
-                            <td>ADD</td>
-                            <td>1xxx</td>
-                            <td>9xxx</td>
-                        </tr>
-                        <tr>
-                            <td>LDA</td>
-                            <td>2xxx</td>
-                            <td>Axxx</td>
-                        </tr>
-                        <tr>
-                            <td>STA</td>
-                            <td>3xxx</td>
-                            <td>Bxxx</td>
-                        </tr>
-                        <!-- <tr>
+                <div class="flexBox">
+                    <div class="AsembleArea">
+                        <textarea name="" id="asembler"  cols="30" rows="15"></textarea>
+                        <button class="btn" id="asmblerBtn" onclick="assembler()">send to textarea</button>
+                    </div>
+                    <div class="Instruction endInput">
+                        <table class="InstructionTableReg">
+                            <tr>
+                                <th>symbol</th>
+                                <th>I=0</th>
+                                <th>I=1</th>
+                            </tr>
+                            <tr>
+                                <td>AND</td>
+                                <td>0xxx</td>
+                                <td>8xxx</td>
+                            </tr>
+                            <tr>
+                                <td>ADD</td>
+                                <td>1xxx</td>
+                                <td>9xxx</td>
+                            </tr>
+                            <tr>
+                                <td>LDA</td>
+                                <td>2xxx</td>
+                                <td>Axxx</td>
+                            </tr>
+                            <tr>
+                                <td>STA</td>
+                                <td>3xxx</td>
+                                <td>Bxxx</td>
+                            </tr>
+                            <!-- <tr>
                             <td>BUN</td>
                             <td>4xxx</td>
                             <td>Cxxx</td>
                         </tr> -->
-                        <!-- <tr>
+                            <!-- <tr>
                             <td>BSA</td>
                             <td>5xxx</td>
                             <td>Dxxx</td>
                         </tr> -->
-                        <tr>
-                            <td>ISZ</td>
-                            <td>6xxx</td>
-                            <td>Exxx</td>
-                        </tr>
-                    </table>
-                    <table class="InstructionTableReg">
-                        <tr>
-                            <th>symbol</th>
-                            <th>hexadecimal</th>
-                        </tr>
-                        <tr>
-                            <td>CLA</td>
-                            <td>7800</td>
-                        </tr>
-                        <tr>
-                            <td>CLE</td>
-                            <td>7400</td>
-                        </tr>
-                        <tr>
-                            <td>CMA</td>
-                            <td>7200</td>
-                        </tr>
-                        <tr>
-                            <td>CME</td>
-                            <td>7100</td>
-                        </tr>
-                        <tr>
-                            <td>CIR</td>
-                            <td>7080</td>
-                        </tr>
-                        <tr>
-                            <td>CIL</td>
-                            <td>7040</td>
-                        </tr>
-                        <tr>
-                            <td>INC</td>
-                            <td>7020</td>
-                        </tr>
-                        <!-- <tr>
+                            <tr>
+                                <td>ISZ</td>
+                                <td>6xxx</td>
+                                <td>Exxx</td>
+                            </tr>
+                        </table>
+
+                        <table class="InstructionTableReg">
+                            <tr>
+                                <th>symbol</th>
+                                <th>hexadecimal</th>
+                            </tr>
+                            <tr>
+                                <td>CLA</td>
+                                <td>7800</td>
+                            </tr>
+                            <tr>
+                                <td>CLE</td>
+                                <td>7400</td>
+                            </tr>
+                            <tr>
+                                <td>CMA</td>
+                                <td>7200</td>
+                            </tr>
+                            <tr>
+                                <td>CME</td>
+                                <td>7100</td>
+                            </tr>
+                            <tr>
+                                <td>CIR</td>
+                                <td>7080</td>
+                            </tr>
+                            <tr>
+                                <td>CIL</td>
+                                <td>7040</td>
+                            </tr>
+                            <tr>
+                                <td>INC</td>
+                                <td>7020</td>
+                            </tr>
+                            <!-- <tr>
                             <td>SPA</td>
                             <td>7010</td>
                         </tr>
@@ -210,19 +215,20 @@
                             <td>SNA</td>
                             <td>7008</td>
                         </tr> -->
-                        <!-- <tr>
+                            <!-- <tr>
                             <td>SZA</td>
                             <td>7004</td>
                         </tr> -->
-                        <!-- <tr>
+                            <!-- <tr>
                             <td>SZE</td>
                             <td>7002</td>
                         </tr> -->
-                        <tr>
-                            <td>HLT</td>
-                            <td>7001</td>
-                        </tr>
-                    </table>
+                            <tr>
+                                <td>HLT</td>
+                                <td>7001</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
