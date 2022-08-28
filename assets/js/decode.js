@@ -744,7 +744,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
@@ -764,7 +764,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
@@ -783,7 +783,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
@@ -802,7 +802,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
@@ -813,7 +813,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
@@ -824,7 +824,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
@@ -835,7 +835,7 @@ function decode() {
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
-                    registerHex.AR = registerHex.memory;
+                    registerHex.AR ="0x" + registerHex.memory;
                     break;
                 }
             writeTotable("5", "T3: AR <-M[AR]");
