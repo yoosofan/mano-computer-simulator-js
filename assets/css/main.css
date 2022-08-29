@@ -8,30 +8,33 @@
 .marginBox {
     margin: 50px 0px;
 }
-.header{
+
+.header {
     display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: flex-start;
-	align-content: stretch;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
 }
 
-.version{
+.version {
     width: 35%;
     padding-top: 13px;
 }
 
-.versions{
-    padding: 8px;  
+.versions {
+    padding: 8px;
     width: 110px;
     color: rgb(36, 90, 90);
     border: 2px solid #3aa3a7;
     background-color: #fff;
 }
+
 :focus-visible {
     outline: #3aa3a7 auto 1px;
 }
+
 h1 {
     color: rgb(36, 90, 90);
     text-align: center;
@@ -75,25 +78,30 @@ h3 {
     align-items: flex-start;
     justify-content: space-between;
 }
-.flexBox{
+
+.flexBox {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 
 }
-.AssembleArea{
+
+.AssembleArea {
     display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: flex-end;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
 }
-.lableAssembly{
+
+.lableAssembly {
     display: flex;
     flex-direction: column;
 }
-.lableAssembly label{
+
+.lableAssembly label {
     margin-bottom: 15px;
 }
+
 .Instruction {
     display: flex;
     align-items: flex-start;
@@ -148,15 +156,17 @@ h3 {
     width: 120px;
 }
 
-.special{
+.special {
     background-color: #3aa3a7;
     color: #fff;
 }
+
 .btn:hover {
     transition: .3s;
     background-color: rgb(36, 90, 90);
     color: #fff;
 }
+
 .special:hover {
     background-color: #ffffff;
     color: rgb(36, 90, 90);
@@ -332,40 +342,49 @@ table {
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
 }
-#back{
+
+#back {
     margin: 20px;
 }
-.logexecute{
+
+.logexecute {
     display: flex;
     flex-direction: column;
 }
-.flagTable{
-margin-top: 50px;
+
+.flagTable {
+    margin-top: 50px;
 }
+
 .flagTable td {
     align-items: center;
     padding: 8px;
     border-collapse: collapse;
     border: 1px solid #3aa3a7;
 }
+
 .itemsStyle {
     width: 220px;
 }
-#HLT{
+
+#HLT {
     display: none;
 }
+
 .shutDown {
     background-color: #333333;
     width: 100vw;
     height: 100vh;
     display: block !important;
 }
-.textHLT{
+
+.textHLT {
     color: #fff;
     font-size: 50px;
     /* -webkit-animation: slide-fwd-center 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: slide-fwd-center 0.45s cubic-bezier(0.250, 0.460, 0.450, 0.940) both; */
 }
+
 /* @-webkit-keyframes slide-fwd-center {
     0% {
       -webkit-transform: translateZ(0);
@@ -386,7 +405,7 @@ margin-top: 50px;
               transform: translateZ(160px);
     }
   } */
-  
+
 
 
 
@@ -396,9 +415,11 @@ margin-top: 50px;
     height: 70vh;
     overflow-y: auto;
 }
-#log{
+
+#log {
     width: 100%;
 }
+
 #log th {
     /* width: 112px; */
     padding: 8px;
@@ -411,6 +432,7 @@ margin-top: 50px;
 
     text-align: center;
 }
+
 .ledBox {
     /* border:1px solid #3aa3a7; */
     background-color: rgb(223, 223, 223);
@@ -419,35 +441,157 @@ margin-top: 50px;
     justify-content: space-between;
     width: 50%;
 }
-.ledBox h3{
+
+.ledBox h3 {
     margin: 0px 10px 0px 0px;
 }
+
 .circle {
     height: 25px;
     width: 25px;
-    border:1px solid #3aa3a7;
+    border: 1px solid #3aa3a7;
     background-color: #fff;
     border-radius: 50%;
     display: inline-block;
 }
-.led{
+
+.led {
     display: flex;
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
 }
-.led h1{
+
+.led h1 {
     margin: 20px 0px;
 }
+
 .StartCPU {
     display: none;
 }
-.space{
+
+.space {
     background-color: #fff;
     height: 20px;
 }
 
 /* version two  */
-.dis{
+.dis {
     display: none;
+}
+
+/* seven segment  */
+
+.boxSevensegment {
+    margin-top: 50px;
+    width: 80%;
+    height: 340px;
+    padding: 20px;
+    background-color: #1d1d1d;
+    display: flex;
+    justify-content: space-around;
+}
+
+.display {
+    position: relative;
+    width: 160px;
+}
+
+.display2 {
+    position: relative;
+    width: 160px;
+}
+
+.display3 {
+    position: relative;
+    width: 160px;
+}
+
+.display4 {
+    position: relative;
+    width: 160px;
+}
+
+.segment {
+    height: 125px;
+    width: 15px;
+    background-color: #3aa3a7;
+    border-radius: 9999px;
+    box-shadow: 0px 0px 25px #3aa3a7;
+}
+
+.segment2 {
+    height: 125px;
+    width: 15px;
+    background-color: #3aa3a7;
+    border-radius: 9999px;
+    box-shadow: 0px 0px 25px #3aa3a7;
+}
+
+.segment3 {
+    height: 125px;
+    width: 15px;
+    background-color: #3aa3a7;
+    border-radius: 9999px;
+    box-shadow: 0px 0px 25px #3aa3a7;
+}
+
+.segment4 {
+    height: 125px;
+    width: 15px;
+    background-color: #3aa3a7;
+    border-radius: 9999px;
+    box-shadow: 0px 0px 25px #3aa3a7;
+}
+
+.A {
+    position: absolute;
+    top: -45px;
+    left: 90px;
+    transform: rotate(90deg);
+}
+
+.B {
+    position: absolute;
+    top: 20px;
+    left: 160px;
+}
+
+.C {
+    position: absolute;
+    top: 150px;
+    left: 160px;
+}
+
+.D {
+    position: absolute;
+    top: 215px;
+    left: 90px;
+    transform: rotate(90deg);
+}
+
+.E {
+    position: absolute;
+    top: 150px;
+    left: 20px;
+}
+
+.F {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.G {
+    position: absolute;
+    top: 85px;
+    left: 90px;
+    transform: rotate(90deg);
+}
+
+@media screen and (max-width: 1000px) {
+    .boxSevensegment {
+        width: 100%;
+        
+    }
 }
