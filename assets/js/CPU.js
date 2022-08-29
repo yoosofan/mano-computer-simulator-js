@@ -283,170 +283,170 @@ function checkFlag() {
 }
 
 var sevenSegment = {
-  zero: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "F")
-        el.style.display = "block";
-    })
-  },
-  one: function (myList) {
-    console.log(this)
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "B" || el.classList[1] == "C" )
-        el.style.display = "block";
-    })
-  },
-  two: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  three: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  four: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  five: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  six: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E"|| el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  seven: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" ||  el.classList[1] == "B" || el.classList[1] == "C")
-        el.style.display = "block";
-    })
-  },
-  eight: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E"|| el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  nine: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" ||  el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  A: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "E" ||  el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  B: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (  el.classList[1] == "C" ||  el.classList[1] == "D" || el.classList[1] == "E" ||  el.classList[1] == "F" || el.classList[1] == "G")
-        el.style.display = "block";
-    })
-  },
-  C: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (  el.classList[1] == "A" ||  el.classList[1] == "D" || el.classList[1] == "E" ||  el.classList[1] == "F" )
-        el.style.display = "block";
-    })
-  },
-  D: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (  el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" ||  el.classList[1] == "G" )
-        el.style.display = "block";
-    })
-  },
-  E: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (  el.classList[1] == "A" || el.classList[1] == "F" || el.classList[1] == "D" || el.classList[1] == "E" ||  el.classList[1] == "G" )
-        el.style.display = "block";
-    })
-  },
-  F: function (myList) {
-    this.lightsOut(myList);
-    [].forEach.call(myList, function (el) {
-      if (  el.classList[1] == "A" || el.classList[1] == "F" || el.classList[1] == "E" ||  el.classList[1] == "G" )
-        el.style.display = "block";
-    })
-  },
-  lightsOut: function (myList) {
-    console.log(myList, ";kdjhdjdhfjh");
-    [].forEach.call(myList, function (el) {
-      el.style.display = "none"
-    });
-  }
+    zero: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "F")
+                el.style.display = "block";
+        })
+    },
+    one: function (myList) {
+        console.log(this)
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "B" || el.classList[1] == "C")
+                el.style.display = "block";
+        })
+    },
+    two: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    three: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    four: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    five: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    six: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    seven: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C")
+                el.style.display = "block";
+        })
+    },
+    eight: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    nine: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    A: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "E" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    B: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "F" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    C: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "F")
+                el.style.display = "block";
+        })
+    },
+    D: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "B" || el.classList[1] == "C" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    E: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "F" || el.classList[1] == "D" || el.classList[1] == "E" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    F: function (myList) {
+        this.lightsOut(myList);
+        [].forEach.call(myList, function (el) {
+            if (el.classList[1] == "A" || el.classList[1] == "F" || el.classList[1] == "E" || el.classList[1] == "G")
+                el.style.display = "block";
+        })
+    },
+    lightsOut: function (myList) {
+        console.log(myList, ";kdjhdjdhfjh");
+        [].forEach.call(myList, function (el) {
+            el.style.display = "none"
+        });
+    }
 };
-function sevensegmentF(){
+function sevensegmentF() {
     for (let index = 0; index < 4; index++) {
-        var partOFAC=registerHex.AC[index];
+        var partOFAC = registerHex.AC[index];
         var className;
-        if(index == 0)
-            className=myClassdisplay;
-        else if(index == 1)
-            className=myClassdisplay2;
-        else if(index == 2)
-            className=myClassdisplay3;
-        else if(index == 3)
-            className=myClassdisplay4;
+        if (index == 0)
+            className = myClassdisplay;
+        else if (index == 1)
+            className = myClassdisplay2;
+        else if (index == 2)
+            className = myClassdisplay3;
+        else if (index == 3)
+            className = myClassdisplay4;
 
-        if(partOFAC == "0")
+        if (partOFAC == "0")
             sevenSegment.zero(className);
-        if(partOFAC == "1")
+        if (partOFAC == "1")
             sevenSegment.one(className);
-        if(partOFAC == "2")
+        if (partOFAC == "2")
             sevenSegment.two(className);
-        if(partOFAC == "3")
+        if (partOFAC == "3")
             sevenSegment.three(className);
-        if(partOFAC == "4")
+        if (partOFAC == "4")
             sevenSegment.four(className);
-        if(partOFAC == "5")
+        if (partOFAC == "5")
             sevenSegment.five(className);
-        if(partOFAC == "6")
+        if (partOFAC == "6")
             sevenSegment.six(className);
-        if(partOFAC == "7")
+        if (partOFAC == "7")
             sevenSegment.seven(className);
-        if(partOFAC == "8")
+        if (partOFAC == "8")
             sevenSegment.eight(className);
-        if(partOFAC == "9")
+        if (partOFAC == "9")
             sevenSegment.nine(className);
-        if(partOFAC == "A")
+        if (partOFAC == "A")
             sevenSegment.A(className);
-        if(partOFAC == "B")
+        if (partOFAC == "B")
             sevenSegment.B(className);
-        if(partOFAC == "C")
+        if (partOFAC == "C")
             sevenSegment.C(className);
-        if(partOFAC == "D")
+        if (partOFAC == "D")
             sevenSegment.D(className);
-        if(partOFAC == "E")
+        if (partOFAC == "E")
             sevenSegment.E(className);
-        if(partOFAC == "F")
+        if (partOFAC == "F")
             sevenSegment.F(className);
     }
     // console.log(registerHex.AC[0],"1111111111111")
@@ -567,8 +567,8 @@ function CMA() {
         if (AC[index] == 0)
             AC[index] = 1;
         else if (AC[index] == 1) {
-        AC[index] = 0;
-    }
+            AC[index] = 0;
+        }
     AC = AC.join('');
     registerHex.AC = binaryToHex(AC);
 }
@@ -627,6 +627,8 @@ function SPA() {
     if (ACsplit[15] == 0)
         PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC);
+    console.log(PC, AC, "PCCCCCC,ACCCCCCC")
+
 }
 
 function SNA() {
@@ -635,20 +637,25 @@ function SNA() {
     if (ACsplit[15] == 1)
         PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC);
+    // console.log(PC,AC,"PCCCCCC,ACCCCCCC")
 }
 
 function SZA() {
     var one = "1";
-    if (AC == '0000000000000000')
+    if (AC == '0000000000000000') {
         PC = ADD(PC, one);
-    registerHex.PC = binaryToHex(PC);
+        registerHex.PC = binaryToHex(PC);
+        // console.log(PC, AC, "PCCCCCC,ACCCCCCC")
+    }
 }
 
 function SZE() {
     var one = "1";
-    if (carry == '0')
+    if (carry == '0'){
         PC = ADD(PC, one);
-    registerHex.PC = binaryToHex(PC);
+        registerHex.PC = binaryToHex(PC);
+        console.log(PC,AC,"PCCCCCC,ACCCCCCC")
+    }
 }
 
 function HLT() {
@@ -773,7 +780,7 @@ function STA() {
 
 function BUN() {
     PC = AR;
-    registerHex.PC=binaryToHex(AR);
+    registerHex.PC = binaryToHex(AR);
 }
 
 function BSA() {
@@ -862,13 +869,21 @@ function decode() {
             if (register_instructions[j][1] == registerHex.IR) {
                 valu = register_instructions[j][0];
                 sym = valu;
+                if (valu == "SPA" || valu == "SNA" || valu == "SZA" || valu == "SZE") {
+                    if (versions == 2)
+                        sym = valu;
+                    else
+                        errors = 1;
+                }
+                else
+                    sym = valu;
             }
         }
     } else {
-        console.log(registerHex.IR,registerHex.IR.slice(1, 4),"lhfhyyyyyyyyyyyyyyyyyyyytttttttttttttttttttt")
+        console.log(registerHex.IR, registerHex.IR.slice(1, 4), "lhfhyyyyyyyyyyyyyyyyyyyytttttttttttttttttttt")
         registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
         AR = hextobinary(registerHex.AR);
-        console.log(registerHex.AR,"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        console.log(registerHex.AR, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         writeTotable("4", "T2: AR <- IR[0:11]");
         if (opcode == 0) {
             sym = "AND";
@@ -1034,7 +1049,7 @@ function decode() {
 
     }
     if (errors == 1) {
-        errors=0;
+        errors = 0;
         error(sym)
         disableBtn(executeBtn);
         disableBtn(decodeBtn);
