@@ -209,6 +209,7 @@ function back() {
 // TextAreaAssembler
 function assembler() {
     var stringValu = getDataAssembler.value.split('\n');
+    console.log(stringValu, ";lkjdklsdsskoedldokdlkflk")
     var opcode;
     var arr = [];
     for (let index = 0; index < stringValu.length; index++) {
@@ -220,18 +221,24 @@ function assembler() {
             if (memory_instructions[i][0] == instructionAssembler[0].toUpperCase()) {
                 b = 1;
                 s = 1;
-                for (let j = 0; j < memoryAddress.length; j++) {
-                    if (memoryAddress[j].innerText == instructionAssembler[1]) {
-                        opcode = memory_instructions[i][2];
-                        a = 1;
-                        instructionAssembler[1] = instructionAssembler[1].slice(2, 5);
-                        console.log(instructionAssembler[1].slice(2, 5), "kkkkkkkk");
+                for (let k = 0; k < stringValu.length; k++) {
+                    var f = stringValu[k].split(' ');
+                    if (f[0] == instructionAssembler[1]) {
+                        for (let j = 0; j < memoryAddress.length; j++) {
+                            console.log(f[1], memoryAddress[j].innerText, "///////////////////////////////////////////////////////")
+                            if (memoryAddress[j].innerText == f[1]) {
+                                opcode = memory_instructions[i][2];
+                                a = 1;
+                                // f[1] = f[1].slice(2, 5);
+                                // console.log(f[1], "kkkkkkkk");
+                            }
+                        }
 
                     }
                 }
                 if (a == 0)
                     opcode = memory_instructions[i][1];
-                arr[index] = opcode + instructionAssembler[1] + ",";
+                arr[index] = opcode + instructionAssembler[1].slice(2, 5) + ",";
                 break;
             }
 
@@ -250,12 +257,25 @@ function assembler() {
             if (s == 0) {
                 for (let i = 0; i < memoryAddress.length; i++) {
                     if (instructionAssembler[0] == memoryAddress[i].innerText) {
-                        // var ind=memoryAddress.indexOf(memoryAddress[i]);
-                        arr[i] = instructionAssembler[1] + ",";
+                      
+                        var sp = instructionAssembler[1].slice(0, 2);
+                        if(sp == "0x")
+                            arr[i] = instructionAssembler[1].slice(2, 5) + ",";
+                        else
+                            arr[i] = instructionAssembler[1] + ",";
+                        console.log(sp, "mmmmm")
                     }
 
                 }
             }
+            // else if(s == 0 && a == 0){
+            //     for (let i = 0; i < memoryAddress.length; i++) {
+            //         if (instructionAssembler[0] == memoryAddress[i].innerText) {
+            //             arr[i] = instructionAssembler[1] + ",";
+            //         }
+
+            //     }
+            // }
         }
 
     }
