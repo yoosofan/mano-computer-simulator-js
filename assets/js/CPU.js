@@ -907,8 +907,7 @@ function decode() {
             if (versions == 2)
                 sym = "BUN";
             else
-                errors = 1;
-            // error(sym);   
+                errors = 1;  
         } else if (opcode == 5) {
             sym = "BSA";
         } else if (opcode == 6) {
