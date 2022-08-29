@@ -475,11 +475,6 @@ table {
     height: 20px;
 }
 
-/* version two  */
-.dis {
-    display: none;
-}
-
 /* seven segment  */
 
 .boxSevensegment {
@@ -587,6 +582,10 @@ table {
     top: 85px;
     left: 90px;
     transform: rotate(90deg);
+}
+/* version two  */
+.dis {
+    display: none;
 }
 
 @media screen and (max-width: 1000px) {

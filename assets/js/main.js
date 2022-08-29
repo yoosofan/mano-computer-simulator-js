@@ -310,6 +310,7 @@ function version() {
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
+        
     }
 
 }
