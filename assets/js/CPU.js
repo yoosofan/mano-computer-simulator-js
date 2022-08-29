@@ -773,6 +773,7 @@ function STA() {
 
 function BUN() {
     PC = AR;
+    registerHex.PC=binaryToHex(AR);
 }
 
 function BSA() {
@@ -855,7 +856,7 @@ function decode() {
     opcode = registerHex.IR.split('')[0];
     if (opcode == "7") {
         registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        AR = hextobinary(AR);
+        AR = hextobinary(registerHex.AR);
         writeTotable("4", "T2: AR <- IR[0:11]");
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
@@ -864,8 +865,10 @@ function decode() {
             }
         }
     } else {
+        console.log(registerHex.IR,registerHex.IR.slice(1, 4),"lhfhyyyyyyyyyyyyyyyyyyyytttttttttttttttttttt")
         registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        AR = hextobinary(AR);
+        AR = hextobinary(registerHex.AR);
+        console.log(registerHex.AR,"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         writeTotable("4", "T2: AR <- IR[0:11]");
         if (opcode == 0) {
             sym = "AND";
