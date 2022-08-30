@@ -1,7 +1,7 @@
 var myClassdisplay = document.getElementsByClassName("segment");
 var myClassdisplay2 = document.getElementsByClassName("segment2");
-var myClassdisplay3 = document.getElementsByClassName("segment3");
-var myClassdisplay4 = document.getElementsByClassName("segment4");
+// var myClassdisplay3 = document.getElementsByClassName("segment3");
+// var myClassdisplay4 = document.getElementsByClassName("segment4");
 var valu;
 var versions = 1;
 var errors = 0;
@@ -32,6 +32,17 @@ const register_instructions = [
     ["SZE", "7002"],
     ["HLT", "7001"]
 ]
+
+
+const InputOutput_instructions = [
+    ["INP", "F800"],
+    ["OUT", "F400"],
+    ["SKI", "F200"],
+    ["SKO", "F100"],
+    ["ION", "F080"],
+    ["IOF", "F040"]
+
+]
 let sym;
 let myString;
 let AC = '0000000000000000';
@@ -41,7 +52,8 @@ let IR = '0000000000000000';
 let PC = '000000000000';
 let TR = '0000000000000000';
 let memory = '000000000000';
-
+let INPR = '00000000';
+let OUTR = '00000000';
 let registerHex = {
     IR: binaryToHex(IR),
     AC: binaryToHex(AC),
@@ -49,6 +61,8 @@ let registerHex = {
     PC: binaryToHex(PC),
     AR: binaryToHex(AR),
     memory: binaryToHex(AR),
+    INPR: "00",
+    OUTR: "00"
 }
 
 
@@ -70,7 +84,33 @@ const executeBtn = document.getElementById('execute');
 let len;
 let str;
 let char;
+function writeToflag() {
+    var flag = document.getElementsByClassName("flagList");
+    console.log(FGO,"jdjdjkdkdjdkdjdkhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    flag[0].innerHTML = carry;
+    flag[1].innerHTML = Z;
+    flag[2].innerHTML = N;
+    flag[3].innerHTML = V;
+    flag[4].innerHTML = FGI;
+    flag[5].innerHTML = FGO;
+    flag[6].innerHTML = Int;
 
+}
+
+function checkFlag() {
+    if (AC == "0000000000000000") {
+        Z = "1";
+    } else if (AC != "0000000000000000") {
+        Z = "0";
+    }
+    console.log(AC[0], "5454jhhugy")
+    if (AC[0] == "0") {
+        N = "0";
+    } else if (AC[0] == "1") {
+        N = "1";
+    }
+    writeToflag();
+}
 function hexNumber(dec) {
     len = -1;
     str = '';
@@ -126,9 +166,9 @@ for (let i = -1; i < 100; i++) {
         let c = document.createElement('td');
         if (i == -1) {
             if (j == 0) {
-                c.innerText = 'Decimal Addrress';
+                c.innerText = 'D-Addrress';
             } else if (j == 1) {
-                c.innerText = 'Hex Addrress';
+                c.innerText = 'H-Addrress';
             } else if (j == 2) {
                 c.innerText = 'Memory';
             }
@@ -158,12 +198,20 @@ memoryTable.appendChild(ramTable);
 const regtable = document.createElement('table');
 const registerTable = document.querySelector('.registerTable');
 const items = ['Elements', 'Initial Values', 'T0: AR <- PC', 'T1: IR <- M[AR], PC <-PC+1', 'T2: AR <- IR[0:11]', 'T:', 'T:', 'T:', 'T:'];
-const headerItems = ['statements', 'IR', 'AC', 'DR', 'PC', 'AR', 'M[AR]'];
+const headerItems = ['statements', 'IR', 'AC', 'DR', 'PC', 'AR', 'M[AR]', 'OUTR', 'INPR'];
 for (let i = 0; i < 9; i++) {
     let r = document.createElement('tr');
-    for (let j = 0; j < 7; j++) {
+    for (let j = 0; j < 9; j++) {
         let c = document.createElement('td');
         if (j !== 0) {
+            if (j == 7) {
+                c.classList.add("dis");
+                c.classList.add("vThree");
+            }
+            if (j == 8) {
+                c.classList.add("dis");
+                c.classList.add("vFour");
+            }
             c.classList.add(`${i}`);
             if (i != 0 && i != 1)
                 c.classList.add('regList');
@@ -183,9 +231,9 @@ for (let i = 0; i < 9; i++) {
         }
         if (i == 1) {
             if (j == 1)
-                c.innerHTML = "0x" + registerHex.IR;
+                c.innerHTML = registerHex.IR;
             else if (j == 2)
-                c.innerHTML = "0x" + registerHex.AC;
+                c.innerHTML = registerHex.AC;
             else if (j == 3)
                 c.innerHTML = registerHex.DR;
             else if (j == 4)
@@ -193,8 +241,13 @@ for (let i = 0; i < 9; i++) {
             else if (j == 5)
                 c.innerHTML = "0x" + registerHex.AR;
             else if (j == 6)
-                c.innerHTML = "0x" + registerHex.memory;
+                c.innerHTML = registerHex.memory;
+            else if (j == 7)
+                c.innerHTML = registerHex.OUTR;
+            else if (j == 8)
+                c.innerHTML = registerHex.INPR;
         }
+
         r.appendChild(c);
     }
     regtable.appendChild(r);
@@ -214,11 +267,25 @@ for (let o = 0; o < 2; o++) {
             c.classList.add('text');
             r.classList.add('sticky');
         }
+        if (j == 5) {
+            c.classList.add('dis');
+            c.classList.add('vThree');
+           
+        }
+        if (j == 4) {
+            c.classList.add('dis');
+            c.classList.add('vFour');
 
+        }
+        if (j == 6) {
+            c.classList.add('dis');
+            c.classList.add('vSix');
+        }
+       
         if (o == 1) {
             c.classList.add('flagList');
             if (j == 0)
-                c.innerText = "0";
+                c.innerHTML = "0";
             else if (j == 1)
                 c.innerHTML = "0";
             else if (j == 2)
@@ -231,6 +298,7 @@ for (let o = 0; o < 2; o++) {
                 c.innerHTML = "0";
             else if (j == 6)
                 c.innerHTML = "0";
+
         }
         r.appendChild(c);
     }
@@ -243,8 +311,6 @@ flagTable.appendChild(ftable);
 // write to table 
 function writeTotable(number, T) {
     let c = document.getElementsByClassName(`${number}`);
-    // console.log(c, ";;;;;;;;;;;;rpooepirope")
-    // console.log(typeof (registerHex.IR), "lllllll");
     c[0].innerHTML = T;
     c[1].innerText = registerHex.IR;
     c[2].innerText = registerHex.AC;
@@ -252,35 +318,12 @@ function writeTotable(number, T) {
     c[4].innerText = "0x" + registerHex.PC;
     c[5].innerText = registerHex.AR;
     c[6].innerText = registerHex.memory;
+    c[7].innerText = registerHex.OUTR;
+    c[8].innerText = registerHex.INPR;
 }
 
 // write to flag
-function writeToflag() {
-    var flag = document.getElementsByClassName("flagList");
-    flag[0].innerText = carry;
-    flag[1].innerText = Z;
-    flag[2].innerText = N;
-    flag[3].innerText = V;
-    flag[4].innerText = FGI;
-    flag[5].innerText = FGO;
-    flag[6].innerText = Int;
 
-}
-
-function checkFlag() {
-    if (AC == "0000000000000000") {
-        Z = "1";
-    } else if (AC != "0000000000000000") {
-        Z = "0";
-    }
-    console.log(AC[0], "5454jhhugy")
-    if (AC[0] == "0") {
-        N = "0";
-    } else if (AC[0] == "1") {
-        N = "1";
-    }
-    writeToflag();
-}
 
 var sevenSegment = {
     zero: function (myList) {
@@ -403,18 +446,19 @@ var sevenSegment = {
         });
     }
 };
+
 function sevensegmentF() {
-    for (let index = 0; index < 4; index++) {
-        var partOFAC = registerHex.AC[index];
+    for (let index = 0; index < 2; index++) {
+        var partOFAC = registerHex.OUTR[index];
         var className;
         if (index == 0)
             className = myClassdisplay;
         else if (index == 1)
             className = myClassdisplay2;
-        else if (index == 2)
-            className = myClassdisplay3;
-        else if (index == 3)
-            className = myClassdisplay4;
+        // else if (index == 2)
+        //     className = myClassdisplay3;
+        // else if (index == 3)
+        //     className = myClassdisplay4;
 
         if (partOFAC == "0")
             sevenSegment.zero(className);
@@ -451,6 +495,7 @@ function sevensegmentF() {
     }
     // console.log(registerHex.AC[0],"1111111111111")
 }
+
 function led() {
     var led = document.getElementsByClassName("circle");
     // console.log(led[1], 'pppp')
@@ -521,7 +566,7 @@ function binaryToHex(number) {
         }
         let arr = hexadecimal.split('');
         arr.splice(0, 0, ...numberOfZero);
-        // console.log(arr)
+        console.log(arr)
         outcome = arr.join('');
         hexadecimal = outcome;
     }
@@ -548,8 +593,50 @@ function hextobinary(hex) {
 
 function error(nameAssemble) {
     alert(`You are in version ${versions} and you cannot use ${nameAssemble}`);
-    // back();
 }
+
+// Input Output instruction 
+
+function OUT() {
+    if (FGO == "1") {
+        var n = registerHex.AC;
+
+        let numberOfZero = [];
+        for (let i = 0; i < 4 - n.length; i++) {
+            numberOfZero.push("0");
+        }
+        let arr = n.split('');
+        arr.splice(0, 0, ...numberOfZero);
+        arr = arr.join('')
+        OUTR = AC.slice(8, 16);
+        registerHex.OUTR = arr.slice(2, 4);
+        FGO = "0";
+        sevensegmentF();
+        setTimeout(function () {
+            FGO = "1";
+            console.log(FGO);
+            checkFlag();
+        }, 5000);
+
+    } else
+        alert("go to go")
+}
+
+function SKO(){
+    var one="1";
+    if(FGO == "1"){
+        PC=ADD(PC,one);
+    }
+}
+
+
+
+
+
+
+
+
+
 // Register-refrence instruction
 
 function CLA() {
@@ -567,8 +654,8 @@ function CMA() {
         if (AC[index] == 0)
             AC[index] = 1;
         else if (AC[index] == 1) {
-            AC[index] = 0;
-        }
+        AC[index] = 0;
+    }
     AC = AC.join('');
     registerHex.AC = binaryToHex(AC);
 }
@@ -651,10 +738,10 @@ function SZA() {
 
 function SZE() {
     var one = "1";
-    if (carry == '0'){
+    if (carry == '0') {
         PC = ADD(PC, one);
         registerHex.PC = binaryToHex(PC);
-        console.log(PC,AC,"PCCCCCC,ACCCCCCC")
+        console.log(PC, AC, "PCCCCCC,ACCCCCCC")
     }
 }
 
@@ -717,7 +804,6 @@ function ADDlogic(MemStr, ACStr) {
     if (ACStr.length == 1) {
         ACStr = "0000000000000001"
     }
-    console.log(ACStr.length, ";;;;;;;;;;;;;;;;;yyyyyyyyyyyyyyyyyyyyyyy")
     for (let i = lenMem - 1, j = lenAC - 1; 0 <= i || 0 <= j; --i, --j) {
         let x, y;
         if (0 <= i)
@@ -862,28 +948,42 @@ function fetch() {
 function decode() {
     opcode = registerHex.IR.split('')[0];
     if (opcode == "7") {
-        registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        AR = hextobinary(registerHex.AR);
-        writeTotable("4", "T2: AR <- IR[0:11]");
+        // registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
+        // AR = hextobinary(registerHex.AR);
+        // writeTotable("4", "T2: AR <- IR[0:11]");
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
                 valu = register_instructions[j][0];
                 sym = valu;
                 if (valu == "SPA" || valu == "SNA" || valu == "SZA" || valu == "SZE") {
-                    if (versions == 2)
+                    if (versions == 2 || versions == 3)
                         sym = valu;
                     else
                         errors = 1;
-                }
-                else
+                } else
+                    sym = valu;
+            }
+        }
+    } else if (opcode == "F") {
+        // registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
+        // AR = hextobinary(registerHex.AR);
+        // writeTotable("4", "T2: AR <- IR[0:11]");
+        for (let j = 0; j < InputOutput_instructions.length; j++) {
+            if (InputOutput_instructions[j][1] == registerHex.IR) {
+                valu = InputOutput_instructions[j][0];
+                sym = valu;
+                if (valu == "SKO" || valu == "OUT") {
+                    if (versions == 3)
+                        sym = valu;
+                    else
+                        errors = 1;
+                } else
                     sym = valu;
             }
         }
     } else {
-        console.log(registerHex.IR, registerHex.IR.slice(1, 4), "lhfhyyyyyyyyyyyyyyyyyyyytttttttttttttttttttt")
         registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
         AR = hextobinary(registerHex.AR);
-        console.log(registerHex.AR, "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
         writeTotable("4", "T2: AR <- IR[0:11]");
         if (opcode == 0) {
             sym = "AND";
@@ -919,10 +1019,10 @@ function decode() {
             sym = "STA";
         } else if (opcode == 4) {
             sym = "BUN";
-            if (versions == 2)
+            if (versions == 2 || versions == 3)
                 sym = "BUN";
             else
-                errors = 1;  
+                errors = 1;
         } else if (opcode == 5) {
             sym = "BSA";
         } else if (opcode == 6) {
@@ -1141,6 +1241,28 @@ function execute() {
 
         }
     }
+    if (opcode == "F") {
+        if (valu == "INP") {
+
+        } else if (valu == "OUT") {
+            OUT();
+            writeTotable("5", "T3: OUTR <- AC(0-7)");
+            myString = " OUTR <- AC(0-7)\n, FGO <- 0";
+            console.log(PC, "PC\n", AC, "AC\n", "OUT");
+        } else if (valu == "SKI") {
+
+        } else if (valu == "SKO") {
+            SKO();
+            writeTotable("5", "T3:If(FGO = 1) then (PC <- PC + 1)");
+            myString = " If(FGO = 1) then (PC <- PC + 1)";
+            console.log(PC, "PC\n", AC, "AC\n", "SKO");
+
+        } else if (valu == "ION") {
+
+        } else if (valu == "IOF") {
+
+        }
+    }
     if (opcode == 0) {
         sym = "AND";
         writeTotable("5", "T3: DR <-M[AR]");
@@ -1251,7 +1373,7 @@ function execute() {
     disableBtn(executeBtn);
     checkFlag();
     led();
-    sevensegmentF();
+    // sevensegmentF();
     writeLog(sym, 2);
 
 }

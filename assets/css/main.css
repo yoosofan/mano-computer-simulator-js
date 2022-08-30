@@ -479,7 +479,7 @@ table {
 
 .boxSevensegment {
     margin-top: 50px;
-    width: 80%;
+    width: 45%;
     height: 340px;
     padding: 20px;
     background-color: #1d1d1d;
@@ -497,7 +497,7 @@ table {
     width: 160px;
 }
 
-.display3 {
+/* .display3 {
     position: relative;
     width: 160px;
 }
@@ -505,7 +505,7 @@ table {
 .display4 {
     position: relative;
     width: 160px;
-}
+} */
 
 .segment {
     height: 125px;
@@ -523,7 +523,7 @@ table {
     box-shadow: 0px 0px 25px #3aa3a7;
 }
 
-.segment3 {
+/* .segment3 {
     height: 125px;
     width: 15px;
     background-color: #3aa3a7;
@@ -537,7 +537,7 @@ table {
     background-color: #3aa3a7;
     border-radius: 9999px;
     box-shadow: 0px 0px 25px #3aa3a7;
-}
+} */
 
 .A {
     position: absolute;

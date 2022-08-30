@@ -183,9 +183,19 @@ function showCPU() {
     [].forEach.call(emptyRegister, function (el) {
         el.innerText = "";
     });
-    [].forEach.call(emptyflag, function (el) {
-        el.innerText = "0";
-    });
+    for (let d = 0; d < emptyflag.length; d++) {
+        console.log("rrxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxssssssssssssssssssssssssss       ")
+        if(versions == 3 && d == 5)
+            emptyflag[5] = "1";
+        else
+        emptyflag[d]= "0"
+    }
+    checkFlag();
+    // [].forEach.call(emptyflag, function (el) {
+        
+            
+    //     el.innerText = "0";
+    // });
     turnOFFled();
 }
 
@@ -268,14 +278,6 @@ function assembler() {
 
                 }
             }
-            // else if(s == 0 && a == 0){
-            //     for (let i = 0; i < memoryAddress.length; i++) {
-            //         if (instructionAssembler[0] == memoryAddress[i].innerText) {
-            //             arr[i] = instructionAssembler[1] + ",";
-            //         }
-
-            //     }
-            // }
         }
 
     }
@@ -296,6 +298,7 @@ function assembler() {
 // version 2 
 function version() {
     console.log("dkdhjfhfj")
+    var three = document.getElementsByClassName("vThree");
     var two = document.getElementsByClassName("vTwo");
     var ver = document.getElementById("versions").value;
     console.log(document.getElementById("versions").value, ";;;;;;;;");
@@ -304,10 +307,27 @@ function version() {
         [].forEach.call(two, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(three, function (el) {
+            el.classList.add("dis");
+        });
     }
     if ("version2" == ver) {
         versions = 2;
         [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
+            el.classList.add("dis");
+        });
+    }
+    if ("version3" == ver) {
+        versions = 3;
+        FGO = "1";
+        checkFlag();
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
             el.classList.remove("dis");
         });
         
