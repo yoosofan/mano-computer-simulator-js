@@ -1,3 +1,6 @@
+body{
+    position: relative;
+}
 .backgroundindex {
     position: relative;
     display: flex;
@@ -586,6 +589,34 @@ table {
 /* version two  */
 .dis {
     display: none;
+}
+
+/* version Four */
+
+#INP{
+    width: 100%;
+    height: 100vh;
+    background-color: #3aa3a76f;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.BoxINP{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    justify-content: space-between;
+}
+.inputBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#InputINPR{
+    height: 35px;
 }
 
 @media screen and (max-width: 1000px) {
