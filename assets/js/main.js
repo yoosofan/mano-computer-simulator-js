@@ -299,6 +299,7 @@ function assembler() {
 function version() {
     console.log("dkdhjfhfj")
     var three = document.getElementsByClassName("vThree");
+    var Four = document.getElementsByClassName("vFour");
     var two = document.getElementsByClassName("vTwo");
     var ver = document.getElementById("versions").value;
     console.log(document.getElementById("versions").value, ";;;;;;;;");
@@ -330,6 +331,23 @@ function version() {
         [].forEach.call(three, function (el) {
             el.classList.remove("dis");
         });
+        
+    }
+    if ("version4" == ver) {
+        versions = 4;
+        FGI = "1";
+        FGO = "1";
+        checkFlag();
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.remove("dis");
+        });
+        
         
     }
 

@@ -510,6 +510,9 @@ function led() {
     }
 }
 
+function InputINPR(){   
+}
+
 function turnOFFled() {
     var led = document.getElementsByClassName("circle");
     // console.log(led[1], 'pppp')
@@ -627,6 +630,30 @@ function SKO(){
     if(FGO == "1"){
         PC=ADD(PC,one);
     }
+}
+
+function SKI(){
+    var one="1";
+    if(FGI == "1"){
+        PC=ADD(PC,one);
+    }
+}
+
+function INP(){
+    if (FGI=="1") { 
+        FGI="0"; 
+        // InputINPR();
+        registerHex.INPR="02"
+        partOFAC=registerHex.AC.slice(0,2);
+        registerHex.AC=partOFAC + registerHex.INPR;
+        AC=hextobinary(registerHex.AC);
+        console.log(AC,registerHex.AC,INPR,"INPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+        FGI="1";
+    }
+    else if (FGI=="0") {
+        alert("! we are taking input !");   
+    }
+
 }
 
 
@@ -1243,6 +1270,10 @@ function execute() {
     }
     if (opcode == "F") {
         if (valu == "INP") {
+            INP();
+            writeTotable("5", "T3: AC(0-7) <-INPR ");
+            myString = " AC(0-7) <-INPR\n, FGI <- 0";
+            console.log(PC, "PC\n", AC, "AC\n", "INP"); 
 
         } else if (valu == "OUT") {
             OUT();
@@ -1250,6 +1281,10 @@ function execute() {
             myString = " OUTR <- AC(0-7)\n, FGO <- 0";
             console.log(PC, "PC\n", AC, "AC\n", "OUT");
         } else if (valu == "SKI") {
+            SKI();
+            writeTotable("5", "T3:If(FGI = 1) then (PC <- PC + 1)");
+            myString = " If(FGI = 1) then (PC <- PC + 1)";
+            console.log(PC, "PC\n", AC, "AC\n", "SKI");
 
         } else if (valu == "SKO") {
             SKO();
