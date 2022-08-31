@@ -510,7 +510,68 @@ function led() {
     }
 }
 
-function InputINPR(){   
+function InputINPR(){
+    // var a=0;
+    // var DataINP=document.getElementById("InputINPR");
+    // if (DataINP.value.length > 2) {
+    //     DataINP.value="";
+    //     alert("! please enter two hexadecimal numbers !");
+    // }
+    // else{
+        
+    //     var SplitData=DataINP.value.split('');
+    //     for (let index = 0; index < SplitData.length; index++) {
+    //         SplitData[index]=SplitData[index].toUpperCase();
+    //         if (SplitData[index] == "0" || SplitData[index] == "1" || SplitData[index] == "2" || SplitData[index] == "3" || SplitData[index] == "4" ||SplitData[index] == "5"
+    //         || SplitData[index] == "6" || SplitData[index] == "7" || SplitData[index] == "8" || SplitData[index] == "9" || SplitData[index] == "A" || SplitData[index] == "B"
+    //         || SplitData[index] == "C" || SplitData[index] == "D" || SplitData[index] == "E" || SplitData[index] == "F") {
+
+    //         }
+    //         else{
+    //             DataINP.value="";
+    //             alert("! please enter hexadecimal numbers !");
+    //             a=1;
+    //             break;
+    //         }  
+    //     }
+      
+    // }
+    // if (a == 0) {
+
+    //     registerHex.INPR = DataINP.value.toUpperCase();    
+    // }
+}
+
+function OK(){
+    var a=0;
+    var DataINP=document.getElementById("InputINPR");
+    if (DataINP.value.length > 2) {
+        DataINP.value="";
+        alert("! please enter two hexadecimal numbers !");
+    }
+    else{
+        
+        var SplitData=DataINP.value.split('');
+        for (let index = 0; index < SplitData.length; index++) {
+            SplitData[index]=SplitData[index].toUpperCase();
+            if (SplitData[index] == "0" || SplitData[index] == "1" || SplitData[index] == "2" || SplitData[index] == "3" || SplitData[index] == "4" ||SplitData[index] == "5"
+            || SplitData[index] == "6" || SplitData[index] == "7" || SplitData[index] == "8" || SplitData[index] == "9" || SplitData[index] == "A" || SplitData[index] == "B"
+            || SplitData[index] == "C" || SplitData[index] == "D" || SplitData[index] == "E" || SplitData[index] == "F") {
+
+            }
+            else{
+                DataINP.value="";
+                alert("! please enter hexadecimal numbers !");
+                a=1;
+                break;
+            }  
+        }
+      
+    }
+    if (a == 0) {
+
+        registerHex.INPR = DataINP.value.toUpperCase();    
+    }
 }
 
 function turnOFFled() {
@@ -521,6 +582,13 @@ function turnOFFled() {
         led[k].style.backgroundColor = "white";
     }
 }
+
+// function InputCheck(){
+//     var DataINP=document.getElementById("InputINPR").value;
+//     if (DataINP.length == 2){
+//         alert("you cannot enter more")
+//     }
+// }
 
 function writeLog(symbol, level) {
     console.log(symbol, "symbol")
@@ -642,8 +710,8 @@ function SKI(){
 function INP(){
     if (FGI=="1") { 
         FGI="0"; 
-        // InputINPR();
-        registerHex.INPR="02"
+        InputINPR();
+        // registerHex.INPR="02"
         partOFAC=registerHex.AC.slice(0,2);
         registerHex.AC=partOFAC + registerHex.INPR;
         AC=hextobinary(registerHex.AC);
