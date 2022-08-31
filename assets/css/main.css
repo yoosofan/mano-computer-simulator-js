@@ -1,6 +1,4 @@
-body{
-    position: relative;
-}
+
 .backgroundindex {
     position: relative;
     display: flex;
@@ -595,19 +593,26 @@ table {
 
 #INP{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #3aa3a76f;
-    position: relative;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .BoxINP{
+    background-color: #fff;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    width: 300px;
+    /* width: 400px; */
     justify-content: space-between;
+}
+.BoxINP label{
+    color: #272727;
+    margin-bottom: 10px;
 }
 .inputBox{
     display: flex;
