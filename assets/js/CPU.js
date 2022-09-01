@@ -87,7 +87,6 @@ let char;
 
 function writeToflag() {
     var flag = document.getElementsByClassName("flagList");
-    console.log(FGO, "jdjdjkdkdjdkdjdkhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     flag[0].innerHTML = carry;
     flag[1].innerHTML = Z;
     flag[2].innerHTML = N;
@@ -104,7 +103,6 @@ function checkFlag() {
     } else if (AC != "0000000000000000") {
         Z = "0";
     }
-    console.log(AC[0], "5454jhhugy")
     if (AC[0] == "0") {
         N = "0";
     } else if (AC[0] == "1") {
@@ -149,12 +147,10 @@ function hexNumberAddress(dec) {
 }
 
 function disableBtn(button) {
-    console.log(";;;;;;;;;;;;;")
     button.disabled = true;
 }
 
 function enableBtn(button) {
-    console.log("ooooooooooo")
     button.disabled = false;
 }
 
@@ -336,7 +332,6 @@ var sevenSegment = {
         })
     },
     one: function (myList) {
-        console.log(this)
         this.lightsOut(myList);
         [].forEach.call(myList, function (el) {
             if (el.classList[1] == "B" || el.classList[1] == "C")
@@ -442,7 +437,6 @@ var sevenSegment = {
         })
     },
     lightsOut: function (myList) {
-        console.log(myList, ";kdjhdjdhfjh");
         [].forEach.call(myList, function (el) {
             el.style.display = "none"
         });
@@ -495,12 +489,10 @@ function sevensegmentF() {
         if (partOFAC == "F")
             sevenSegment.F(className);
     }
-    // console.log(registerHex.AC[0],"1111111111111")
 }
 
 function led() {
     var led = document.getElementsByClassName("circle");
-    // console.log(led[1], 'pppp')
     var ACLed = AC.split('');
     for (let k = 0; k < ACLed.length; k++) {
         if (ACLed[k] == 1) {
@@ -512,29 +504,15 @@ function led() {
     }
 }
 var PCFake;
-// var valuFake;
-// var symFake;
-// var opcodeFake;
 var check = 0;
 
 function InputINPR() {
     PCFake = PC;
-    console.log("sosososososoososo")
-    // if(valu == "INP"){
     document.getElementById("INP").style.display = "flex";
-    // while(FGI == 0){
-
-    // }
-    // INP();
-
-    // }
 }
 var l = 1;
 
 function OK() {
-    // valuFake=valu;
-    // symFake=sym;
-    // opcodeFake=opcode;
     check = 1;
     var a = 0;
     var DataINP = document.getElementById("InputINPR");
@@ -574,22 +552,15 @@ function OK() {
 
 function turnOFFled() {
     var led = document.getElementsByClassName("circle");
-    // console.log(led[1], 'pppp')
     var ACLed = AC.split('');
     for (let k = 0; k < ACLed.length; k++) {
         led[k].style.backgroundColor = "white";
     }
 }
 
-// function InputCheck(){
-//     var DataINP=document.getElementById("InputINPR").value;
-//     if (DataINP.length == 2){
-//         alert("you cannot enter more")
-//     }
-// }
+
 
 function writeLog(symbol, level) {
-    console.log(symbol, "symbol")
     var tab = document.getElementById("log");
     let c = document.createElement('td');
     for (let index = 0; index < 3; index++) {
@@ -613,7 +584,6 @@ function writeLog(symbol, level) {
             tab.appendChild(r);
         } else if (index == 2 && index == level) {
             if (l == 0) {
-                console.log(myString, "log")
                 let w = document.createElement('td');
                 w.classList.add('space');
                 r.appendChild(w);
@@ -629,7 +599,6 @@ function writeLog(symbol, level) {
                 tab.appendChild(r);
                 l = 1;
             } else {
-                console.log(myString, "log")
                 c.innerText = `execute \n  ${myString}`;
                 r.classList.add('logList');
                 r.classList.add('logexecute');
@@ -655,7 +624,6 @@ function binaryToHex(number) {
         }
         let arr = hexadecimal.split('');
         arr.splice(0, 0, ...numberOfZero);
-        console.log(arr)
         outcome = arr.join('');
         hexadecimal = outcome;
     }
@@ -666,7 +634,6 @@ function binaryToHex(number) {
 }
 
 function hextobinary(hex) {
-    // console.log(hex, "hex")
     var binery = parseInt(hex, 16).toString(2);
     let numberOfZero = [];
     let outcome;
@@ -689,7 +656,6 @@ function error(nameAssemble) {
 function OUT() {
     if (FGO == "1") {
         var n = registerHex.AC;
-
         let numberOfZero = [];
         for (let i = 0; i < 4 - n.length; i++) {
             numberOfZero.push("0");
@@ -703,7 +669,6 @@ function OUT() {
         sevensegmentF();
         setTimeout(function () {
             FGO = "1";
-            console.log(FGO);
             checkFlag();
         }, 5000);
 
@@ -727,7 +692,6 @@ function SKI() {
 }
 
 function INP() {
-    // registerHex.INPR="02"
     partOFAC = registerHex.AC.slice(0, 2);
     registerHex.AC = partOFAC + registerHex.INPR;
     AC = hextobinary(registerHex.AC);
@@ -736,8 +700,6 @@ function INP() {
     writeTotable("5", "T3: AC(0-7) <-INPR ");
     myString = " AC(0-7) <-INPR\n, FGI <- 0";
     writeLog(sym, 2);
-    console.log(AC, registerHex.AC, INPR, "INPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-
 }
 
 
@@ -825,7 +787,6 @@ function SPA() {
     if (ACsplit[15] == 0)
         PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC);
-    console.log(PC, AC, "PCCCCCC,ACCCCCCC")
 
 }
 
@@ -835,7 +796,6 @@ function SNA() {
     if (ACsplit[15] == 1)
         PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC);
-    // console.log(PC,AC,"PCCCCCC,ACCCCCCC")
 }
 
 function SZA() {
@@ -843,7 +803,6 @@ function SZA() {
     if (AC == '0000000000000000') {
         PC = ADD(PC, one);
         registerHex.PC = binaryToHex(PC);
-        // console.log(PC, AC, "PCCCCCC,ACCCCCCC")
     }
 }
 
@@ -852,14 +811,11 @@ function SZE() {
     if (carry == '0') {
         PC = ADD(PC, one);
         registerHex.PC = binaryToHex(PC);
-        console.log(PC, AC, "PCCCCCC,ACCCCCCC")
     }
 }
 
 function HLT() {
-    // console.log("hlt meeeeee")
     document.getElementById("HLT").classList.add("shutDown");
-    // document.getElementById("back").style.display = "block";
     document.getElementById("container").style.display = "none";
 }
 
@@ -892,7 +848,6 @@ function ADD(MemStr, ACStr) {
             y = 0;
 
         result.push((x + y + E) % 2);
-        // console.log((x + y + E) , "AAAAAAAAAA")
         E = 1 < x + y + E;
     };
     if (E) {
@@ -944,7 +899,6 @@ function ADDlogic(MemStr, ACStr) {
             V = 1;
         }
     }
-    console.log(V, "overflow")
     if (E) {
         result.push(1);
         Cout = 1;
@@ -965,7 +919,6 @@ function LDA() {
 
 function STA() {
     for (let l = 0; l < memoryAddress.length; l++) {
-        // console.log(memoryAddress[l].innerText, "koja", registerHex.AR)
         if (memoryAddress[l].innerText == registerHex.AR) {
             code[l].innerText = binaryToHex(AC);
             memory = hextobinary(code[l].innerText);
@@ -976,7 +929,6 @@ function STA() {
 }
 
 function BUN() {
-    console.log(registerHex.AR, "hjrliiioioioioiioioioioioioiiooiio")
     PC = AR;
     registerHex.PC = binaryToHex(AR);
 }
@@ -1022,28 +974,22 @@ function fetch() {
     var emptyRegister = document.querySelectorAll(".regList");
     var emptytable = document.querySelectorAll(".empty");
     [].forEach.call(emptyRegister, function (el) {
-        console.log("pspspsps")
         el.innerText = "";
     });
     [].forEach.call(emptytable, function (el) {
-        console.log(el, "////////////")
         el.innerText = "T :";
     });
-    console.log(registerHex, "fetch");
-
     var one = "1";
     registerHex.AR = "0x" + binaryToHex(PC); // AR <= PC   
     AR = PC; // AR <= PC
     writeTotable("2", "T0: AR <- PC");
     PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC); //PC <= PC +1
-    // console.log(registerHex.AR, "PC")
     for (let index = 0; index < memoryAddress.length; index++) {
         if (memoryAddress[index].innerText == registerHex.AR) {
             code[index].classList.add("border");
             memory = hextobinary(code[index].innerText);
             registerHex.memory = code[index].innerText;
-            // console.log(memory, "dhghydyetyttttttttttttttttttttttttt")
             registerHex.IR = registerHex.memory; //IR <= M[AR]
             IR = memory; //IR <= M[AR]
 
@@ -1241,14 +1187,11 @@ function decode() {
             if (versions > 4) {
                 sym = "BUN";
                 for (let l = 0; l < memoryAddress.length; l++) {
-
-                    // console.log(registerHex.AR, "hjrliiioioioioiioioioioioioidddddddddddddddddddddddddddddddddiooiio");
                     if (memoryAddress[l].innerText == registerHex.AR) {
                         memory = hextobinary(code[l].innerText);
                         registerHex.memory = code[l].innerText;
                         AR = memory;
                         registerHex.AR =  "0x" + registerHex.memory;
-                        // console.log(registerHex.memory, "hjrliiioioioioiioioioieeeeeeeeeeeeeeeeeeeeeeeeeeoioioiiooiio");
                         break;
                     }
                 }
@@ -1313,81 +1256,66 @@ function execute() {
     enableBtn(fetchBtn);
     disableBtn(decodeBtn);
     disableBtn(executeBtn);
-    console.log(registerHex, "execute");
     if (opcode == "7") {
 
         if (valu == "CLA") {
             CLA();
             writeTotable("5", "T3: AC <- 0");
             myString = " AC <- 0";
-            console.log(PC, "PC\n", AC, "AC\n", "CLA");
 
         } else if (valu == "CLE") {
             CLE();
             writeTotable("5", "T3: E <- 0");
             myString = " E <- 0";
-            console.log(PC, "PC\n", AC, "AC\n", "CLE");
 
         } else if (valu == "CMA") {
             CMA();
             writeTotable("5", "T3: AC <- complement(AC)");
             myString = " AC <- complement(AC)";
-            console.log(PC, "PC\n", AC, "AC\n", "CMA");
 
         } else if (valu == "CME") {
             CME();
             writeTotable("5", "T3: E <- complement(E)");
             myString = " E <- complement(E)"
-            console.log(PC, "PC\n", AC, "AC\n", "CME");
 
         } else if (valu == "CIR") {
             CIR();
             writeTotable("5", "T3: AC <- shr AC\n, AC(15) <- E\n ,E <- AC(0)");
             myString = " AC <- shr AC\n AC(15) <- E\n E <- AC(0)";
-            console.log(PC, "PC\n", AC, "AC\n", "CIR");
 
         } else if (valu == "CIL") {
             CIL();
             writeTotable("5", "T3: AC <- shl AC\n, AC(0) <- E\n,E <- AC(15)");
             myString = " AC <- shl AC\n AC(0) <- E\n E <- AC(15)";
-            console.log(PC, "PC\n", AC, "AC\n", "CIL");
 
         } else if (valu == "INC") {
             INC();
             writeTotable("5", "T3: AC <- AC + 1");
             myString = " AC <- AC + 1"
-            console.log(PC, "PC\n", AC, "AC\n", "INC");
 
         } else if (valu == "SPA") {
             SPA();
             writeTotable("5", "T3:If( AC(15) = 0)\n,then ( PC <- PC + 1)");
             myString = "If( AC(15) = 0)\n  then ( PC <- PC + 1)";
-            console.log(PC, "PC\n", AC, "AC\n", "SPA");
 
         } else if (valu == "SNA") {
             SNA();
             writeTotable("5", "T3:If( AC(15) = 1)\n,then ( PC <- PC + 1)");
             myString = "If( AC(15) = 1)\n then ( PC <- PC + 1)";
-            console.log(PC, "PC\n", AC, "AC\n", "SNA");
 
         } else if (valu == "SZA") {
             SZA();
             writeTotable("5", "T3:If( AC = 0)\n,then ( PC <- PC + 1)");
             myString = "If( AC = 0)\n then ( PC <- PC + 1)";
-            console.log(PC, "PC\n", AC, "AC\n", "SZA");
 
         } else if (valu == "SZE") {
             SZE();
             writeTotable("5", "T3:If( E = 0)\n,then ( PC <- PC + 1)");
-            console.log(PC, "PC\n", AC, "AC\n", "SZE");
             myString = "If( E = 0)\n then ( PC <- PC + 1)";
         } else if (valu == "HLT") {
             HLT();
             writeTotable("5", "T3:S <- 0");
             myString = "T3:S <- 0";
-            console.log(PC, "PC\n", AC, "AC\n", "HLT");
-
-
         }
     }
     if (opcode == "F") {
@@ -1407,18 +1335,15 @@ function execute() {
             OUT();
             writeTotable("5", "T3: OUTR <- AC(0-7)");
             myString = " OUTR <- AC(0-7)\n, FGO <- 0";
-            console.log(PC, "PC\n", AC, "AC\n", "OUT");
         } else if (valu == "SKI") {
             SKI();
             writeTotable("5", "T3:If(FGI = 1) then (PC <- PC + 1)");
             myString = " If(FGI = 1) then (PC <- PC + 1)";
-            console.log(PC, "PC\n", AC, "AC\n", "SKI");
 
         } else if (valu == "SKO") {
             SKO();
             writeTotable("5", "T3:If(FGO = 1) then (PC <- PC + 1)");
             myString = " If(FGO = 1) then (PC <- PC + 1)";
-            console.log(PC, "PC\n", AC, "AC\n", "SKO");
 
         } else if (valu == "ION") {
 
@@ -1433,7 +1358,6 @@ function execute() {
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC ^ DR");
         myString = "AC <- AC ^ DR";
-        console.log(PC, "PC\n", AC, "AC\n", "and");
     } else if (opcode == 1) {
         sym = "ADD";
         writeTotable("5", "T3: DR <-M[AR]");
@@ -1441,41 +1365,35 @@ function execute() {
         registerHex.AC = binaryToHex(AC);
         writeTotable("6", "T4: AC <- AC + DR");
         myString = "AC <- AC + DR";
-        console.log(PC, "PC\n", AC, "AC\n", "ADD");
     } else if (opcode == 2) {
         sym = "LDA";
         writeTotable("5", "T3: DR <-M[AR]");
         LDA();
         writeTotable("6", "T4: AC <- DR");
         myString = "AC <- DR";
-        console.log(PC, "PC\n", AC, "AC\n", "LDA");
 
     } else if (opcode == 3) {
         sym = "STA";
         STA();
         writeTotable("5", "T3: M[AR] <- AC");
         myString = " M[AR] <- AC";
-        console.log(PC, "PC\n", AC, "AC\n", "STA");
     } else if (opcode == 4) {
         sym = "BUN";
         BUN();
         writeTotable("5", "T3: PC  <- AR");
         myString = "PC  <- AR";
-        console.log(PC, "PC\n", AC, "AC\n", "BUN");
     } else if (opcode == 5) {
         sym = "BSA";
         BSA();
         writeTotable("5", "T3: M[AR] <- PC\nAR <- AR + 1");
         writeTotable("6", "T4: PC <- AR");
         myString = "PC <- AR";
-        console.log(PC, "PC\n", AC, "AC\n", "BSA");
     } else if (opcode == 6) {
         sym = "ISZ";
         writeTotable("5", "T3: DR <-M[AR]");
         ISZ();
         writeTotable("6", "T4: M[AR] <- DR IF(DR=0) ,\n then (PC <- PC + 1)");
         myString = " M[AR] <- DR IF(DR=0) ,\n then (PC <- PC + 1)";
-        console.log(PC, "PC\n", AC, "AC\n", "ISZ");
 
     } else if (opcode == 8) {
         sym = "AND";
@@ -1484,7 +1402,6 @@ function execute() {
         registerHex.AC = binaryToHex(AC);
         writeTotable("7", "T5: AC <- AC ^ DR");
         myString = "AC <- AC ^ DR";
-        console.log(PC, "PC\n", AC, "AC\n", "andtwo");
 
     } else if (opcode == 9) {
         sym = "ADD";
@@ -1493,26 +1410,22 @@ function execute() {
         registerHex.AC = binaryToHex(AC);
         writeTotable("7", "T5: AC <- AC + DR");
         myString = "AC <- AC + DR";
-        console.log(PC, "PC\n", AC, "AC\n", "ADDtwo");
     } else if (opcode == "A") {
         sym = "LDA";
         writeTotable("6", "T4: DR <-M[AR]");
         LDA();
         writeTotable("7", "T5: AC <- DR");
         myString = "AC <- DR";
-        console.log(PC, "PC\n", AC, "AC\n", "LDAtwo");
     } else if (opcode == "B") {
         sym = "STA";
         STA();
         writeTotable("6", "T4: M[AR] <- AC");
         myString = " M[AR] <- AC";
-        console.log(PC, "PC\n", AC, "AC\n", "STAtwo");
     } else if (opcode == "C") {
         sym = "BUN";
         BUN();
         writeTotable("6", "T4: PC  <- AR");
         myString = "PC  <- AR";
-        console.log(PC, "PC\n", AC, "AC\n", "BUNtwo");
 
     } else if (opcode == "D") {
         sym = "BSA";
@@ -1520,26 +1433,17 @@ function execute() {
         writeTotable("6", "T4: M[AR] <- PC\nAR <- AR + 1");
         writeTotable("7", "T5: PC <- AR");
         myString = "PC <- AR";
-        console.log(PC, "PC\n", AC, "AC\n", "BSAtwo");
     } else if (opcode == "E") {
         sym = "ISZ";
         writeTotable("6", "T4: DR <-M[AR]");
         ISZ();
         writeTotable("7", "T5: M[AR] <- DR IF(DR=0),\nthen (PC <- PC + 1)");
         myString = " M[AR] <- DR IF(DR=0) ,\n then (PC <- PC + 1)";
-        console.log(PC, "PC\n", AC, "AC\n", "ISZtwo");
 
     }
 
 
     checkFlag();
     led();
-    // sevensegmentF();
-    // if(l == 1)
     writeLog(sym, 2);
-
 }
-// if(valu == "INP"){
-//     console.log(";;;;;;;;;;;;;;;;;;;;;;")
-// InputINPR();
-// }
