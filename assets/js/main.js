@@ -302,7 +302,9 @@ function version() {
     console.log("dkdhjfhfj")
     var three = document.getElementsByClassName("vThree");
     var Four = document.getElementsByClassName("vFour");
+    var Five = document.getElementsByClassName("vFive");
     var two = document.getElementsByClassName("vTwo");
+    var BUNfive = document.getElementById("five");
     var ver = document.getElementById("versions").value;
     console.log(document.getElementById("versions").value, ";;;;;;;;");
     if ("version1" == ver) {
@@ -313,6 +315,13 @@ function version() {
         [].forEach.call(three, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        BUNfive.innerText="----";
     }
     if ("version2" == ver) {
         versions = 2;
@@ -322,6 +331,13 @@ function version() {
         [].forEach.call(three, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        BUNfive.innerText="----";
     }
     if ("version3" == ver) {
         versions = 3;
@@ -333,7 +349,13 @@ function version() {
         [].forEach.call(three, function (el) {
             el.classList.remove("dis");
         });
-        
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        BUNfive.innerText="----";
     }
     if ("version4" == ver) {
         versions = 4;
@@ -349,8 +371,29 @@ function version() {
         [].forEach.call(Four, function (el) {
             el.classList.remove("dis");
         });
-        
-        
+        [].forEach.call(Four, function (el) {
+            el.classList.add("dis");
+        });
+        BUNfive.innerText="----";
+    }
+    if ("version5" == ver) {
+        versions = 5;
+        FGI = "1";
+        FGO = "1";
+        checkFlag();
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Five, function (el) {
+            el.classList.remove("dis");
+        });
+        BUNfive.innerText="Cxxx";
     }
 
 }
