@@ -84,6 +84,7 @@ const executeBtn = document.getElementById('execute');
 let len;
 let str;
 let char;
+
 function writeToflag() {
     var flag = document.getElementsByClassName("flagList");
     console.log(FGO, "jdjdjkdkdjdkdjdkhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
@@ -111,6 +112,7 @@ function checkFlag() {
     }
     writeToflag();
 }
+
 function hexNumber(dec) {
     len = -1;
     str = '';
@@ -509,31 +511,47 @@ function led() {
 
     }
 }
+var PCFake;
+// var valuFake;
+// var symFake;
+// var opcodeFake;
+var check = 0;
 
 function InputINPR() {
+    PCFake = PC;
+    console.log("sosososososoososo")
+    // if(valu == "INP"){
     document.getElementById("INP").style.display = "flex";
-    
+    // while(FGI == 0){
+
+    // }
+    // INP();
+
+    // }
 }
+var l = 1;
 
 function OK() {
+    // valuFake=valu;
+    // symFake=sym;
+    // opcodeFake=opcode;
+    check = 1;
     var a = 0;
     var DataINP = document.getElementById("InputINPR");
     if (DataINP.value.length > 2) {
         DataINP.value = "";
         alert("! please enter two hexadecimal numbers !");
-        a=1;
-    }
-    else {
+        a = 1;
+    } else {
 
         var SplitData = DataINP.value.split('');
         for (let index = 0; index < SplitData.length; index++) {
             SplitData[index] = SplitData[index].toUpperCase();
-            if (SplitData[index] == "0" || SplitData[index] == "1" || SplitData[index] == "2" || SplitData[index] == "3" || SplitData[index] == "4" || SplitData[index] == "5"
-                || SplitData[index] == "6" || SplitData[index] == "7" || SplitData[index] == "8" || SplitData[index] == "9" || SplitData[index] == "A" || SplitData[index] == "B"
-                || SplitData[index] == "C" || SplitData[index] == "D" || SplitData[index] == "E" || SplitData[index] == "F") {
+            if (SplitData[index] == "0" || SplitData[index] == "1" || SplitData[index] == "2" || SplitData[index] == "3" || SplitData[index] == "4" || SplitData[index] == "5" ||
+                SplitData[index] == "6" || SplitData[index] == "7" || SplitData[index] == "8" || SplitData[index] == "9" || SplitData[index] == "A" || SplitData[index] == "B" ||
+                SplitData[index] == "C" || SplitData[index] == "D" || SplitData[index] == "E" || SplitData[index] == "F") {
 
-            }
-            else {
+            } else {
                 DataINP.value = "";
                 alert("! please enter hexadecimal numbers !");
                 a = 1;
@@ -542,16 +560,16 @@ function OK() {
         }
     }
     if (a == 0) {
-
         registerHex.INPR = DataINP.value.toUpperCase();
         document.getElementById("INP").style.display = "none";
+        INP();
         FGI = "1";
 
-    }
-    else if(a == 1){
+
+    } else if (a == 1) {
         InputINPR();
     }
-    
+
 }
 
 function turnOFFled() {
@@ -584,24 +602,44 @@ function writeLog(symbol, level) {
         } else if (index == 1 && index == level) {
             if (opcode == "8" || opcode == "9" || opcode == "A" || opcode == "B" || opcode == "C" || opcode == "D" || opcode == "E")
                 c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol} \n  AR <-M[AR]`;
+            else if (opcode == "7")
+                c.innerText = `Decode \n register instruction \n ${symbol}`;
+            else if (opcode == "F")
+                c.innerText = `Decode \n Input Output instruction \n ${symbol}`;
             else
-                c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`;
+                c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`
             r.classList.add('logList');
             r.appendChild(c);
             tab.appendChild(r);
         } else if (index == 2 && index == level) {
-            console.log(myString, "log")
-            c.innerText = `execute \n  ${myString}`;
-            r.classList.add('logList');
-            r.classList.add('logexecute');
-            r.appendChild(c);
-            tab.appendChild(r);
-
-            let z = document.createElement('td');
-
-            z.classList.add('space');
-            r.appendChild(z);
-            tab.appendChild(r);
+            if (l == 0) {
+                console.log(myString, "log")
+                let w = document.createElement('td');
+                w.classList.add('space');
+                r.appendChild(w);
+                tab.appendChild(r);
+                c.innerText = `execute \n  ${myString}`;
+                r.classList.add('logList');
+                r.classList.add('logexecute');
+                r.appendChild(c);
+                tab.appendChild(r);
+                let z = document.createElement('td');
+                z.classList.add('space');
+                r.appendChild(z);
+                tab.appendChild(r);
+                l = 1;
+            } else {
+                console.log(myString, "log")
+                c.innerText = `execute \n  ${myString}`;
+                r.classList.add('logList');
+                r.classList.add('logexecute');
+                r.appendChild(c);
+                tab.appendChild(r);
+                let z = document.createElement('td');
+                z.classList.add('space');
+                r.appendChild(z);
+                tab.appendChild(r);
+            }
         }
 
     }
@@ -684,15 +722,21 @@ function SKI() {
     var one = "1";
     if (FGI == "1") {
         PC = ADD(PC, one);
+        registerHex.PC = binaryToHex(PC);
     }
 }
 
 function INP() {
-        // registerHex.INPR="02"
-        partOFAC = registerHex.AC.slice(0, 2);
-        registerHex.AC = partOFAC + registerHex.INPR;
-        AC = hextobinary(registerHex.AC);
-        console.log(AC, registerHex.AC, INPR, "INPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+    // registerHex.INPR="02"
+    partOFAC = registerHex.AC.slice(0, 2);
+    registerHex.AC = partOFAC + registerHex.INPR;
+    AC = hextobinary(registerHex.AC);
+    if (PC != PCFake)
+        l = 0;
+    writeTotable("5", "T3: AC(0-7) <-INPR ");
+    myString = " AC(0-7) <-INPR\n, FGI <- 0";
+    writeLog(sym, 2);
+    console.log(AC, registerHex.AC, INPR, "INPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
 
 }
 
@@ -721,8 +765,8 @@ function CMA() {
         if (AC[index] == 0)
             AC[index] = 1;
         else if (AC[index] == 1) {
-            AC[index] = 0;
-        }
+        AC[index] = 0;
+    }
     AC = AC.join('');
     registerHex.AC = binaryToHex(AC);
 }
@@ -1013,11 +1057,11 @@ function fetch() {
 
 //decode**************************************************
 function decode() {
-    opcode = registerHex.IR.split('')[0];
+    opcode = registerHex.IR.split('')[0].toUpperCase();
     if (opcode == "7") {
         // registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
         // AR = hextobinary(registerHex.AR);
-        // writeTotable("4", "T2: AR <- IR[0:11]");
+        // writeTotable("4", "T2: register instructions");
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
                 valu = register_instructions[j][0];
@@ -1048,19 +1092,18 @@ function decode() {
                     sym = valu;
 
                 if (valu == "SKI" || valu == "INP") {
-                    if (versions == 4){
+                    if (versions == 4) {
                         sym = valu;
-                        if (valu == "INP") {
-                            if (FGI == "1") {
-                                FGI = "0";
-                                checkFlag();
-                                InputINPR();
-                            } 
-                            else
-                                alert("! we are taking input !");    
-                        }
-                    }
-                    else
+                        // if (valu == "INP") {
+                        //     if (FGI == "1") {
+                        //         FGI = "0";
+                        //         checkFlag();
+                        //         InputINPR();
+                        //     } 
+                        //     else
+                        //         alert("! we are taking input !");    
+                        // }
+                    } else
                         errors = 1;
                 } else
                     sym = valu;
@@ -1248,7 +1291,11 @@ function decode() {
 }
 
 //execute**************************************************
+// var g=0;
 function execute() {
+    enableBtn(fetchBtn);
+    disableBtn(decodeBtn);
+    disableBtn(executeBtn);
     console.log(registerHex, "execute");
     if (opcode == "7") {
 
@@ -1328,11 +1375,17 @@ function execute() {
     }
     if (opcode == "F") {
         if (valu == "INP") {
-            INP();
-            writeTotable("5", "T3: AC(0-7) <-INPR ");
-            myString = " AC(0-7) <-INPR\n, FGI <- 0";
-            console.log(PC, "PC\n", AC, "AC\n", "INP");
 
+            if (FGI == 1) {
+                FGI = "0";
+                checkFlag();
+                InputINPR();
+                writeTotable("5", "T3: con not execute until you give a valu to the input");
+                myString = "con not execute until you give a valu to the input";
+            } else {
+                alert("we are taking data");
+               
+            }
         } else if (valu == "OUT") {
             OUT();
             writeTotable("5", "T3: OUTR <- AC(0-7)");
@@ -1461,12 +1514,15 @@ function execute() {
 
     }
 
-    enableBtn(fetchBtn);
-    disableBtn(decodeBtn);
-    disableBtn(executeBtn);
+
     checkFlag();
     led();
     // sevensegmentF();
+    // if(l == 1)
     writeLog(sym, 2);
 
 }
+// if(valu == "INP"){
+//     console.log(";;;;;;;;;;;;;;;;;;;;;;")
+// InputINPR();
+// }

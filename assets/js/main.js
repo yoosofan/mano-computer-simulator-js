@@ -203,6 +203,8 @@ function back() {
     document.getElementById("container").style.display = "block";
     document.getElementById("HLT").classList.remove("shutDown");
     document.getElementById("versions").style.display = "block";
+    document.getElementById("INP").style.display = "none";
+    FGI = "1";
     var end = document.querySelectorAll(".cpu");
     var start = document.querySelectorAll(".endInput");
     [].forEach.call(start, function (el) {
