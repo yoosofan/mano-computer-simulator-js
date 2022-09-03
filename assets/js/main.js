@@ -155,6 +155,7 @@ function showCPU() {
     enableBtn(fetchBtn);
     disableBtn(executeBtn);
     disableBtn(decodeBtn);
+
     PC = '000000000000';
     IR = '0000000000000000';
     AC = '0000000000000000';
@@ -165,6 +166,7 @@ function showCPU() {
     registerHex.AC = binaryToHex(AC);
     registerHex.DR = binaryToHex(DR);
     registerHex.memory = binaryToHex(memory);
+    document.getElementById("h").innerText="CPU ON";
     var start = document.querySelectorAll(".cpu");
     var end = document.querySelectorAll(".endInput");
     document.getElementById("versions").style.display = "none";
@@ -201,8 +203,9 @@ function showCPU() {
 }
 
 function back() {
+    document.getElementById("h").innerText="CPU OFF";
     document.getElementById("container").style.display = "block";
-    document.getElementById("HLT").classList.remove("shutDown");
+    document.getElementById("back").classList.remove("shutDown");
     document.getElementById("versions").style.display = "block";
     document.getElementById("InputINPR").disabled=true;
     document.getElementById("OK").disabled=true;
