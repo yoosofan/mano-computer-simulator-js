@@ -1095,7 +1095,7 @@ function decode() {
             sym = "STA";
         } else if (opcode == 4) {
             sym = "BUN";
-            if (versions == 2 || versions == 3)
+            if (versions > 1 )
                 sym = "BUN";
             else
                 errors = 1;

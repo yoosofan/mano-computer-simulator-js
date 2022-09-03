@@ -181,7 +181,12 @@
                     <div class="AssembleArea endInput">
                         <div class="lableAssembly">
                             <label for="">Add your assembly code</label>
-                            <textarea name="" id="assembler" cols="30" rows="15"></textarea>
+                            <textarea name="" id="assembler" cols="30" rows="15">LDA 0x063
+AND 0x062
+HLT
+0x062 1111
+0x063 0101
+                            </textarea>
                         </div>
                         <button class="btn" id="assmblerBtn" onclick="assembler()">send to textarea</button>
                     </div>
