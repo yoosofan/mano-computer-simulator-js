@@ -204,7 +204,8 @@ function back() {
     document.getElementById("container").style.display = "block";
     document.getElementById("HLT").classList.remove("shutDown");
     document.getElementById("versions").style.display = "block";
-    document.getElementById("INP").style.display = "none";
+    document.getElementById("InputINPR").disabled=true;
+    document.getElementById("OK").disabled=true;
     FGI = "1";
     var end = document.querySelectorAll(".cpu");
     var start = document.querySelectorAll(".endInput");

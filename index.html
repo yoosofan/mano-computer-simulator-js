@@ -16,16 +16,15 @@
         <button class="btn" onclick="back()" id="back">Start agin</button>
         <h1 class="textHLT">Shut down</h1>
     </div>
-    <div id="INP">
+    <!-- <div id="INP">
         <div class="BoxINP">
             <label> type your input two hexadecimal bits:</label>
             <div class="inputBox">
                 <input type="text" name="" id="InputINPR">
                 <button class="btn" onclick="OK()" id="OK"> OK </button>
-            </div>
-            <!-- <h1 class="textINPR">Shut down</h1> -->
+            </div> 
         </div>
-    </div>
+    </div> -->
     <div class="backgroundindex">
 
         <div class="container" id="container">
@@ -65,6 +64,15 @@
                     <div class="register cpu StartCPU">
                         <div class="registerTable"></div>
                         <div class="flagTable"></div>
+                        <div id="INP">
+                            <div class="BoxINP">
+                                <label> type your input two hexadecimal bits:</label>
+                                <div class="inputBox">
+                                    <input type="text" name="" id="InputINPR" disabled>
+                                    <button class="btn1" onclick="OK()" id="OK" disabled> OK </button>
+                                </div> 
+                            </div>
+                        </div>
                     </div>
                     <div class="boxLog cpu StartCPU">
                         <table id="log">

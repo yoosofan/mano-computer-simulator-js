@@ -508,7 +508,8 @@ var check = 0;
 
 function InputINPR() {
     PCFake = PC;
-    document.getElementById("INP").style.display = "flex";
+    document.getElementById("InputINPR").disabled=false;
+    document.getElementById("OK").disabled=false;
 }
 var l = 1;
 
@@ -539,14 +540,16 @@ function OK() {
     }
     if (a == 0) {
         registerHex.INPR = DataINP.value.toUpperCase();
-        document.getElementById("INP").style.display = "none";
         INP();
         FGI = "1";
+        document.getElementById("InputINPR").disabled=true;
+        document.getElementById("OK").disabled=true;
 
 
     } else if (a == 1) {
         InputINPR();
     }
+    
 
 }
 
@@ -1007,15 +1010,12 @@ function fetch() {
 function decode() {
     opcode = registerHex.IR.split('')[0].toUpperCase();
     if (opcode == "7") {
-        // registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        // AR = hextobinary(registerHex.AR);
-        // writeTotable("4", "T2: register instructions");
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
                 valu = register_instructions[j][0];
                 sym = valu;
                 if (valu == "SPA" || valu == "SNA" || valu == "SZA" || valu == "SZE") {
-                    if (versions == 2 || versions == 3)
+                    if (versions > 1)
                         sym = valu;
                     else
                         errors = 1;
@@ -1024,15 +1024,12 @@ function decode() {
             }
         }
     } else if (opcode == "F") {
-        // registerHex.AR = "0x" + registerHex.IR.slice(1, 4); // AR<=IR[0,11]
-        // AR = hextobinary(registerHex.AR);
-        // writeTotable("4", "T2: AR <- IR[0:11]");
         for (let j = 0; j < InputOutput_instructions.length; j++) {
             if (InputOutput_instructions[j][1] == registerHex.IR) {
                 valu = InputOutput_instructions[j][0];
                 sym = valu;
                 if (valu == "SKO" || valu == "OUT") {
-                    if (versions == 3 || versions == 4)
+                    if (versions > 2)
                         sym = valu;
                     else
                         errors = 1;
@@ -1040,7 +1037,7 @@ function decode() {
                     sym = valu;
 
                 if (valu == "SKI" || valu == "INP") {
-                    if (versions == 4) {
+                    if (versions > 3) {
                         sym = valu;
                         // if (valu == "INP") {
                         //     if (FGI == "1") {
