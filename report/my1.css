@@ -4,8 +4,9 @@ body { direction: rtl;
 p{
     font-size: 20px;
     color: rgb(68, 68, 68);
-    padding: 10px 30px;
+    padding: 10px 60px;
     text-align: justify;
+    line-height: 40px;
 }
 img{
     padding: 10px 30px;
