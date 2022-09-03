@@ -563,7 +563,7 @@ function turnOFFled() {
 function writeLog(symbol, level) {
     var tab = document.getElementById("log");
     let c = document.createElement('td');
-    for (let index = 0; index < 3; index++) {
+   for (let index = 0; index < 3; index++) {
         let r = document.createElement('tr');
         if (index == 0 && index == level) {
             c.innerText = `Fetch \n AR <= PC \n PC <= PC + 1 \n IR <= M[AR]`;
@@ -582,6 +582,7 @@ function writeLog(symbol, level) {
             r.classList.add('logList');
             r.appendChild(c);
             tab.appendChild(r);
+            
         } else if (index == 2 && index == level) {
             if (l == 0) {
                 let w = document.createElement('td');
@@ -611,7 +612,7 @@ function writeLog(symbol, level) {
             }
         }
 
-    }
+   }
 }
 
 function binaryToHex(number) {
@@ -815,8 +816,11 @@ function SZE() {
 }
 
 function HLT() {
-    document.getElementById("HLT").classList.add("shutDown");
-    document.getElementById("container").style.display = "none";
+    document.getElementById("back").classList.add("shutDown");
+    document.getElementById("h").innerText="CPU OFF";
+    disableBtn(fetchBtn);
+    disableBtn(executeBtn);
+    disableBtn(decodeBtn);
 }
 
 

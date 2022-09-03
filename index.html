@@ -12,10 +12,7 @@
 </head>
 
 <body>
-    <div id="HLT">
-        <button class="btn" onclick="back()" id="back">Start agin</button>
-        <h1 class="textHLT">Shut down</h1>
-    </div>
+    
     <div id="INP">
         <div class="BoxINP">
             <label> type your input two hexadecimal bits:</label>
@@ -27,10 +24,17 @@
         </div>
     </div>
     <div class="backgroundindex">
-
+        
         <div class="container" id="container">
+            
             <div class="marginBox">
                 <div class="header">
+                    <div id="HLT">
+                        <h3 class="textHLT" id="h">CPU OFF</h3>
+                    </div>
+                    <div id="back">
+                        <button class="btn onCpu" onclick="back()" >Start agin</button>
+                    </div>
                     <div class="version">
                         <select class="versions" id="versions" onchange="version()">
                             <option value="version1">version1</option>
