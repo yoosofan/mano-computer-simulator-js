@@ -308,6 +308,7 @@ function version() {
     var three = document.getElementsByClassName("vThree");
     var Four = document.getElementsByClassName("vFour");
     var Five = document.getElementsByClassName("vFive");
+    var Six = document.getElementsByClassName("vSix");
     var two = document.getElementsByClassName("vTwo");
     var BUNfive = document.getElementById("five");
     var ver = document.getElementById("versions").value;
@@ -396,6 +397,31 @@ function version() {
             el.classList.remove("dis");
         });
         [].forEach.call(Five, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.add("dis");
+        });
+        BUNfive.innerText="Cxxx";
+    }
+    if ("version6" == ver) {
+        versions = 6;
+        FGI = "1";
+        FGO = "1";
+        checkFlag();
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Five, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Six, function (el) {
             el.classList.remove("dis");
         });
         BUNfive.innerText="Cxxx";
