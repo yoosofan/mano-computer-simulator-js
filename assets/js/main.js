@@ -309,6 +309,7 @@ function version() {
     var Four = document.getElementsByClassName("vFour");
     var Five = document.getElementsByClassName("vFive");
     var Six = document.getElementsByClassName("vSix");
+    var Seven = document.getElementsByClassName("vSeven");
     var two = document.getElementsByClassName("vTwo");
     var BUNfive = document.getElementById("five");
     var ver = document.getElementById("versions").value;
@@ -324,7 +325,13 @@ function version() {
         [].forEach.call(Four, function (el) {
             el.classList.add("dis");
         });
-        [].forEach.call(Four, function (el) {
+        [].forEach.call(Five, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="----";
@@ -340,7 +347,13 @@ function version() {
         [].forEach.call(Four, function (el) {
             el.classList.add("dis");
         });
-        [].forEach.call(Four, function (el) {
+        [].forEach.call(Five, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="----";
@@ -358,7 +371,13 @@ function version() {
         [].forEach.call(Four, function (el) {
             el.classList.add("dis");
         });
-        [].forEach.call(Four, function (el) {
+        [].forEach.call(Five, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="----";
@@ -378,6 +397,12 @@ function version() {
             el.classList.remove("dis");
         });
         [].forEach.call(Five, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="----";
@@ -402,6 +427,9 @@ function version() {
         [].forEach.call(Six, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(Seven, function (el) {
+            el.classList.add("dis");
+        });
         BUNfive.innerText="Cxxx";
     }
     if ("version6" == ver) {
@@ -422,6 +450,34 @@ function version() {
             el.classList.remove("dis");
         });
         [].forEach.call(Six, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Seven, function (el) {
+            el.classList.add("dis");
+        });
+        BUNfive.innerText="Cxxx";
+    }
+    if ("version7" == ver) {
+        versions = 7;
+        FGI = "1";
+        FGO = "1";
+        checkFlag();
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Five, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Seven, function (el) {
             el.classList.remove("dis");
         });
         BUNfive.innerText="Cxxx";
