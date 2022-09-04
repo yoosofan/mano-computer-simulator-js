@@ -917,7 +917,30 @@ function ADDlogic(MemStr, ACStr) {
     else
         return result.reverse().join('');
 
+
 };
+
+function minus(pars){
+    pars= parseInt(DR, 2).toString(10);
+    pars=pars-1;
+    pars= convertToBinary(pars);
+    console.log(DR,pars,";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
+}
+// program to convert decimal to binary
+function convertToBinary(x) {
+    let bin = 0;
+    let rem, i = 1, step = 1;
+    while (x != 0) {
+        rem = x % 2;
+        console.log(
+            `Step ${step++}: ${x}/2, Remainder = ${rem}, Quotient = ${parseInt(x/2)}`
+        );
+        x = parseInt(x / 2);
+        bin = bin + rem * i;
+        i = i * 10;
+    }
+    return bin;
+}
 
 function LDA() {
     AC = DR;
