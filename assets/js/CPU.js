@@ -29,7 +29,8 @@ const register_instructions = [
     ["SNA", "7008"],
     ["SZA", "7004"],
     ["SZE", "7002"],
-    ["HLT", "7001"]
+    ["HLT", "7001"],
+    ["RET", "7030"]
 ]
 
 
@@ -53,7 +54,7 @@ let TR = '0000000000000000';
 let memory = '000000000000';
 let INPR = '00000000';
 let OUTR = '00000000';
-let SP = '000000000000';
+let SP = '000001100011';
 let memSP = '000000000000';
 let registerHex = {
     IR: binaryToHex(IR),
@@ -924,10 +925,12 @@ function ADDlogic(MemStr, ACStr) {
 };
 
 function minus(pars){
-    pars= parseInt(DR, 2).toString(10);
-    pars=pars-1;
+    pars= parseInt(pars, 2).toString(10);
+    pars=Number(pars)-1;
+    console.log(pars,";;;;fhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     pars= convertToBinary(pars);
-    console.log(DR,pars,";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;");
+    console.log(pars,";;;;fhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    return pars;
 }
 // program to convert decimal to binary
 function convertToBinary(x) {
@@ -994,19 +997,26 @@ function ISZ() {
 }
 
 function CALL() {
-    code[SP].innerText = registerHex.PC;
-    memSP = hextobinary(code[SP].innerText);
-    registerHex.memSP = code[SP].innerText;
-    SP = min(SP);
+    var SPDecimal= parseInt(SP, 2).toString(10);
+    code[SPDecimal].innerText = registerHex.PC;
+    memSP = hextobinary(code[SPDecimal].innerText);
+    registerHex.memSP = code[SPDecimal].innerText;
+    SP = minus(SP);
+    registerHex.SP=binaryToHex(SP);
     PC = AR;
     registerHex.PC = binaryToHex(AR);
+    console.log(SP,"*************************************************8")
 }
 
-function RETURN() {
-    var one = 1;
-    registerHex.PC = registerHex.memSP;
-    PC = memSP
-    SP = ADD(SP, one);
+function RET() {
+    var SPDecimal= parseInt(SP, 2).toString(10);
+    SPDecimal = Number(SPDecimal)  + 1;
+    SP= convertToBinary(SPDecimal);
+    registerHex.PC =code[SPDecimal].innerText;
+    PC = hextobinary(registerHex.PC);
+    code[SPDecimal].innerText="0000"
+    console.log(registerHex.PC,code[SPDecimal],SP,"*************************************************8")
+
 }
 //fetch************************************************
 
@@ -1061,7 +1071,7 @@ function decode() {
                         sym = valu;
                     else
                         errors = 1;
-                } else if (valu == "RETURN") {
+                } else if (valu == "RET") {
                     if (versions > 5)
                         sym = valu;
                     else
@@ -1072,19 +1082,26 @@ function decode() {
         }
     } else if (opcode == "F") {
         if (opcodeCALL == "9") {
-            if (versions > 5) {
-                registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
-                AR = hextobinary(registerHex.AR);
-                writeTotable("4", "T2: AR <- IR[0:11]");
-                sym = "CALL";
-            } else
-                errors = 1;
-
+       
+                
+                if (versions > 5) {
+                       
+                        valu = "CALL";
+                        registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
+                        AR = hextobinary(registerHex.AR);
+                        writeTotable("4", "T2: AR <- IR[0:11]");
+                        sym = valu;
+                    } else
+                        errors = 1;
+        
+               
+        
+           
         } else {
             for (let j = 0; j < InputOutput_instructions.length; j++) {
                 if (InputOutput_instructions[j][1] == registerHex.IR) {
                     valu = InputOutput_instructions[j][0];
-                    sym = valu;
+                    // sym = valu;
                     if (valu == "SKO" || valu == "OUT") {
                         if (versions > 2)
                             sym = valu;
@@ -1362,8 +1379,8 @@ function execute() {
             HLT();
             writeTotable("5", "T3:S <- 0");
             myString = "T3:S <- 0";
-        } else if (valu == "RETURN") {
-            RETURN();
+        } else if (valu == "RET") {
+            RET();
             writeTotable("5", "T3:PC <- M[SP], SP <- SP - 1 ");
             myString = " T3:PC <- M[SP], SP <- SP - 1";
         }
@@ -1400,6 +1417,7 @@ function execute() {
         } else if (valu == "IOF") {
 
         } else if (valu == "CALL") {
+            console.log("execut%%%%%%%%%%%%%%%%%%%%%%")
             CALL();
             writeTotable("5", "T3: M[SP] <- PC , SP <- SP + 1");
             myString = "  M[SP] <- PC , SP <- SP + 1";
