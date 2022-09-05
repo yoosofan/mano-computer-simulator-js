@@ -11,7 +11,10 @@ const memory_instructions = [
     ["BUN", 4, "C"],
     ["BSA", 5, "D"],
     ["ISZ", 6, "E"],
-    ["CALL", "F9"]
+    ["CALL", "F9"],
+    ["LDS", "F7", "FF"],
+    ["LDA", "F6", "FE"]
+
 ]
 
 
@@ -80,6 +83,7 @@ let N = "0";
 let V = "0";
 let PSW = "1";
 var opcode;
+var opcodeCALL;
 var code = document.getElementsByClassName("data");
 var memoryAddress = document.getElementsByClassName("Address");
 const fetchBtn = document.getElementById('fetchdata');
@@ -581,15 +585,23 @@ function writeLog(symbol, level) {
             if (opcode == "8" || opcode == "9" || opcode == "A" || opcode == "B" || opcode == "C" || opcode == "D" || opcode == "E")
                 c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol} \n  AR <-M[AR]`;
             else if (opcode == "7")
-                c.innerText = `Decode \n register instruction \n ${symbol}`;
+                if (symbol == "RET")
+                    c.innerText = `Decode \n ${symbol}`;
+                else
+                    c.innerText = `Decode \n register instruction \n ${symbol}`;
+
             else if (opcode == "F")
-                c.innerText = `Decode \n Input Output instruction \n ${symbol}`;
+                if (opcodeCALL == "9" || opcodeCALL == "6" || opcodeCALL == "E" || opcodeCALL == "F" || opcodeCALL == "7")
+                    c.innerText = `Decode \n ${symbol}`;
+                else
+                    c.innerText = `Decode \n Input Output instruction \n ${symbol}`;
+
             else
-                c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`
+                c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`;
+
             r.classList.add('logList');
             r.appendChild(c);
             tab.appendChild(r);
-
         } else if (index == 2 && index == level) {
             if (l == 0) {
                 let w = document.createElement('td');
@@ -735,8 +747,8 @@ function CMA() {
         if (AC[index] == 0)
             AC[index] = 1;
         else if (AC[index] == 1) {
-        AC[index] = 0;
-    }
+            AC[index] = 0;
+        }
     AC = AC.join('');
     registerHex.AC = binaryToHex(AC);
 }
@@ -924,12 +936,12 @@ function ADDlogic(MemStr, ACStr) {
 
 };
 
-function minus(pars){
-    pars= parseInt(pars, 2).toString(10);
-    pars=Number(pars)-1;
-    console.log(pars,";;;;fhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
-    pars= convertToBinary(pars);
-    console.log(pars,";;;;fhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+function minus(pars) {
+    pars = parseInt(pars, 2).toString(10);
+    pars = Number(pars) - 1;
+    console.log(pars, ";;;;fhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    pars = convertToBinary(pars);
+    console.log(pars, ";;;;fhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
     return pars;
 }
 // program to convert decimal to binary
@@ -939,7 +951,7 @@ function convertToBinary(x) {
     while (x != 0) {
         rem = x % 2;
         console.log(
-            `Step ${step++}: ${x}/2, Remainder = ${rem}, Quotient = ${parseInt(x/2)}`
+            `Step ${step++}: ${x}/2, Remainder = ${rem}, Quotient = ${parseInt(x / 2)}`
         );
         x = parseInt(x / 2);
         bin = bin + rem * i;
@@ -997,26 +1009,44 @@ function ISZ() {
 }
 
 function CALL() {
-    var SPDecimal= parseInt(SP, 2).toString(10);
+    var SPDecimal = parseInt(SP, 2).toString(10);
     code[SPDecimal].innerText = registerHex.PC;
     memSP = hextobinary(code[SPDecimal].innerText);
     registerHex.memSP = code[SPDecimal].innerText;
     SP = minus(SP);
-    registerHex.SP=binaryToHex(SP);
+    registerHex.SP = binaryToHex(SP);
     PC = AR;
     registerHex.PC = binaryToHex(AR);
-    console.log(SP,"*************************************************8")
+    console.log(SP, "*************************************************8")
 }
 
 function RET() {
-    var SPDecimal= parseInt(SP, 2).toString(10);
-    SPDecimal = Number(SPDecimal)  + 1;
-    SP= convertToBinary(SPDecimal);
-    registerHex.PC =code[SPDecimal].innerText;
+    var SPDecimal = parseInt(SP, 2).toString(10);
+    SPDecimal = Number(SPDecimal) + 1;
+    SP = convertToBinary(SPDecimal);
+    registerHex.PC = code[SPDecimal].innerText;
     PC = hextobinary(registerHex.PC);
-    code[SPDecimal].innerText="0000"
-    console.log(registerHex.PC,code[SPDecimal],SP,"*************************************************8")
+    code[SPDecimal].innerText = "0000"
+    console.log(registerHex.PC, code[SPDecimal], SP, "*************************************************8")
 
+}
+
+function LDS() {
+    SP = DR;
+    registerHex.SP = binaryToHex(SP);
+    console.log(SP, "SPPPPPPPPPPPPPPPPPPPPPPPPPP")
+}
+function STS() {
+    console.log("////////////////////")
+    for (let l = 0; l < memoryAddress.length; l++) {
+        console.log(registerHex.AR, "ARRRRRR")
+        if (memoryAddress[l].innerText == registerHex.AR) {
+            code[l].innerText = binaryToHex(SP);
+            memSP = hextobinary(code[l].innerText);
+            registerHex.memSP = code[l].innerText;
+        }
+
+    }
 }
 //fetch************************************************
 
@@ -1068,6 +1098,7 @@ function decode() {
             if (register_instructions[j][1] == registerHex.IR) {
                 PSW="0";
                 valu = register_instructions[j][0];
+                sym = valu;
                 if (valu == "SPA" || valu == "SNA" || valu == "SZA" || valu == "SZE") {
                     if (versions > 1)
                         sym = valu;
@@ -1084,6 +1115,7 @@ function decode() {
         }
     } else if (opcode == "F") {
         if (opcodeCALL == "9") {
+<<<<<<< HEAD
             PSW = "0";
                 if (versions > 5) {
                        
@@ -1099,6 +1131,98 @@ function decode() {
         
            
         } else {
+=======
+
+
+            sym = "CALL";
+            if (versions > 5) {
+                valu = "CALL";
+
+                registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
+                AR = hextobinary(registerHex.AR);
+                writeTotable("4", "T2: AR <- IR[0:11]");
+            } else
+                errors = 1;
+
+        }
+        else if (opcodeCALL == "7") {
+            // console.log("{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}")
+            sym = "LDS";
+            if (versions > 6) {
+                valu = "LDS";
+                registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
+                AR = hextobinary(registerHex.AR);
+                writeTotable("4", "T2: AR <- IR[0:11]");
+                for (let l = 0; l < memoryAddress.length; l++)
+                    if (memoryAddress[l].innerText == registerHex.AR) {
+                        memory = hextobinary(code[l].innerText);
+                        registerHex.memory = code[l].innerText;
+                        registerHex.DR = code[l].innerText;
+                        DR = hextobinary(registerHex.DR);
+                    }
+            } else
+                errors = 1;
+        }
+        else if (opcodeCALL == "F") {
+
+            sym = "LDS";
+            if (versions > 6) {
+                registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
+                AR = hextobinary(registerHex.AR);
+                writeTotable("4", "T2: AR <- IR[0:11]");
+                valu = "LDS";
+                for (let l = 0; l < memoryAddress.length; l++)
+                    if (memoryAddress[l].innerText == registerHex.AR) {
+                        memory = hextobinary(code[l].innerText);
+                        registerHex.memory = code[l].innerText;
+                        AR = memory;
+                        registerHex.AR = "0x" + registerHex.memory;
+                        break;
+                    }
+                writeTotable("5", "T3: AR <-M[AR]");
+                for (let y = 0; y < memoryAddress.length; y++) {
+                    if (memoryAddress[y].innerText == registerHex.AR) {
+                        memory = hextobinary(code[y].innerText);
+                        registerHex.memory = code[y].innerText;
+                        registerHex.DR = code[y].innerText;
+                        DR = hextobinary(registerHex.DR);
+                    }
+                }
+            } else
+                errors = 1;
+        }
+        else if (opcodeCALL == "6") {
+            // console.log("{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}")
+            sym = "STS";
+            if (versions > 6) {
+                registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
+                AR = hextobinary(registerHex.AR);
+                writeTotable("4", "T2: AR <- IR[0:11]");
+                valu = "STS";
+            } else
+                errors = 1;
+        }
+        else if (opcodeCALL == "E") {
+
+            sym = "STS";
+            if (versions > 6) {
+                registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
+                AR = hextobinary(registerHex.AR);
+                writeTotable("4", "T2: AR <- IR[0:11]");
+                sym = "STS";
+                for (let l = 0; l < memoryAddress.length; l++)
+                    if (memoryAddress[l].innerText == registerHex.AR) {
+                        memory = hextobinary(code[l].innerText);
+                        registerHex.memory = code[l].innerText;
+                        AR = memory;
+                        registerHex.AR = "0x" + registerHex.memory;
+                        break;
+                    }
+            } else
+                errors = 1;
+        }
+        else {
+>>>>>>> c18c8379be9c3bb0c40cb0045f9586bc5998776e
             for (let j = 0; j < InputOutput_instructions.length; j++) {
                 if (InputOutput_instructions[j][1] == registerHex.IR) {
                     PSW = "0";
@@ -1423,6 +1547,16 @@ function execute() {
             CALL();
             writeTotable("5", "T3: M[SP] <- PC , SP <- SP + 1");
             myString = "  M[SP] <- PC , SP <- SP + 1";
+        } else if (valu == "LDS") {
+            writeTotable("6", "T4: DR <-M[AR]");
+            LDS();
+            writeTotable("7", "T5: SP <- DR");
+            myString = "SP <- DR";
+        } else if (valu == "STS") {
+            sym = "STS";
+            STS();
+            writeTotable("5", "T3: M[AR] <- SP");
+            myString = " M[AR] <- SP";
         }
     }
     if (opcode == 0) {
