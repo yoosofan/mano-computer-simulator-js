@@ -78,7 +78,7 @@ let Z = "0";
 let carry = "0";
 let N = "0";
 let V = "0";
-
+let PSW = "1";
 var opcode;
 var code = document.getElementsByClassName("data");
 var memoryAddress = document.getElementsByClassName("Address");
@@ -1059,12 +1059,14 @@ function fetch() {
 }
 
 //decode**************************************************
+
 function decode() {
     opcode = registerHex.IR.split('')[0].toUpperCase();
     opcodeCALL = registerHex.IR.split('')[1].toUpperCase();
     if (opcode == "7") {
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
+                PSW="0";
                 valu = register_instructions[j][0];
                 if (valu == "SPA" || valu == "SNA" || valu == "SZA" || valu == "SZE") {
                     if (versions > 1)
@@ -1082,8 +1084,7 @@ function decode() {
         }
     } else if (opcode == "F") {
         if (opcodeCALL == "9") {
-       
-                
+            PSW = "0";
                 if (versions > 5) {
                        
                         valu = "CALL";
@@ -1100,6 +1101,7 @@ function decode() {
         } else {
             for (let j = 0; j < InputOutput_instructions.length; j++) {
                 if (InputOutput_instructions[j][1] == registerHex.IR) {
+                    PSW = "0";
                     valu = InputOutput_instructions[j][0];
                     // sym = valu;
                     if (valu == "SKO" || valu == "OUT") {
