@@ -81,7 +81,7 @@ let Z = "0";
 let carry = "0";
 let N = "0";
 let V = "0";
-let PSW = "1";
+let PSW = "0";
 var opcode;
 var opcodeCALL;
 var code = document.getElementsByClassName("data");
@@ -102,6 +102,7 @@ function writeToflag() {
     flag[4].innerHTML = FGI;
     flag[5].innerHTML = FGO;
     flag[6].innerHTML = Int;
+    flag[7].innerHTML = PSW;
 
 }
 
@@ -263,10 +264,10 @@ registerTable.appendChild(regtable);
 // flag table
 const ftable = document.createElement('table');
 const flagTable = document.querySelector('.flagTable');
-const header = ['E', 'Z', 'N', 'V', 'FGI', 'FGO', 'IEN'];
+const header = ['E', 'Z', 'N', 'V', 'FGI', 'FGO', 'IEN','PSW'];
 for (let o = 0; o < 2; o++) {
     let r = document.createElement('tr');
-    for (let j = 0; j < 7; j++) {
+    for (let j = 0; j < 8; j++) {
         let c = document.createElement('td');
         if (o == 0) {
             c.innerText = header[j];
@@ -303,6 +304,8 @@ for (let o = 0; o < 2; o++) {
             else if (j == 5)
                 c.innerHTML = "0";
             else if (j == 6)
+                c.innerHTML = "0";
+            else if (j == 7)
                 c.innerHTML = "0";
 
         }
@@ -747,8 +750,8 @@ function CMA() {
         if (AC[index] == 0)
             AC[index] = 1;
         else if (AC[index] == 1) {
-            AC[index] = 0;
-        }
+        AC[index] = 0;
+    }
     AC = AC.join('');
     registerHex.AC = binaryToHex(AC);
 }
@@ -947,7 +950,8 @@ function minus(pars) {
 // program to convert decimal to binary
 function convertToBinary(x) {
     let bin = 0;
-    let rem, i = 1, step = 1;
+    let rem, i = 1,
+        step = 1;
     while (x != 0) {
         rem = x % 2;
         console.log(
@@ -1036,6 +1040,7 @@ function LDS() {
     registerHex.SP = binaryToHex(SP);
     console.log(SP, "SPPPPPPPPPPPPPPPPPPPPPPPPPP")
 }
+
 function STS() {
     console.log("////////////////////")
     for (let l = 0; l < memoryAddress.length; l++) {
@@ -1090,13 +1095,14 @@ function fetch() {
 
 //decode**************************************************
 
+var PSWfake="1";
 function decode() {
     opcode = registerHex.IR.split('')[0].toUpperCase();
     opcodeCALL = registerHex.IR.split('')[1].toUpperCase();
     if (opcode == "7") {
         for (let j = 0; j < register_instructions.length; j++) {
             if (register_instructions[j][1] == registerHex.IR) {
-                PSW="0";
+                PSWfake = "0";
                 valu = register_instructions[j][0];
                 sym = valu;
                 if (valu == "SPA" || valu == "SNA" || valu == "SZA" || valu == "SZE") {
@@ -1115,38 +1121,17 @@ function decode() {
         }
     } else if (opcode == "F") {
         if (opcodeCALL == "9") {
-<<<<<<< HEAD
-            PSW = "0";
-                if (versions > 5) {
-                       
-                        valu = "CALL";
-                        registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
-                        AR = hextobinary(registerHex.AR);
-                        writeTotable("4", "T2: AR <- IR[0:11]");
-                        sym = valu;
-                    } else
-                        errors = 1;
-        
-               
-        
-           
-        } else {
-=======
-
-
-            sym = "CALL";
+            PSWfake = "0";
             if (versions > 5) {
                 valu = "CALL";
-
                 registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
                 AR = hextobinary(registerHex.AR);
                 writeTotable("4", "T2: AR <- IR[0:11]");
+                sym = valu;
             } else
                 errors = 1;
-
-        }
-        else if (opcodeCALL == "7") {
-            // console.log("{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}")
+        } else if (opcodeCALL == "7") {
+            PSWfake = "0";
             sym = "LDS";
             if (versions > 6) {
                 valu = "LDS";
@@ -1162,9 +1147,8 @@ function decode() {
                     }
             } else
                 errors = 1;
-        }
-        else if (opcodeCALL == "F") {
-
+        } else if (opcodeCALL == "F") {
+            PSWfake = "0";
             sym = "LDS";
             if (versions > 6) {
                 registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
@@ -1190,9 +1174,8 @@ function decode() {
                 }
             } else
                 errors = 1;
-        }
-        else if (opcodeCALL == "6") {
-            // console.log("{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}}}}}}}}")
+        } else if (opcodeCALL == "6") {
+            PSWfake = "0";
             sym = "STS";
             if (versions > 6) {
                 registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
@@ -1201,9 +1184,8 @@ function decode() {
                 valu = "STS";
             } else
                 errors = 1;
-        }
-        else if (opcodeCALL == "E") {
-
+        } else if (opcodeCALL == "E") {
+            PSWfake = "0";
             sym = "STS";
             if (versions > 6) {
                 registerHex.AR = "0x" + "0" + registerHex.IR.slice(2, 4); // AR<=IR[0,11]
@@ -1220,12 +1202,10 @@ function decode() {
                     }
             } else
                 errors = 1;
-        }
-        else {
->>>>>>> c18c8379be9c3bb0c40cb0045f9586bc5998776e
+        } else {
             for (let j = 0; j < InputOutput_instructions.length; j++) {
                 if (InputOutput_instructions[j][1] == registerHex.IR) {
-                    PSW = "0";
+                    PSWfake = "0";
                     valu = InputOutput_instructions[j][0];
                     // sym = valu;
                     if (valu == "SKO" || valu == "OUT") {
@@ -1251,9 +1231,11 @@ function decode() {
         AR = hextobinary(registerHex.AR);
         writeTotable("4", "T2: AR <- IR[0:11]");
         if (opcode == 0) {
+            
             sym = "AND";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
@@ -1262,9 +1244,11 @@ function decode() {
 
 
         } else if (opcode == 1) {
+           
             sym = "ADD";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
@@ -1275,6 +1259,7 @@ function decode() {
             sym = "LDA";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
@@ -1282,15 +1267,20 @@ function decode() {
                 }
         } else if (opcode == 3) {
             sym = "STA";
+            PSWfake = "0";
         } else if (opcode == 4) {
-            sym = "BUN";
-            if (versions > 1)
+
+            if (versions > 1){
                 sym = "BUN";
+                PSWfake = "0";
+            }
             else
                 errors = 1;
         } else if (opcode == 5) {
-            if (versions > 4)
+            if (versions > 4){
                 sym = "BSA";
+                PSWfake = "0";
+            }
             else
                 errors = 1;
 
@@ -1298,6 +1288,7 @@ function decode() {
             sym = "ISZ";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     registerHex.DR = code[l].innerText;
@@ -1307,6 +1298,7 @@ function decode() {
             sym = "AND";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
@@ -1316,6 +1308,7 @@ function decode() {
             writeTotable("5", "T3: AR <-M[AR]");
             for (let y = 0; y < memoryAddress.length; y++) {
                 if (memoryAddress[y].innerText == registerHex.AR) {
+                    // PSWfake = "0";
                     memory = hextobinary(code[y].innerText);
                     registerHex.memory = code[y].innerText;
                     registerHex.DR = code[y].innerText;
@@ -1327,6 +1320,7 @@ function decode() {
             sym = "ADD";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
@@ -1336,6 +1330,7 @@ function decode() {
             writeTotable("5", "T3: AR <-M[AR]");
             for (let y = 0; y < memoryAddress.length; y++) {
                 if (memoryAddress[y].innerText == registerHex.AR) {
+                    // PSWfake = "0";
                     memory = hextobinary(code[y].innerText);
                     registerHex.memory = code[y].innerText;
                     registerHex.DR = code[y].innerText;
@@ -1346,6 +1341,7 @@ function decode() {
             sym = "LDA";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
@@ -1363,20 +1359,24 @@ function decode() {
             }
         } else if (opcode == "B") {
             sym = "STA";
-            for (let l = 0; l < memoryAddress.length; l++)
+            for (let l = 0; l < memoryAddress.length; l++){
+                console.log(memoryAddress[l].innerText,PSW,"lfffffffffffffffffffffffffffffffffff")
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
                     registerHex.AR = "0x" + registerHex.memory;
                     break;
                 }
+            }
             writeTotable("5", "T3: AR <-M[AR]");
         } else if (opcode == "C") {
             if (versions > 4) {
                 sym = "BUN";
                 for (let l = 0; l < memoryAddress.length; l++) {
                     if (memoryAddress[l].innerText == registerHex.AR) {
+                        PSWfake = "0";
                         memory = hextobinary(code[l].innerText);
                         registerHex.memory = code[l].innerText;
                         AR = memory;
@@ -1392,6 +1392,7 @@ function decode() {
                 sym = "BSA";
                 for (let l = 0; l < memoryAddress.length; l++)
                     if (memoryAddress[l].innerText == registerHex.AR) {
+                        PSWfake = "0";
                         memory = hextobinary(code[l].innerText);
                         registerHex.memory = code[l].innerText;
                         AR = memory;
@@ -1406,6 +1407,7 @@ function decode() {
             sym = "ISZ";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
+                    PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
                     registerHex.memory = code[l].innerText;
                     AR = memory;
@@ -1424,18 +1426,34 @@ function decode() {
         }
 
     }
-    if (errors == 1) {
-        errors = 0;
-        error(sym)
+    if(PSWfake == "1"){
+        PSW="1";
+        document.getElementById("back").classList.add("shutDown");
+        document.getElementById("h").innerText = "CPU OFF";
+        alert("CPU stoped beacuse PSW = 1")
         disableBtn(executeBtn);
         disableBtn(decodeBtn);
         disableBtn(fetchBtn);
-    } else {
-        enableBtn(executeBtn);
-        disableBtn(decodeBtn);
-        disableBtn(fetchBtn);
-        writeLog(sym, 1);
+        checkFlag()
+    }else{
+        PSW="0";
+        PSWfake = "1";
+        if (errors == 1) {
+            errors = 0;
+            error(sym)
+            disableBtn(executeBtn);
+            disableBtn(decodeBtn);
+            disableBtn(fetchBtn);
+        } else {
+            enableBtn(executeBtn);
+            disableBtn(decodeBtn);
+            disableBtn(fetchBtn);
+            writeLog(sym, 1);
+        }
     }
+    
+  
+
 
 }
 
