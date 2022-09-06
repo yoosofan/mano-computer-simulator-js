@@ -470,14 +470,7 @@ function sevensegmentF() {
             className = myClassdisplay;
         else if (index == 1)
             className = myClassdisplay2;
-<<<<<<< HEAD
-
-=======
-        // else if (index == 2)
-        //     className = myClassdisplay3;
-        // else if (index == 3)
-        //     className = myClassdisplay4;
->>>>>>> 18f6d3c4638c322a57a21e7b8ca2088554af83a1
+            
         if (partOFAC == "0")
             sevenSegment.zero(className);
         if (partOFAC == "1")
