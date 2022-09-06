@@ -314,6 +314,12 @@ table {
     background-color: #3aa3a7;
     color: black;
 }
+.sticky1 {
+    bottom: 0;
+    position: sticky;
+    background-color: #3aa3a7;
+    color: black;
+}
 
 .center {
     text-align: center;
