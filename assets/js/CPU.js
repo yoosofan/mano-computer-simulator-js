@@ -469,10 +469,6 @@ function sevensegmentF() {
             className = myClassdisplay;
         else if (index == 1)
             className = myClassdisplay2;
-        // else if (index == 2)
-        //     className = myClassdisplay3;
-        // else if (index == 3)
-        //     className = myClassdisplay4;
 
         if (partOFAC == "0")
             sevenSegment.zero(className);
