@@ -462,6 +462,7 @@ var sevenSegment = {
 };
 
 function sevensegmentF() {
+
     for (let index = 0; index < 2; index++) {
         var partOFAC = registerHex.OUTR[index];
         var className;
@@ -469,7 +470,14 @@ function sevensegmentF() {
             className = myClassdisplay;
         else if (index == 1)
             className = myClassdisplay2;
+<<<<<<< HEAD
 
+=======
+        // else if (index == 2)
+        //     className = myClassdisplay3;
+        // else if (index == 3)
+        //     className = myClassdisplay4;
+>>>>>>> 18f6d3c4638c322a57a21e7b8ca2088554af83a1
         if (partOFAC == "0")
             sevenSegment.zero(className);
         if (partOFAC == "1")
@@ -585,8 +593,8 @@ function writeLog(symbol, level) {
         if (index == 0 && index == level) {
             c.innerText = `Fetch \n AR <= PC \n PC <= PC + 1 \n IR <= M[AR]`;
             r.classList.add('logList');
-            r.appendChild(c);
-            tab.appendChild(r);
+            r.prepend(c);
+            tab.prepend(r);
         } else if (index == 1 && index == level) {
             if (opcode == "8" || opcode == "9" || opcode == "A" || opcode == "B" || opcode == "C" || opcode == "D" || opcode == "E")
                 c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol} \n  AR <-M[AR]`;
@@ -606,8 +614,8 @@ function writeLog(symbol, level) {
                 c.innerText = `Decode \n AR <= IR[0:11] \n ${symbol}`;
 
             r.classList.add('logList');
-            r.appendChild(c);
-            tab.appendChild(r);
+            r.prepend(c);
+            tab.prepend(r);
         } else if (index == 2 && index == level) {
             if (l == 0) {
                 let w = document.createElement('td');
@@ -628,19 +636,19 @@ function writeLog(symbol, level) {
                 c.innerText = `execute \n  ${myString}`;
                 r.classList.add('logList');
                 r.classList.add('logexecute');
-                r.appendChild(c);
-                tab.appendChild(r);
+                r.prepend(c);
+                tab.prepend(r);
                 let z = document.createElement('td');
                 z.classList.add('space');
-                r.appendChild(z);
-                tab.appendChild(r);
+                r.prepend(z);
+                tab.prepend(r);
             }
         } else if (index == 0 && level == 4) {
 
             let w = document.createElement('td');
             w.classList.add('space');
-            r.appendChild(w);
-            tab.appendChild(r);
+            r.prepend(w);
+            tab.prepend(r);
             if (ShowLog == 2) {
                 c.innerText = `Enable internal interrupt \n M[98] <- PC \n pc <- 99 \n R <- 0 \n Int <- 0`;
 
@@ -651,12 +659,12 @@ function writeLog(symbol, level) {
             }
             r.classList.add('logList');
             r.classList.add('logexecute');
-            r.appendChild(c);
-            tab.appendChild(r);
+            r.prepend(c);
+            tab.prepend(r);
             let z = document.createElement('td');
             z.classList.add('space');
-            r.appendChild(z);
-            tab.appendChild(r);
+            r.prepend(z);
+            tab.prepend(r);
             l = 1;
 
         }
@@ -1489,7 +1497,7 @@ function decode() {
         disableBtn(decodeBtn);
         disableBtn(fetchBtn);
         checkFlag();
-    }else if(PSWfake == "1" && Int == "0") {
+    } else if (PSWfake == "1" && Int == "0") {
         PSW = "1";
         if (errors == 1) {
             errors = 0;
@@ -1504,7 +1512,7 @@ function decode() {
             writeLog(sym, 1);
             checkFlag();
         }
-    }else {
+    } else {
 
 
         PSW = "0";
