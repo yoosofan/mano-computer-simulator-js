@@ -160,6 +160,11 @@ function showCPU() {
     AC = '0000000000000000';
     DR = '0000000000000000';
     memory = '000000000000';
+    OUTR="00000000";
+    registerHex.OUTR="00"
+    if (versions > 2) {
+        sevensegmentF();    
+    }
     registerHex.PC = binaryToHex(PC);
     registerHex.IR = binaryToHex(IR);
     registerHex.AC = binaryToHex(AC);

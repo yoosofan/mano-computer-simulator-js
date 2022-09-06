@@ -462,6 +462,7 @@ var sevenSegment = {
 };
 
 function sevensegmentF() {
+
     for (let index = 0; index < 2; index++) {
         var partOFAC = registerHex.OUTR[index];
         var className;
@@ -473,7 +474,6 @@ function sevensegmentF() {
         //     className = myClassdisplay3;
         // else if (index == 3)
         //     className = myClassdisplay4;
-
         if (partOFAC == "0")
             sevenSegment.zero(className);
         if (partOFAC == "1")
@@ -1493,7 +1493,7 @@ function decode() {
         disableBtn(decodeBtn);
         disableBtn(fetchBtn);
         checkFlag();
-    }else if(PSWfake == "1" && Int == "0") {
+    } else if (PSWfake == "1" && Int == "0") {
         PSW = "1";
         if (errors == 1) {
             errors = 0;
@@ -1508,7 +1508,7 @@ function decode() {
             writeLog(sym, 1);
             checkFlag();
         }
-    }else {
+    } else {
 
 
         PSW = "0";
