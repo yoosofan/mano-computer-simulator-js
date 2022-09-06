@@ -19,7 +19,7 @@ function natural() {
 function insert() {
     // console.log(count, ";;;")
     var data = document.getElementById("firstInput").value;
-    if (data == "") {} else
+    if (data == "") { } else
         elementt[count - 1].innerText = data;
 
     console.log(data, "llllfjfhdjfgdj")
@@ -59,10 +59,10 @@ function store() {
             else
                 dataStore[b] = " ";
         else
-        if (b == 99)
-            dataStore[b] = tag + ",";
-        else
-            dataStore[b] = tag;
+            if (b == 99)
+                dataStore[b] = tag + ",";
+            else
+                dataStore[b] = tag;
     }
     getDataTextarea.value = dataStore;
 }
@@ -79,7 +79,7 @@ function localstore() {
     for (let i = listTest.length; i < 10; i++) {
         let o = i - listTest.length;
         var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
-        if (storedNames == null) {} else {
+        if (storedNames == null) { } else {
             list[i].innerHTML = `DataFile${o}`;
             list[i].onclick = function () {
                 var namelist = this.innerHTML;
@@ -93,12 +93,12 @@ function localstore() {
 
 // list test
 var list = document.getElementsByClassName("listData");
-console.log(listTest.length,"hhhddddddddddddssssssssssssssssssssssssssssssssssssss")
+console.log(listTest.length, "hhhddddddddddddssssssssssssssssssssssssssssssssssssss")
 for (let i = listTest.length; i < 10; i++) {
     let o = i - listTest.length;
     var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
     // console.log(storedNames, "{{{{{{{{{[")
-    if (storedNames == null) {} else {
+    if (storedNames == null) { } else {
         list[i].innerHTML = `DataFile${o}`;
         list[i].onclick = function () {
             var namelist = this.innerHTML;
@@ -130,7 +130,7 @@ function sendText() {
     let c = document.getElementsByClassName('data');
     let j = 0;
     for (let i = 0; i < c.length; i++) {
-        if (a[j] == undefined || a[j] == " ") {} else if (a[j] == "") {
+        if (a[j] == undefined || a[j] == " ") { } else if (a[j] == "") {
             break
         } else {
             console.log(a[j])
@@ -144,7 +144,6 @@ function sendText() {
 
 function turnOFFled() {
     var led = document.getElementsByClassName("circle");
-    // console.log(led[1], 'pppp')
     var ACLed = AC.split('');
     for (let k = 0; k < ACLed.length; k++) {
         led[k].style.backgroundColor = "white";
@@ -155,7 +154,7 @@ function showCPU() {
     enableBtn(fetchBtn);
     disableBtn(executeBtn);
     disableBtn(decodeBtn);
-
+    PSW = "0";
     PC = '000000000000';
     IR = '0000000000000000';
     AC = '0000000000000000';
@@ -166,7 +165,7 @@ function showCPU() {
     registerHex.AC = binaryToHex(AC);
     registerHex.DR = binaryToHex(DR);
     registerHex.memory = binaryToHex(memory);
-    document.getElementById("h").innerText="CPU ON";
+    document.getElementById("h").innerText = "CPU ON";
     var start = document.querySelectorAll(".cpu");
     var end = document.querySelectorAll(".endInput");
     document.getElementById("versions").style.display = "none";
@@ -187,28 +186,37 @@ function showCPU() {
         el.innerText = "";
     });
     for (let d = 0; d < emptyflag.length; d++) {
-        console.log("rrxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxssssssssssssssssssssssssss       ")
-        if(versions == 3 && d == 5)
-            emptyflag[5] = "1";
-        else
-            emptyflag[d]= "0"
+        if (versions > 3 && d == 4)
+            FGI = "1";
+        else if (versions > 2 && d == 5)
+            FGO = "1";
+        else {
+            Int = "0";
+            Z = "0";
+            carry = "0";
+            N = "0";
+            V = "0";
+            PSW = "0";
+            R = "0";
+        }
     }
+    console.log(emptyflag[7], "578474848")
     checkFlag();
     // [].forEach.call(emptyflag, function (el) {
-        
-            
+
+
     //     el.innerText = "0";
     // });
     turnOFFled();
 }
 
 function back() {
-    document.getElementById("h").innerText="CPU OFF";
+    document.getElementById("h").innerText = "CPU OFF";
     document.getElementById("container").style.display = "block";
     document.getElementById("back").classList.remove("shutDown");
     document.getElementById("versions").style.display = "block";
-    document.getElementById("InputINPR").disabled=true;
-    document.getElementById("OK").disabled=true;
+    document.getElementById("InputINPR").disabled = true;
+    document.getElementById("OK").disabled = true;
     FGI = "1";
     var end = document.querySelectorAll(".cpu");
     var start = document.querySelectorAll(".endInput");
@@ -252,12 +260,12 @@ function assembler() {
                 }
                 if (a == 0)
                     opcode = memory_instructions[i][1];
-                console.log(instructionAssembler[1],"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")    
-                arr[index] = opcode + instructionAssembler[1].slice(2,5) + ",";
+                console.log(instructionAssembler[1], "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+                arr[index] = opcode + instructionAssembler[1].slice(2, 5) + ",";
                 break;
             }
-            
-                         
+
+
         }
         if (b == 0) {
             b = 2;
@@ -277,15 +285,15 @@ function assembler() {
                     arr[index] = opcode + ",";
                     break;
                 }
-                
+
             }
             if (s == 0) {
                 for (let i = 0; i < memoryAddress.length; i++) {
                     // console.log(instructionAssembler[0])
                     if (instructionAssembler[0] == memoryAddress[i].innerText) {
-                      
+
                         var sp = instructionAssembler[1].slice(0, 2);
-                        if(sp == "0x")
+                        if (sp == "0x")
                             arr[i] = instructionAssembler[1].slice(2, 5) + ",";
                         else
                             arr[i] = instructionAssembler[1] + ",";
@@ -323,7 +331,7 @@ function version() {
     var two = document.getElementsByClassName("vTwo");
     var BUNfive = document.getElementById("five");
     var ver = document.getElementById("versions").value;
-    console.log(document.getElementById("versions").value, ";;;;;;;;");
+    // console.log(document.getElementById("versions").value, ";;;;;;;;");
     if ("version1" == ver) {
         versions = 1;
         [].forEach.call(two, function (el) {
@@ -347,7 +355,7 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="----";
+        BUNfive.innerText = "----";
     }
     if ("version2" == ver) {
         versions = 2;
@@ -372,12 +380,12 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="----";
+        BUNfive.innerText = "----";
     }
     if ("version3" == ver) {
         versions = 3;
-        FGO = "1";
-        checkFlag();
+        // FGO = "1";
+        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
@@ -399,13 +407,13 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="----";
+        BUNfive.innerText = "----";
     }
     if ("version4" == ver) {
         versions = 4;
-        FGI = "1";
-        FGO = "1";
-        checkFlag();
+        // FGI = "1";
+        // FGO = "1";
+        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
@@ -427,13 +435,13 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="----";
+        BUNfive.innerText = "----";
     }
     if ("version5" == ver) {
         versions = 5;
-        FGI = "1";
-        FGO = "1";
-        checkFlag();
+        // FGI = "1";
+        // FGO = "1";
+        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
@@ -455,13 +463,13 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="Cxxx";
+        BUNfive.innerText = "Cxxx";
     }
     if ("version6" == ver) {
         versions = 6;
-        FGI = "1";
-        FGO = "1";
-        checkFlag();
+        // FGI = "1";
+        // FGO = "1";
+        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
@@ -483,13 +491,13 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="Cxxx";
+        BUNfive.innerText = "Cxxx";
     }
     if ("version7" == ver) {
         versions = 7;
-        FGI = "1";
-        FGO = "1";
-        checkFlag();
+        // FGI = "1";
+        // FGO = "1";
+        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
@@ -511,13 +519,14 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
-        BUNfive.innerText="Cxxx";
+        BUNfive.innerText = "Cxxx";
     }
     if ("version8" == ver) {
         versions = 8;
-        FGI = "1";
-        FGO = "1";
-        checkFlag();
+        // FGI = "1";
+        // FGO = "1";
+        // PSW
+        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
@@ -539,6 +548,6 @@ function version() {
         [].forEach.call(Eight, function (el) {
             el.classList.remove("dis");
         });
-        BUNfive.innerText="Cxxx";
+        BUNfive.innerText = "Cxxx";
     }
 }

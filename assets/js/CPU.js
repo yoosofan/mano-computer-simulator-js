@@ -87,6 +87,7 @@ let R = "0";
 
 var opcode;
 var opcodeCALL;
+var ShowLog = 0;
 var code = document.getElementsByClassName("data");
 var memoryAddress = document.getElementsByClassName("Address");
 const fetchBtn = document.getElementById('fetchdata');
@@ -106,7 +107,6 @@ function writeToflag() {
     flag[5].innerHTML = FGO;
     flag[6].innerHTML = Int;
     flag[7].innerHTML = PSW;
-
 }
 
 function checkFlag() {
@@ -120,6 +120,7 @@ function checkFlag() {
     } else if (AC[0] == "1") {
         N = "1";
     }
+    console.log(PSW, FGO, FGI, "ppppppppppppppppppppppppppppppp")
     writeToflag();
 }
 
@@ -291,7 +292,10 @@ for (let o = 0; o < 2; o++) {
             c.classList.add('dis');
             c.classList.add('vEight');
         }
-
+        if (j == 7) {
+            c.classList.add('dis');
+            c.classList.add('vEight');
+        }
         if (o == 1) {
             c.classList.add('flagList');
             if (j == 0)
@@ -635,23 +639,30 @@ function writeLog(symbol, level) {
                 r.appendChild(z);
                 tab.appendChild(r);
             }
-        }else if (index == 0 &&  level == 4) {
-            
-                let w = document.createElement('td');
-                w.classList.add('space');
-                r.appendChild(w);
-                tab.appendChild(r);
-                c.innerText = `Enable interrupt \n M[98] <- PC \n pc <- 99 \n R <- 0 \n Int <- 0`;
-                r.classList.add('logList');
-                r.classList.add('logexecute');
-                r.appendChild(c);
-                tab.appendChild(r);
-                let z = document.createElement('td');
-                z.classList.add('space');
-                r.appendChild(z);
-                tab.appendChild(r);
-                l = 1;
-           
+        } else if (index == 0 && level == 4) {
+
+            let w = document.createElement('td');
+            w.classList.add('space');
+            r.appendChild(w);
+            tab.appendChild(r);
+            if (ShowLog == 2) {
+                c.innerText = `Enable internal interrupt \n M[98] <- PC \n pc <- 99 \n R <- 0 \n Int <- 0`;
+
+            }
+            else if (ShowLog == 1) {
+                c.innerText = `Enable I/O interrupt \n M[98] <- PC \n pc <- 99 \n R <- 0 \n Int <- 0`;
+
+            }
+            r.classList.add('logList');
+            r.classList.add('logexecute');
+            r.appendChild(c);
+            tab.appendChild(r);
+            let z = document.createElement('td');
+            z.classList.add('space');
+            r.appendChild(z);
+            tab.appendChild(r);
+            l = 1;
+
         }
     }
 
@@ -770,8 +781,8 @@ function CMA() {
         if (AC[index] == 0)
             AC[index] = 1;
         else if (AC[index] == 1) {
-        AC[index] = 0;
-    }
+            AC[index] = 0;
+        }
     AC = AC.join('');
     registerHex.AC = binaryToHex(AC);
 }
@@ -1088,16 +1099,16 @@ function IOF() {
 enableBtn(fetchBtn);
 disableBtn(executeBtn);
 disableBtn(decodeBtn);
-var checkPC="0";
+var checkPC = "0";
 function fetch() {
     console.log(R, "[[[[[[[")
     if (R == "1") {
-        checkPC="1";
+        checkPC = "1";
         // var f="98";
         // var SPDecimal =Number(parseInt(f, 2).toString(10)) ;
         code[98].innerText = registerHex.PC;
-        PC="000001100011";
-        registerHex.PC=binaryToHex(PC);
+        PC = "000001100011";
+        registerHex.PC = binaryToHex(PC);
         Int = "0";
         R = "0";
         checkFlag();
@@ -1117,9 +1128,9 @@ function fetch() {
     writeTotable("2", "T0: AR <- PC");
     PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC); //PC <= PC +1
-    if(registerHex.PC == "064"){
-        registerHex.PC=="000";
-        PC=hextobinary(registerHex.PC);
+    if (registerHex.PC == "064") {
+        registerHex.PC == "000";
+        PC = hextobinary(registerHex.PC);
     }
     for (let index = 0; index < memoryAddress.length; index++) {
         if (memoryAddress[index].innerText == registerHex.AR) {
@@ -1473,7 +1484,7 @@ function decode() {
         }
 
     }
-    if (PSWfake == "1") {
+    if (PSWfake == "1" && Int == "0") {
         PSW = "1";
         document.getElementById("back").classList.add("shutDown");
         document.getElementById("h").innerText = "CPU OFF";
@@ -1482,9 +1493,8 @@ function decode() {
         disableBtn(decodeBtn);
         disableBtn(fetchBtn);
         checkFlag();
-    } else {
-        PSW = "0";
-        PSWfake = "1";
+    }else if(PSWfake == "1" && Int == "0") {
+        PSW = "1";
         if (errors == 1) {
             errors = 0;
             error(sym)
@@ -1497,12 +1507,25 @@ function decode() {
             disableBtn(fetchBtn);
             writeLog(sym, 1);
             checkFlag();
-            if (Int == "1") {
-                if (FGI == "1" || FGO == "1") {
-                    R = "1";
-                    console.log(R, "[[ffffffffffffffff[[[[[")
-                }
-            }
+        }
+    }else {
+
+
+        PSW = "0";
+        PSWfake = "1";
+
+        if (errors == 1) {
+            errors = 0;
+            error(sym)
+            disableBtn(executeBtn);
+            disableBtn(decodeBtn);
+            disableBtn(fetchBtn);
+        } else {
+            enableBtn(executeBtn);
+            disableBtn(decodeBtn);
+            disableBtn(fetchBtn);
+            writeLog(sym, 1);
+            checkFlag();
         }
 
     }
@@ -1729,4 +1752,15 @@ function execute() {
     checkFlag();
     led();
     writeLog(sym, 2);
+    if (Int == "1") {
+        if (FGI == "1" || FGO == "1") {
+            R = "1";
+            ShowLog = 1;
+            console.log(R, "[[ffffffffffffffff[[[[[")
+        }
+        else if (PSW == "1" || V == "1") {
+            R = "1";
+            ShowLog = 2;
+        }
+    }
 }
