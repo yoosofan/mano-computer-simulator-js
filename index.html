@@ -34,6 +34,7 @@
                             <option value="version5">version5</option>
                             <option value="version6">version6</option>
                             <option value="version7">version7</option>
+                            <option value="version8">version8</option>
                         </select>
                     </div>
                     <h1>Processor simulator</h1>
@@ -184,9 +185,14 @@
                     <div class="AssembleArea endInput">
                         <div class="lableAssembly">
                             <label for="">Add your assembly code</label>
-                            <textarea name="" id="assembler" cols="30" rows="15">LDA 0x063
+                            <textarea name="" id="assembler" cols="30" rows="15">LDA 0x063                     
 AND 0x062
+ION
+call 0x05
 HLT
+OUT
+CLA
+RET
 0x062 1111
 0x063 0101
                             </textarea>
@@ -215,11 +221,11 @@ HLT
                                 <td>SKO</td>
                                 <td>F100</td>
                             </tr>
-                            <tr class="dis">
+                            <tr class="dis vEight">
                                 <td>ION</td>
                                 <td>F080</td>
                             </tr>
-                            <tr class="dis">
+                            <tr class="dis vEight">
                                 <td>IOF</td>
                                 <td>F040</td>
                             </tr>

@@ -191,7 +191,7 @@ function showCPU() {
         if(versions == 3 && d == 5)
             emptyflag[5] = "1";
         else
-        emptyflag[d]= "0"
+            emptyflag[d]= "0"
     }
     checkFlag();
     // [].forEach.call(emptyflag, function (el) {
@@ -242,12 +242,9 @@ function assembler() {
                     var f = stringValu[k].split(' ');
                     if (f[0] == instructionAssembler[1]) {
                         for (let j = 0; j < memoryAddress.length; j++) {
-                            console.log(f[1], memoryAddress[j].innerText, "///////////////////////////////////////////////////////")
                             if (memoryAddress[j].innerText == f[1]) {
                                 opcode = memory_instructions[i][2];
                                 a = 1;
-                                // f[1] = f[1].slice(2, 5);
-                                // console.log(f[1], "kkkkkkkk");
                             }
                         }
 
@@ -255,15 +252,17 @@ function assembler() {
                 }
                 if (a == 0)
                     opcode = memory_instructions[i][1];
-                arr[index] = opcode + instructionAssembler[1].slice(2, 5) + ",";
+                console.log(instructionAssembler[1],"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")    
+                arr[index] = opcode + instructionAssembler[1].slice(2,5) + ",";
                 break;
             }
-
+            
+                         
         }
         if (b == 0) {
             b = 2;
             for (let i = 0; i < register_instructions.length; i++) {
-                if (register_instructions[i][0] == instructionAssembler[0].toUpperCase()) {
+                if (register_instructions[i][0] == stringValu[index].toUpperCase()) {
                     s = 1;
                     opcode = register_instructions[i][1];
                     arr[index] = opcode + ",";
@@ -271,8 +270,18 @@ function assembler() {
                 }
 
             }
+            for (let f = 0; f < InputOutput_instructions.length; f++) {
+                if (InputOutput_instructions[f][0] == stringValu[index].toUpperCase()) {
+                    s = 1;
+                    opcode = InputOutput_instructions[f][1];
+                    arr[index] = opcode + ",";
+                    break;
+                }
+                
+            }
             if (s == 0) {
                 for (let i = 0; i < memoryAddress.length; i++) {
+                    // console.log(instructionAssembler[0])
                     if (instructionAssembler[0] == memoryAddress[i].innerText) {
                       
                         var sp = instructionAssembler[1].slice(0, 2);
@@ -310,6 +319,7 @@ function version() {
     var Five = document.getElementsByClassName("vFive");
     var Six = document.getElementsByClassName("vSix");
     var Seven = document.getElementsByClassName("vSeven");
+    var Eight = document.getElementsByClassName("vEight");
     var two = document.getElementsByClassName("vTwo");
     var BUNfive = document.getElementById("five");
     var ver = document.getElementById("versions").value;
@@ -334,6 +344,9 @@ function version() {
         [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(Eight, function (el) {
+            el.classList.add("dis");
+        });
         BUNfive.innerText="----";
     }
     if ("version2" == ver) {
@@ -354,6 +367,9 @@ function version() {
             el.classList.add("dis");
         });
         [].forEach.call(Seven, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="----";
@@ -378,6 +394,9 @@ function version() {
             el.classList.add("dis");
         });
         [].forEach.call(Seven, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="----";
@@ -405,6 +424,9 @@ function version() {
         [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(Eight, function (el) {
+            el.classList.add("dis");
+        });
         BUNfive.innerText="----";
     }
     if ("version5" == ver) {
@@ -428,6 +450,9 @@ function version() {
             el.classList.add("dis");
         });
         [].forEach.call(Seven, function (el) {
+            el.classList.add("dis");
+        });
+        [].forEach.call(Eight, function (el) {
             el.classList.add("dis");
         });
         BUNfive.innerText="Cxxx";
@@ -455,6 +480,9 @@ function version() {
         [].forEach.call(Seven, function (el) {
             el.classList.add("dis");
         });
+        [].forEach.call(Eight, function (el) {
+            el.classList.add("dis");
+        });
         BUNfive.innerText="Cxxx";
     }
     if ("version7" == ver) {
@@ -480,7 +508,37 @@ function version() {
         [].forEach.call(Seven, function (el) {
             el.classList.remove("dis");
         });
+        [].forEach.call(Eight, function (el) {
+            el.classList.add("dis");
+        });
         BUNfive.innerText="Cxxx";
     }
-
+    if ("version8" == ver) {
+        versions = 8;
+        FGI = "1";
+        FGO = "1";
+        checkFlag();
+        [].forEach.call(two, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(three, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Four, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Five, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Six, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Seven, function (el) {
+            el.classList.remove("dis");
+        });
+        [].forEach.call(Eight, function (el) {
+            el.classList.remove("dis");
+        });
+        BUNfive.innerText="Cxxx";
+    }
 }

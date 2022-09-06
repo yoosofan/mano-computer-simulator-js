@@ -57,7 +57,7 @@ let TR = '0000000000000000';
 let memory = '000000000000';
 let INPR = '00000000';
 let OUTR = '00000000';
-let SP = '000001100011';
+let SP = '000001100001';
 let memSP = '000000000000';
 let registerHex = {
     IR: binaryToHex(IR),
@@ -82,6 +82,9 @@ let carry = "0";
 let N = "0";
 let V = "0";
 let PSW = "0";
+let R = "0";
+
+
 var opcode;
 var opcodeCALL;
 var code = document.getElementsByClassName("data");
@@ -264,7 +267,7 @@ registerTable.appendChild(regtable);
 // flag table
 const ftable = document.createElement('table');
 const flagTable = document.querySelector('.flagTable');
-const header = ['E', 'Z', 'N', 'V', 'FGI', 'FGO', 'IEN','PSW'];
+const header = ['E', 'Z', 'N', 'V', 'FGI', 'FGO', 'IEN', 'PSW'];
 for (let o = 0; o < 2; o++) {
     let r = document.createElement('tr');
     for (let j = 0; j < 8; j++) {
@@ -286,7 +289,7 @@ for (let o = 0; o < 2; o++) {
         }
         if (j == 6) {
             c.classList.add('dis');
-            c.classList.add('vSix');
+            c.classList.add('vEight');
         }
 
         if (o == 1) {
@@ -632,9 +635,26 @@ function writeLog(symbol, level) {
                 r.appendChild(z);
                 tab.appendChild(r);
             }
+        }else if (index == 0 &&  level == 4) {
+            
+                let w = document.createElement('td');
+                w.classList.add('space');
+                r.appendChild(w);
+                tab.appendChild(r);
+                c.innerText = `Enable interrupt \n M[98] <- PC \n pc <- 99 \n R <- 0 \n Int <- 0`;
+                r.classList.add('logList');
+                r.classList.add('logexecute');
+                r.appendChild(c);
+                tab.appendChild(r);
+                let z = document.createElement('td');
+                z.classList.add('space');
+                r.appendChild(z);
+                tab.appendChild(r);
+                l = 1;
+           
         }
-
     }
+
 }
 
 function binaryToHex(number) {
@@ -1053,14 +1073,36 @@ function STS() {
 
     }
 }
+
+function ION() {
+    Int = "1";
+}
+
+function IOF() {
+    Int = "0";
+}
+
+
 //fetch************************************************
 
 enableBtn(fetchBtn);
 disableBtn(executeBtn);
 disableBtn(decodeBtn);
-
+var checkPC="0";
 function fetch() {
-
+    console.log(R, "[[[[[[[")
+    if (R == "1") {
+        checkPC="1";
+        // var f="98";
+        // var SPDecimal =Number(parseInt(f, 2).toString(10)) ;
+        code[98].innerText = registerHex.PC;
+        PC="000001100011";
+        registerHex.PC=binaryToHex(PC);
+        Int = "0";
+        R = "0";
+        checkFlag();
+        writeLog(" ", 4);
+    }
     var emptyRegister = document.querySelectorAll(".regList");
     var emptytable = document.querySelectorAll(".empty");
     [].forEach.call(emptyRegister, function (el) {
@@ -1075,6 +1117,10 @@ function fetch() {
     writeTotable("2", "T0: AR <- PC");
     PC = ADD(PC, one);
     registerHex.PC = binaryToHex(PC); //PC <= PC +1
+    if(registerHex.PC == "064"){
+        registerHex.PC=="000";
+        PC=hextobinary(registerHex.PC);
+    }
     for (let index = 0; index < memoryAddress.length; index++) {
         if (memoryAddress[index].innerText == registerHex.AR) {
             code[index].classList.add("border");
@@ -1095,7 +1141,8 @@ function fetch() {
 
 //decode**************************************************
 
-var PSWfake="1";
+var PSWfake = "1";
+
 function decode() {
     opcode = registerHex.IR.split('')[0].toUpperCase();
     opcodeCALL = registerHex.IR.split('')[1].toUpperCase();
@@ -1213,11 +1260,13 @@ function decode() {
                             sym = valu;
                         else
                             errors = 1;
-                    } else
-                        sym = valu;
-
-                    if (valu == "SKI" || valu == "INP") {
+                    } else if (valu == "SKI" || valu == "INP") {
                         if (versions > 3) {
+                            sym = valu;
+                        } else
+                            errors = 1;
+                    } else if (valu == "ION" || valu == "IOF") {
+                        if (versions > 7) {
                             sym = valu;
                         } else
                             errors = 1;
@@ -1231,7 +1280,7 @@ function decode() {
         AR = hextobinary(registerHex.AR);
         writeTotable("4", "T2: AR <- IR[0:11]");
         if (opcode == 0) {
-            
+
             sym = "AND";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
@@ -1244,7 +1293,7 @@ function decode() {
 
 
         } else if (opcode == 1) {
-           
+
             sym = "ADD";
             for (let l = 0; l < memoryAddress.length; l++)
                 if (memoryAddress[l].innerText == registerHex.AR) {
@@ -1270,18 +1319,16 @@ function decode() {
             PSWfake = "0";
         } else if (opcode == 4) {
 
-            if (versions > 1){
+            if (versions > 1) {
                 sym = "BUN";
                 PSWfake = "0";
-            }
-            else
+            } else
                 errors = 1;
         } else if (opcode == 5) {
-            if (versions > 4){
+            if (versions > 4) {
                 sym = "BSA";
                 PSWfake = "0";
-            }
-            else
+            } else
                 errors = 1;
 
         } else if (opcode == 6) {
@@ -1359,8 +1406,8 @@ function decode() {
             }
         } else if (opcode == "B") {
             sym = "STA";
-            for (let l = 0; l < memoryAddress.length; l++){
-                console.log(memoryAddress[l].innerText,PSW,"lfffffffffffffffffffffffffffffffffff")
+            for (let l = 0; l < memoryAddress.length; l++) {
+                console.log(memoryAddress[l].innerText, PSW, "lfffffffffffffffffffffffffffffffffff")
                 if (memoryAddress[l].innerText == registerHex.AR) {
                     PSWfake = "0";
                     memory = hextobinary(code[l].innerText);
@@ -1426,17 +1473,17 @@ function decode() {
         }
 
     }
-    if(PSWfake == "1"){
-        PSW="1";
+    if (PSWfake == "1") {
+        PSW = "1";
         document.getElementById("back").classList.add("shutDown");
         document.getElementById("h").innerText = "CPU OFF";
         alert("CPU stoped beacuse PSW = 1")
         disableBtn(executeBtn);
         disableBtn(decodeBtn);
         disableBtn(fetchBtn);
-        checkFlag()
-    }else{
-        PSW="0";
+        checkFlag();
+    } else {
+        PSW = "0";
         PSWfake = "1";
         if (errors == 1) {
             errors = 0;
@@ -1449,11 +1496,16 @@ function decode() {
             disableBtn(decodeBtn);
             disableBtn(fetchBtn);
             writeLog(sym, 1);
+            checkFlag();
+            if (Int == "1") {
+                if (FGI == "1" || FGO == "1") {
+                    R = "1";
+                    console.log(R, "[[ffffffffffffffff[[[[[")
+                }
+            }
         }
-    }
-    
-  
 
+    }
 
 }
 
@@ -1557,9 +1609,14 @@ function execute() {
             myString = " If(FGO = 1) then (PC <- PC + 1)";
 
         } else if (valu == "ION") {
-
+            console.log("execut%%%%%%%%%%%%%%%%%%%%%%")
+            ION();
+            writeTotable("5", "T3: IEN <- 1");
+            myString = "IEN <- 1";
         } else if (valu == "IOF") {
-
+            IOF();
+            writeTotable("5", "T3: IEN <- 0");
+            myString = "IEN <- 0";
         } else if (valu == "CALL") {
             console.log("execut%%%%%%%%%%%%%%%%%%%%%%")
             CALL();
