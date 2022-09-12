@@ -17,12 +17,9 @@ function natural() {
 
 
 function insert() {
-    // console.log(count, ";;;")
     var data = document.getElementById("firstInput").value;
     if (data == "") { } else
         elementt[count - 1].innerText = data;
-
-    console.log(data, "llllfjfhdjfgdj")
     adrBox.innerText = adr[count].innerText;
     count++;
     if (count == 100)
