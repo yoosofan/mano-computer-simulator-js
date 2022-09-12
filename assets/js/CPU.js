@@ -17,8 +17,6 @@ const memory_instructions = [
 
 ]
 
-
-
 // registor instructions
 const register_instructions = [
     ["CLA", "7800"],
@@ -35,7 +33,6 @@ const register_instructions = [
     ["HLT", "7001"],
     ["RET", "7030"]
 ]
-
 
 const InputOutput_instructions = [
     ["INP", "F800"],
@@ -120,7 +117,6 @@ function checkFlag() {
     } else if (AC[0] == "1") {
         N = "1";
     }
-    console.log(PSW, FGO, FGI, "ppppppppppppppppppppppppppppppp")
     writeToflag();
 }
 
@@ -731,6 +727,7 @@ function SKO() {
     var one = "1";
     if (FGO == "1") {
         PC = ADD(PC, one);
+        registerHex.PC=binaryToHex(PC);
     }
 }
 
@@ -1101,8 +1098,6 @@ function fetch() {
     console.log(R, "[[[[[[[")
     if (R == "1") {
         checkPC = "1";
-        // var f="98";
-        // var SPDecimal =Number(parseInt(f, 2).toString(10)) ;
         code[98].innerText = registerHex.PC;
         PC = "000001100011";
         registerHex.PC = binaryToHex(PC);
