@@ -416,9 +416,6 @@ function version() {
     }
     if ("version4" == ver) {
         versions = 4;
-        // FGI = "1";
-        // FGO = "1";
-        // checkFlag();
         [].forEach.call(two, function (el) {
             el.classList.remove("dis");
         });
