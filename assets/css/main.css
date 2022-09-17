@@ -7,7 +7,7 @@
 }
 
 .marginBox {
-    margin: 50px 0px;
+    margin:20px 0px 50px 0px;
 }
 
 .header {
@@ -397,7 +397,8 @@ table {
     margin-right: 15px;
     text-align: center;
     background-color: #3aa3a7;
-    /* color: #fff; */
+    width: 50px;
+    margin-bottom: 10px;
 }
 #help a{
     color: #fff;
