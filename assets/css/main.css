@@ -392,7 +392,16 @@ table {
     text-align: center;
     background-color: #3aa3a7;
 }
-
+#help{
+    padding: 8px;
+    margin-right: 15px;
+    text-align: center;
+    background-color: #3aa3a7;
+    /* color: #fff; */
+}
+#help a{
+    color: #fff;
+}
 .shutDown {
     display: block !important;
 }

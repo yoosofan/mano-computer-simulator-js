@@ -151,6 +151,7 @@ function showCPU() {
     enableBtn(fetchBtn);
     disableBtn(executeBtn);
     disableBtn(decodeBtn);
+    document.getElementById("InputINPR").value="";
     PSW = "0";
     PC = '000000000000';
     IR = '0000000000000000';
@@ -159,6 +160,8 @@ function showCPU() {
     memory = '000000000000';
     OUTR="00000000";
     registerHex.OUTR="00"
+    INPR = '00000000';
+    registerHex.INPR="00"
     if (versions > 2) {
         sevensegmentF();    
     }
