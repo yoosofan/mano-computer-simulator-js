@@ -1748,7 +1748,6 @@ function execute() {
         if (FGI == "1" || FGO == "1") {
             R = "1";
             ShowLog = 1;
-            console.log(R, "[[ffffffffffffffff[[[[[")
         }
         else if (PSW == "1" || V == "1") {
             R = "1";
