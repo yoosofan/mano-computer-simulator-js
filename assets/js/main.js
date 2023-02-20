@@ -135,8 +135,7 @@ function sendText() {
         }
         j++;
     }
-    document.getElementById('textarea').value = "";
-
+    //document.getElementById('textarea').value = "";
 }
 
 function turnOFFled() {
