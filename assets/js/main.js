@@ -78,30 +78,11 @@ function localstore() {
         var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
         if (storedNames == null) { } else {
             list[i].innerHTML = `DataFile${o}`;
-            list[i].onclick = function () {
+            list[i].onclick = function (e) {
                 var namelist = this.innerHTML;
                 var storedNames = JSON.parse(localStorage.getItem(namelist));
-                console.log(storedNames, "lksaka");
                 getDataTextarea.value = storedNames;
             }
-        }
-    }
-}
-
-// list test
-var list = document.getElementsByClassName("listData");
-console.log(listTest.length, "hhhddddddddddddssssssssssssssssssssssssssssssssssssss")
-for (let i = listTest.length; i < 10; i++) {
-    let o = i - listTest.length;
-    var storedNames = JSON.parse(localStorage.getItem(`DataFile${o}`));
-    // console.log(storedNames, "{{{{{{{{{[")
-    if (storedNames == null) { } else {
-        list[i].innerHTML = `DataFile${o}`;
-        list[i].onclick = function () {
-            var namelist = this.innerHTML;
-            var storedNames = JSON.parse(localStorage.getItem(namelist));
-            console.log(storedNames, "lksaka");
-            getDataTextarea.value = storedNames;
         }
     }
 }
@@ -135,7 +116,8 @@ function sendText() {
         }
         j++;
     }
-    //document.getElementById('textarea').value = "";
+    document.getElementById('textarea').value = "";
+
 }
 
 function turnOFFled() {

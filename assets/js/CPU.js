@@ -166,7 +166,7 @@ function enableBtn(button) {
 // RAM table and add data  
 const ramTable = document.createElement('table');
 const memoryTable = document.querySelector('.ramtable');
-for (let i = -1; i < 100; i++) {
+for (let i = -1; i < 128; i++) {
     // var datacel = storedNames[i + 1];
     let r = document.createElement('tr');
     for (let j = 0; j < 3; j++) {
