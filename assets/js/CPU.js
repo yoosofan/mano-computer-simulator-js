@@ -163,7 +163,7 @@ function enableBtn(button) {
     button.disabled = false;
 }
 
-// RAM table and add data  
+// RAM table and add data
 const ramTable = document.createElement('table');
 const memoryTable = document.querySelector('.ramtable');
 for (let i = -1; i < 128; i++) {
@@ -201,7 +201,7 @@ for (let i = -1; i < 128; i++) {
 memoryTable.appendChild(ramTable);
 
 
-// register table 
+// register table
 const regtable = document.createElement('table');
 const registerTable = document.querySelector('.registerTable');
 const items = ['Elements', 'Initial Values', 'T0: AR <- PC', 'T1: IR <- M[AR], PC <-PC+1', 'T2: AR <- IR[0:11]', 'T:', 'T:', 'T:', 'T:'];
@@ -321,7 +321,7 @@ for (let o = 0; o < 2; o++) {
 flagTable.appendChild(ftable);
 
 
-// write to table 
+// write to table
 function writeTotable(number, T) {
     let c = document.getElementsByClassName(`${number}`);
     c[0].innerHTML = T;
@@ -467,7 +467,7 @@ function sevensegmentF() {
             className = myClassdisplay;
         else if (index == 1)
             className = myClassdisplay2;
-            
+
         if (partOFAC == "0")
             sevenSegment.zero(className);
         if (partOFAC == "1")
@@ -699,7 +699,7 @@ function error(nameAssemble) {
     alert(`You are in version ${versions} and you cannot use ${nameAssemble}`);
 }
 
-// Input Output instruction 
+// Input Output instruction
 
 function OUT() {
     if (FGO == "1") {
@@ -872,7 +872,7 @@ function HLT() {
 }
 
 
-// Memory-refrence instruction 
+// Memory-refrence instruction
 function and() {
     let result = '';
     var ACNumber = binaryToHex(AC);
@@ -1116,7 +1116,7 @@ function fetch() {
         el.innerText = "T :";
     });
     var one = "1";
-    registerHex.AR = "0x" + binaryToHex(PC); // AR <= PC   
+    registerHex.AR = "0x" + binaryToHex(PC); // AR <= PC
     AR = PC; // AR <= PC
     writeTotable("2", "T0: AR <- PC");
     PC = ADD(PC, one);

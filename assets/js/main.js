@@ -101,7 +101,7 @@ function resetMem() {
 }
 
 
-// send data in texterea 
+// send data in texterea
 function sendText() {
     var data = document.getElementById('textarea').value;
     var a = data.split(',');
@@ -144,7 +144,7 @@ function showCPU() {
     INPR = '00000000';
     registerHex.INPR="00"
     if (versions > 2) {
-        sevensegmentF();    
+        sevensegmentF();
     }
     registerHex.PC = binaryToHex(PC);
     registerHex.IR = binaryToHex(IR);
@@ -305,7 +305,7 @@ function assembler() {
 
 
 
-// version 2 
+// version 2
 function version() {
     console.log("dkdhjfhfj")
     var three = document.getElementsByClassName("vThree");
