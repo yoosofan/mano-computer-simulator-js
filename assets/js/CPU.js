@@ -264,13 +264,14 @@ registerTable.appendChild(regtable);
 // flag table
 const ftable = document.createElement('table');
 const flagTable = document.querySelector('.flagTable');
-const header = ['E', 'Z', 'N', 'V', 'FGI', 'FGO', 'IEN', 'PSW'];
+const header = [['C','Carry'], ['Z', 'AC = 0 🢡 Z = 0'], ['N', 'AC < 0 🢡 N = 1 \nelse N = 0'], ['V', 'Overflow 🢡  V = 1'], ['FGI', 'FGI'], ['FGO', 'FGO'], ['IEN', 'IEN = 1 => interrupt is enabled'], ['PSW', 'PSW']];
 for (let o = 0; o < 2; o++) {
     let r = document.createElement('tr');
     for (let j = 0; j < 8; j++) {
         let c = document.createElement('td');
         if (o == 0) {
-            c.innerText = header[j];
+            c.innerText = header[j][0];
+            c.title = header[j][1];
             c.classList.add('text');
             r.classList.add('sticky');
         }
